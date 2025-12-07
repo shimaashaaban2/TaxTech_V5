@@ -1,0 +1,71 @@
+﻿@model List<Tax_Tech.ViewModels.InvoiceLineViewModel>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-responsive-xl" style="min-height: 200px;" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.ItemCode</th>
+            <th>@Tax_Tech.Resources.Resource.ItemName</th>
+            <th>@Tax_Tech.Resources.Resource.Quantity</th>
+            <th>@Tax_Tech.Resources.Resource.AmountEgp</th>
+            <th>@Tax_Tech.Resources.Resource.Discount</th>
+            <th>@Tax_Tech.Resources.Resource.ItemTotal</th>
+            <th>@Tax_Tech.Resources.Resource.Tax</th>
+            <th>@Tax_Tech.Resources.Resource.NetTotal</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @{ if (Model != null)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td style="width: 25% !important;">
+                            <div>-@item.ItemERPID</div>
+                            <div>-@item.ItemCode</div>
+                        </td>
+                        <td>@item.ItemName</td>
+                        <td>@item.Quantity</td>
+                        <td>@item.UnitInEGP</td>
+                        <td>@item.ItemsDiscount</td>
+                        <td>@item.NetTotal</td>
+                        <td>@item.ItemTaxTotal</td>
+                        <td>@item.Total</td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getEditInvoiceLinePopup('@item.LineID', '@item.ItemID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                    </a>
+
+                                    @Ajax.ActionLink(Tax_Tech.Resources.Resource.Delete, "DeleteInvoiceLine", "InvoiceLine", new { area = "", lineId = item.LineID, docId = item.DocumentID }, new AjaxOptions
+                                    {
+                                        HttpMethod = "POST",
+                                        OnComplete = "showInvoiceLineResult",
+                                        Confirm = Tax_Tech.Resources.Resource.AreyouSuretoDelete
+                                    }, new { @class = "dropdown-item" })
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7" class="text-center text-info">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            }}
+
+    </tbody>
+</table>
+
+<script>
+    $('#thebasic-datatable').DataTable({ "pageLength": 50 });
+</script>

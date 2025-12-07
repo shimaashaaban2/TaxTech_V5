@@ -1,0 +1,48 @@
+﻿
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.CreateBank</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="updateBankModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="PopupMsg"></div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("InsertBank", "Banks", null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "ShowLoading(1)",
+                            OnComplete = "showPopUpResult"
+                        }, new
+                        {
+                            @class = "form-horizontal"
+                        }))
+                {
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="form-label" for="TagName">@Tax_Tech.Resources.Resource.Bankname</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Bankname" id="BankName" name="BankName" tabindex="1" />
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" tabindex="2" id="subBtn-1">
+                            <span class="align-middle d-sm-inline-block d-none">@Tax_Tech.Resources.Resource.CreateBank</span>
+                        </button>
+                        <div class="form-group">
+                            <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

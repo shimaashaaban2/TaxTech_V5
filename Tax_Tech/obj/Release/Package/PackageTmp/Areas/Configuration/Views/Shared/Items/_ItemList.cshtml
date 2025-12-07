@@ -1,0 +1,128 @@
+﻿@using PagedList
+@using PagedList.Mvc
+
+@model IPagedList<Tax_Tech.ViewModels.ItemViewModel>
+@{
+    Tax_Tech.Areas.Configuration.Repository.PermissionRepository _permissionRepository = new Tax_Tech.Areas.Configuration.Repository.PermissionRepository();
+    long actionBy = Convert.ToInt32(Session["ID"]);
+    var hasPermissionsResult = _permissionRepository.HasPermission(3, actionBy);
+
+
+}
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-responsive-xl" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.ERPID</th>
+            <th>@Tax_Tech.Resources.Resource.ItemCode</th>
+            <th>@Tax_Tech.Resources.Resource.ItemName</th>
+            <th>@Tax_Tech.Resources.Resource.ItemType</th>
+            <th>@Tax_Tech.Resources.Resource.Entity</th>
+            <th>@Tax_Tech.Resources.Resource.Status</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            @item.ItemERPID
+                        </td>
+                        <td>
+                            @item.ItemCode
+                        </td>
+                        <td>
+                            @item.ItemName
+                        </td>
+                        <td>
+                            @item.ItemType
+                        </td>
+                        <td>
+                            @item.EntityTitle
+                        </td>
+                        <td>
+                            @if (item.IsActive.HasValue && item.IsActive.Value)
+                            {
+                                <span>@Tax_Tech.Resources.Resource.Active</span>
+                            }
+                            else
+                            {
+                                <span>@Tax_Tech.Resources.Resource.SetInActive</span>
+                            }
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getUpdateItemPopup('@item.ItemSerial')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                    </a>
+                                    @if (hasPermissionsResult.CustomeRespons.HasPermission != "0")
+                                    {
+                                        if (item.IsActive.HasValue && !item.IsActive.Value)
+                                        {
+                                            @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetAsActive, "ChangeStatus", "Items", new { area = "Configuration", itemId = item.ItemSerial, status = true }, new AjaxOptions
+                                            {
+                                                UpdateTargetId = "list",
+                                                OnBegin = "ShowLoading(0)",
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                OnComplete = "showAfterActionResult"
+                                            }, new { @class = "dropdown-item" })
+                                        }
+                                        else
+                                        {
+                                            @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetInActive, "ChangeStatus", "Items", new { area = "Configuration", itemId = item.ItemSerial, status = false }, new AjaxOptions
+                                            {
+                                                UpdateTargetId = "list",
+                                                OnBegin = "ShowLoading(0)",
+                                                InsertionMode = InsertionMode.Replace,
+                                                HttpMethod = "POST",
+                                                OnComplete = "showAfterActionResult",
+                                                Confirm = Tax_Tech.Resources.Resource.AreyouSuretoSetInactive
+                                            }, new { @class = "dropdown-item" })
+                                        }
+
+                                    }
+
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getItemTaxesPopup('@item.ItemSerial')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Taxes</span>
+                                    </a>
+
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getPriceAfterTaxPopup('@item.ItemSerial')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                        <span>@Tax_Tech.Resources.Resource.PriceAfterTax</span>
+                                    </a>
+                                     <a class="dropdown-item" href="javascript:void(0);" onclick="GetGroupItemsPopup('@item.ItemSerial')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-layers"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+                                        <span>@Tax_Tech.Resources.Resource.GroupItems</span>
+                                    </a>
+
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="7">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", "Items", new { area = "Configuration", filter = ViewBag.Filter, pageNo = page, pageSize = 100 }))

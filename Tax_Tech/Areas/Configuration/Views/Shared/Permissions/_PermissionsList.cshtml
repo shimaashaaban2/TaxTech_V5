@@ -1,0 +1,47 @@
+﻿@model List<Tax_Tech.ApiModels.UserPermissionApiModel>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-responsive-xl" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.HasPermission</th>
+            <th>@Tax_Tech.Resources.Resource.ActionName</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        @if (Model.Count > 0)
+        {
+            foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <div class="custom-control custom-checkbox">
+                            @if (item.UserActionID == 0)
+                            {
+                                <input style="cursor: pointer;" type="checkbox" class="custom-control-input" id="hasPermission-@item.ActionID" data-action-id="@item.ActionID" oninput="addPermissionToUser(event)">
+                                <label class="custom-control-label text-danger" style="cursor: pointer;" for="hasPermission-@item.ActionID"></label>
+                            }
+                            else
+                            {
+                                <input type="checkbox" style="cursor: pointer;" class="custom-control-input" id="hasPermission-@item.ActionID" data-action-id="@item.ActionID" checked="checked" oninput="removePermissionFromUser(event)">
+                                <label class="custom-control-label text-success" style="cursor: pointer;" for="hasPermission-@item.ActionID"></label>
+                            }
+                        </div>
+                    </td>
+                    <td style="width: 80%;">
+                        @item.ActionFriendlyName
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="2">
+                    <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                </td>
+            </tr>
+        }
+
+    </tbody>
+</table>

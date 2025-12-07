@@ -1,0 +1,87 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.Home;
+}
+
+
+<div class="row">
+    <a href="@Url.Action("Index", new { controller = "Vendors", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Vendors</h3>
+            </div>
+        </div>
+    </a>
+
+    <a href="@Url.Action("Index", new { controller = "Branches", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-git-branch"><line x1="6" y1="3" x2="6" y2="15"></line><circle cx="18" cy="6" r="3"></circle><circle cx="6" cy="18" r="3"></circle><path d="M18 9a9 9 0 0 1-9 9"></path></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Branches</h3>
+            </div>
+        </div>
+    </a>
+
+    <a href="@Url.Action("Index", new { controller = "Items", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-package"><line x1="16.5" y1="9.4" x2="7.5" y2="4.21"></line><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Items</h3>
+            </div>
+        </div>
+    </a>
+
+    @*<a href="@Url.Action("Index", new { controller = "Banks", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Banks</h3>
+            </div>
+        </div>
+    </a>*@
+
+    @*<a href="@Url.Action("Index", new { controller = "Payment", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-credit-card"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Payments</h3>
+            </div>
+        </div>
+    </a>*@
+
+    <a href="@Url.Action("Index", new { controller = "Accounts", area = "Configuration" })" class="col-md-3">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="avatar bg-light-info p-50 mb-1">
+                    <div class="avatar-content">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                    </div>
+                </div>
+                <h3 class="font-weight-bolder">@Tax_Tech.Resources.Resource.Users</h3>
+            </div>
+        </div>
+    </a>
+</div>
+
+<script src="~/Areas/Configuration/Scripts/Custom/Home.js"></script>

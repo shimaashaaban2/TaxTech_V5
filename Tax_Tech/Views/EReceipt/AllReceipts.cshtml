@@ -1,0 +1,189 @@
+﻿@model  Tax_Tech.Models.EReceiptStatusListsModel
+@{
+    ViewBag.Title = @Tax_Tech.Resources.Resource.EReceipts;
+
+}
+
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 id="totalCount"></h4>
+                    </div>
+                </div>
+
+                @using (Ajax.BeginForm("GetReceiptByNumber", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "OnGetReceiptListByFilterShowLoader",
+                   OnComplete = "OnGetReceiptListByFilterHideLoader"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="ReceiptNumber" name="ReceiptNumber" placeholder="@Tax_Tech.Resources.Resource.EReceiptNumber" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-Receipt-number" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-ReceiptNumber-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+                @using (Ajax.BeginForm("ReceiptListByUUID", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "OnGetReceiptListByFilterShowLoader",
+                   OnComplete = "OnGetReceiptListByFilterHideLoader"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" id="ReceiptUUID" name="ReceiptUUID" class="form-control active" placeholder="@Tax_Tech.Resources.Resource.UUID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="Btn-Receipt-UUID" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="Btn-ReceiptUUID-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+                @using (Ajax.BeginForm("FullReceiptsList", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "OnGetReceiptListByFilterShowLoader",
+                   OnComplete = "OnGetReceiptListByFilterHideLoader"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Issue @Tax_Tech.Resources.Resource.Date </label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.ToString("yyyy-MM-dd")" />@*value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")"*@
+                        </div>
+                    </div>
+                    @*<div class="row">
+                <div class="col-md-12 form-group">
+                    <label>@Tax_Tech.Resources.Resource.To</label>
+                    <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                </div>
+            </div>*@
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <div class="form-check form-check-inline">
+
+                                <input value="true" class="form-check-input" type="checkbox" name="EReceiptSource" id="EReceiptSourceId" onchange="UnSelectOption('EReceiptSourceId','EReceiptSource')" checked="checked" />
+                                <label class="form-check-label">@Tax_Tech.Resources.Resource.AllSources</label>
+                            </div>
+                        </div>
+
+                        <div class="col-md-12 mb-1 form-group">
+                            @Html.DropDownList("EReceiptSource", new SelectList(Model.eReceiptSources, "SourceID", "Source"), @Tax_Tech.Resources.Resource.Sources, new { @class = "form-control select2 select2-hidden-accessible", @onchange = "UncheckBox('EReceiptSourceId')" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-12 form-group">
+                            <div class="form-check form-check-inline">
+
+                                <input value="true" class="form-check-input" type="checkbox" name="EReceiptStatusId" id="EReceiptStatusId" onchange="UnSelectOption('EReceiptStatusId','EReceiptStatus')" checked="checked" />
+
+                                <label class="form-check-label">@Tax_Tech.Resources.Resource.AllStatuses</label>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mb-1 form-group">
+                            @*<div class="position-relative">*@
+                            @Html.DropDownList("EReceiptStatus", new SelectList(Model.eReceiptStatuses, "EReceiptStatus", "EReceiptStatus"), @Tax_Tech.Resources.Resource.EReceiptStatus, new { @class = "form-control select2", @onchange = "UncheckBox('EReceiptStatusId')" })
+
+                            @*</div>*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-ReceiptGetList" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-ReceiptGetList-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+
+
+                }
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-outline-primary col-md-12" id="btnExportToExecl" onclick="exportAllReceiptsToExecl()">@Tax_Tech.Resources.Resource.ExportToExcel</a>
+                        <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnExportToExecl-loader" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                        </button>
+                    </div>
+                </div>
+
+                @*<div class="row">
+            <div class="col-md-12">
+                <button class="btn btn-outline-primary col-md-12" id="btnExportToExecl">@Tax_Tech.Resources.Resource.ExportToExcel</button>
+                <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnExportToExecl-loader" type="button" disabled="">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                </button>
+            </div>
+        </div>*@
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div id="Receipt-List">
+                    <h4 class="text-center"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        ClearEReceiptSearch();
+    });
+</script>
+<script src="~/Scripts/Custom/Public.js"></script>
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/EReceipt.js"></script>
+<script src="~/Scripts/Custom/Checkbox.js"></script>

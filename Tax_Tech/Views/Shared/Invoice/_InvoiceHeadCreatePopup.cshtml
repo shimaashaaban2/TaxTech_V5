@@ -1,0 +1,151 @@
+﻿@using Tax_Tech.Repository;
+@{
+    InvoiceApiRepository _invoiceApiRepository = new InvoiceApiRepository();
+    List<Tax_Tech.ViewModels.BranchViewModel> branches = ViewBag.Branches;
+    List<Tax_Tech.ViewModels.VendorViewModel> vendors = ViewBag.Vendors;
+    var VendorId = ViewBag.VendorsId;
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.NewInvoice</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+
+                @using (Ajax.BeginForm("CreateInvoiceHead", "Invoice",
+                    null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "ShowLoading(1)",
+                            OnComplete = "onCreateInvoiceHeadSubmit"
+                        }, new
+                        {
+                            @class = "form-horizontal"
+                        }
+                ))
+                {
+                    <div class="card-body">
+                        <div id="PopupMsg"></div>
+                        @{ if (Tax_Tech.Classes.PublicConfig.ShowInternalID == "1")
+                            {
+                                <div class="row">
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="InvoiceInternalID">
+                                            @Tax_Tech.Resources.Resource.InvoiceInternalID
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.InvoiceInternalID" name="InvoiceInternalID" id="InvoiceInternalID" tabindex="1" autofocus />
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="InvoiceIssueDate">
+                                            @Tax_Tech.Resources.Resource.InvoiceIssueDate
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input tabindex="2" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm")" type="text" id="" name="InvoiceIssueDate" class="form-control flatpickr-date-time flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                                    </div>
+                                </div>}
+                            else
+                            {
+                                <div class="row">
+                                    <input type="hidden" name="InvoiceInternalID" id="InvoiceInternalID" value="0" tabindex="1" />
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="InvoiceIssueDate">
+                                            @Tax_Tech.Resources.Resource.InvoiceIssueDate
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input tabindex="2" value="@DateTime.Now.ToString("yyyy-MM-dd hh:mm")" type="text" id="" name="InvoiceIssueDate" class="form-control flatpickr-date-time flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                                    </div>
+
+                                    <div class="form-group col-md-6">
+                                        <label class="control-label" for="ActivityCode">
+                                            @Tax_Tech.Resources.Resource.TaxPayerActiCode
+                                            <span class="req">*</span>
+                                        </label>
+                                        <input type="number" tabindex="3" class="form-control" id="ActivityCode" name="ActivityCode" placeholder="@Tax_Tech.Resources.Resource.TaxPayerActiCode" value="@_invoiceApiRepository.GetActivityCodes(Convert.ToInt16(Session["EntityID"]))" />
+                                    </div>
+                                </div>
+                            }
+                        }
+
+
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label class="control-label" for="OwnerID">
+                                        @Tax_Tech.Resources.Resource.Branch
+                                        <span class="req">*</span>
+                                    </label>
+                                    @if (branches != null)
+                                    {
+                                        @Html.DropDownList("OwnerID", new SelectList(branches, "BranchID", "BranchName"), Tax_Tech.Resources.Resource.Branch, new { @class = "select2 form-control form-control-lg select2-hidden-accessible", tabindex = "4" })
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="col-md-6" data-select2-id="20">
+                                <label class="control-label" for="VendorID">
+                                    @Tax_Tech.Resources.Resource.InvoiceTo
+                                    <span class="req">*</span>
+                                </label>
+                                <div class="invoice-customer">
+                                    @if (vendors != null)
+                                    {
+                                        <div class="form-group">
+                                            <input name="VendorName" type="text" class="form-control" id="autocomplete-input" placeholder="Type at least 3 characters" autocomplete="off" />
+                                        </div>
+                                    }
+                                </div>
+                                @*<div class="row" style="margin-top: 5px;">
+                                        <div class="col-md-6">
+                                            <a href="javascript:void(0);" onclick="getCreateVendorPopup()">@Tax_Tech.Resources.Resource.CreateVendor</a>
+                                        </div>
+                                    </div>*@
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="18">@Tax_Tech.Resources.Resource.CreateInvoice</button>
+                        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<link rel="stylesheet" href="~/Content/style/AutoComplete.css">
+<script src="~/Scripts/Custom/Invoice.js"></script>
+
+
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+    var dateTimePickr = $('.flatpickr-date-time');
+    if (dateTimePickr.length) {
+        dateTimePickr.flatpickr({
+            enableTime: true
+        });
+    }
+</script>
+

@@ -1,0 +1,106 @@
+﻿@model List<Tax_Tech.Areas.Configuration.ViewModels.UserAccountsViewModel>
+<div>@Html.Partial("_Result")</div>
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.DisplayName</th>
+            <th>@Tax_Tech.Resources.Resource.Username</th>
+            <th>@Tax_Tech.Resources.Resource.Role</th>
+            <th>@Tax_Tech.Resources.Resource.Entity</th>
+            <th>@Tax_Tech.Resources.Resource.Status</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                      
+                        <td style="width: 25% !important;word-break: break-all !important;">
+                            <span>@item.DisplayName</span>
+                        </td>
+                        <td style="width: 25% !important;">
+                            <span>@item.Username</span>
+                        </td> 
+                        <td>
+                            <span>@item.RoleTitle</span>
+                        </td>
+                        <td>
+                            <span>@item.EntityTitle</span>
+                        </td>
+                        @if (item.IsActive)
+                        {
+                            <td>@Tax_Tech.Resources.Resource.Active</td>
+
+                        }
+                        else
+                        {
+                            <td>@Tax_Tech.Resources.Resource.Suspended</td>
+                        }
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="getEditAccountPopup(@item.UserID)">
+                                        <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0)" onclick="getResetPasswordPopup(@item.UserID)">
+                                        <span>@Tax_Tech.Resources.Resource.ResetPassword</span>
+                                    </a>
+                                     @*@Ajax.ActionLink(Tax_Tech.Resources.Resource.ResetChangePassword, "ResetChangePassword", "Accounts", new { area = "Configuration", id = item.UserID }, new AjaxOptions
+    {
+        UpdateTargetId = "list",
+        //OnBegin = "ShowProgress",
+        InsertionMode = InsertionMode.Replace,
+        HttpMethod = "POST" 
+    }, new { @class = "dropdown-item" })*@
+
+
+                                    @if (item.IsActive)
+    {
+                                @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetAsSuspended, "SetActivationStatus", "Accounts", new { area = "Configuration", id = item.UserID, status = false }, new AjaxOptions
+{
+    UpdateTargetId = "list",
+    //OnBegin = "ShowProgress",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST",
+    Confirm = Tax_Tech.Resources.Resource.AreyouSureYouWantToSetThisAcctoSuspend
+}, new { @class = "dropdown-item" })
+}
+else
+{
+                                @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetAsActive, "SetActivationStatus", "Accounts", new { area = "Configuration", id = item.UserID, status = true }, new AjaxOptions
+{
+    UpdateTargetId = "list",
+    // OnBegin = "ShowProgress",
+    InsertionMode = InsertionMode.Replace,
+    HttpMethod = "POST"
+}, new { @class = "dropdown-item" })
+
+
+}
+
+                                </div>
+                            </div>
+
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="6">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

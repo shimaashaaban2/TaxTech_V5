@@ -1,0 +1,21 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.Summary;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row mt-2">
+    <div class="col-md-12" id="list">
+        <div class="my-3 d-flex justify-content-center">
+            <span class="my-2 spinner-border"></span>
+        </div>
+    </div>
+</div>
+
+
+<script src="~/Scripts/Custom/JobQueueLog.js"></script>
+<script>
+    window.addEventListener('load', function () {
+        getJobQueueLogDetails('@ViewBag.JobID');
+    });
+</script>

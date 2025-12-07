@@ -1,0 +1,58 @@
+﻿@model List<Tax_Tech.ApiModels.DocumentActionLog>
+
+
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.ActionLog</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="docActionLogModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="docActionLogModalErr">
+                @if (ViewBag.ErrorMsg != null)
+                {
+                    <div class="alert alert-danger">
+                        @ViewBag.ErrorMsg
+                    </div>
+                }
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-responsive">
+                    <thead>
+                        <tr>
+                            <th>@Tax_Tech.Resources.Resource.Status</th>
+                            <th>@Tax_Tech.Resources.Resource.ProcessDate</th>
+                            <th>@Tax_Tech.Resources.Resource.ProcessMessage</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null)
+                        {
+                            if (Model.Count > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>@item.ProcessStatusTitle</td>
+                                        <td>@item.ProcessDate</td>
+                                        <td>@item.ProcessMessage</td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="6" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                                </tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,37 @@
+﻿@model List<Tax_Tech.ViewModels.InvoiceLineViewModel>
+
+<style>
+    .tooltip.show div div {
+        text-align: left !important;
+    }
+</style>
+
+@if (Model != null && Model.Count > 0)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Code: </span>@item.ItemCode</div>
+                <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ERPID: </span>@item.ItemERPID</div>
+            </td>
+            <td>
+                <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Name: </span>@item.ItemName</div>
+                <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Desc: </span>@item.Description</div>
+            </td>
+            <td>@item.Quantity</td>
+            <td rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="<div><div>@Tax_Tech.Resources.Resource.Currency: @item.CurrencyCode</div><div>@Tax_Tech.Resources.Resource.ExchangeRate: @item.CurrencyExchangeRate</div><div>@Tax_Tech.Resources.Resource.UnitinEGP: @item.UnitInEGP</div></div>">
+                @item.AmountSold
+            </td>
+            <td rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="<div><div>@Tax_Tech.Resources.Resource.TotalSales: @item.SalesTotal</div><div>@Tax_Tech.Resources.Resource.ItemDiscount: @item.ItemsDiscount</div></div>">@item.NetTotal</td>
+            <td>@item.ItemTaxTotal</td>
+            <td>@item.Total</td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="7" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+    </tr>
+}

@@ -1,0 +1,71 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+</head>
+
+<body>
+    <div>
+        <button onclick="getCloseJobV2(1,3,1)" class="btn btn-primary">Send File</button>
+    </div>
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $("#sendFileBtn").click(function () {
+            $.ajax({
+                url: '@Url.Action("GenerateInvoice", "SendingFile")',
+                type: "POST",
+                data: {
+                    DocumentId: 123,   // example values, replace with your requestDto data
+                    PhoneNumber: "201234567890"
+                },
+                success: function (response) {
+                    if (response && response.success) {
+                        toastr.success("✅ File sent successfully via WhatsApp!");
+                    } else {
+                        toastr.warning("⚠ Something went wrong: " + (response.message || "Unknown error"));
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error("❌ Failed to send file: " + error);
+                }
+            });
+        });
+    });
+    function getCloseJobV2(sessionId, jobStatus, createdBy) {
+        var jobQueue = {
+            sessionId: sessionId,
+            jobStatus: jobStatus,
+            createdBy: createdBy
+        };
+
+        $.ajax({
+            url: '/JobQueueV2/ChangeJobStatus',
+            type: 'PUT',
+            data: JSON.stringify(jobQueue),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                console.log(response);
+                if (response.success) {
+                    alert('Success: ' + response.data);
+                } else {
+                    alert('Error: ' + response.message);
+                }
+            },
+            error: function (xhr) {
+                alert('Request failed: ' + xhr.statusText);
+            }
+        });
+    }
+</script>

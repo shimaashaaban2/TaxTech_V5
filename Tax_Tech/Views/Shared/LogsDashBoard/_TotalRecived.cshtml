@@ -1,0 +1,122 @@
+﻿@model  Tax_Tech.Models.TotalsReceivedViewModel
+
+<div class="card-header">
+    <h2 class="">@Tax_Tech.Resources.Resource.RecivedSummary</h2>
+</div>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-4">
+            <ul class="timeline">
+                @foreach (var totals in Model.totalReceiveds)
+                {
+
+                    <li class="timeline-item">
+                        <span class="timeline-point timeline-point-indicator"></span>
+                        <div class="timeline-event">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                <h3>@Tax_Tech.Resources.Resource.Received</h3>
+
+                            </div>
+                            <h4> <span class="text-primary" style="font-weight: bold; font-size: 16px;">@Tax_Tech.Resources.Resource.ReceivedRequest:</span>  <span style="font-size: 20px;">@totals.CountOfRecived</span></h4>
+                            <h5 class="mt-1"> <span class="fw-bold text-info" style="font-weight: bold; font-size: 16px;">@Tax_Tech.Resources.Resource.CreatedDocs:</span> <span style="font-size:20px;">@totals.CountOfAccepted</span> </h5>
+                            <div class="mt-1">
+                                <p><span class="text-warning" style="font-size: 16px;">@Tax_Tech.Resources.Resource.Billing:</span>  <span style="font-size:20px;">@totals.CountOfAcceptedFromBiling</span></p>
+                                <p><span class="text-success" style="font-size: 16px;">@Tax_Tech.Resources.Resource.WinCash:</span>   <span style="font-size:20px;">@totals.CountOfAcceptedFromWincash</span></p>
+                                <p><span class="text-danger" style="font-size: 16px;">@Tax_Tech.Resources.Resource.Recovery:</span>   <span style="font-size:20px;">@totals.CountOfRecovery</span></p>
+                            </div>
+                        </div>
+                    </li>
+
+                }
+            </ul>
+        </div>
+        <div class="col-4">
+            <ul class="timeline">
+                @foreach (var process in Model.processingSummery)
+                {
+                    <li class="timeline-item">
+                        <span class="timeline-point timeline-point-warning timeline-point-indicator"></span>
+                        <div class="timeline-event">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                <h3>@Tax_Tech.Resources.Resource.Processing</h3>
+                                @*<span class="timeline-event-time">45 min ago</span>*@
+                            </div>
+
+                            <div>
+                                <div class="media-body ml-50">
+                                    <p style="font-size: 20px;"><span class="text-info">@Tax_Tech.Resources.Resource.Normalize: </span>    @process.CountOfNormalizFail</p>
+                                    <p style="font-size: 20px;"><span class="text-success">@Tax_Tech.Resources.Resource.Submitted:</span>  @process.CountOfSubmited</p>
+                                    <p style="font-size: 20px;"><span class="text-warning">@Tax_Tech.Resources.Resource.Pending:</span>    @process.CountOfPending</p>
+                                    <p style="font-size: 20px;"><span class="text-danger">@Tax_Tech.Resources.Resource.FailToSubmit:</span>  @process.CountOfFailToSubmit</p>
+                                    <p style="font-size: 20px;"><span class="text-warning">@Tax_Tech.Resources.Resource.PendingRecovery:</span> </p>
+                                </div>
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div class="col-4">
+            <ul class="timeline">
+
+                @foreach (var result in Model.resultSummeries)
+                {
+                    <li class="timeline-item">
+                        <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                        <div class="timeline-event">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                @*<h3>@Tax_Tech.Resources.Resource.Result</h3>*@
+                                <p style="font-size: 20px;"><span class="text-primary">@result.EReceiptStatus:</span>   @result.CountORecored 
+                                @{ if (result.IsWaiting=="1")
+                                    {
+                                        <button type="button" class="btn btn-icon btn-info waves-effect waves-float waves-light" onclick="ResetResult()">
+                                            <i data-feather='refresh-ccw'></i>
+                                        </button>
+                                    }}
+                                </p>
+                            </div>
+                            <div>
+                                @*  <p style="font-size: 20px;"><span class="text-primary">@result.EReceiptStatus:</span>   @result.CountORecored </p>*@
+                            </div>
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+    </div>
+
+}
+<!--<ul class="timeline row">-->
+@*<p class="mb-50">Click the button below to read financial reports</p>
+    <button class="btn btn-outline-primary btn-sm" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample">
+        Show Report
+    </button>
+    <div class="collapse" id="collapseExample">
+        <ul class="list-group list-group-flush mt-1">
+            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                <span>Last Year's Profit : <span class="font-weight-bold">$20000</span></span>
+                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+            </li>
+            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                <span> This Year's Profit : <span class="font-weight-bold">$25000</span></span>
+                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+            </li>
+            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                <span> Last Year's Commission : <span class="font-weight-bold">$5000</span></span>
+                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+            </li>
+            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                <span> This Year's Commission : <span class="font-weight-bold">$7000</span></span>
+                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+            </li>
+            <li class="list-group-item d-flex justify-content-between flex-wrap">
+                <span> This Year's Total Balance : <span class="font-weight-bold">$70000</span></span>
+                <i data-feather="share-2" class="cursor-pointer font-medium-2"></i>
+            </li>
+        </ul>
+    </div>*@
+
+
+<!--</ul>-->

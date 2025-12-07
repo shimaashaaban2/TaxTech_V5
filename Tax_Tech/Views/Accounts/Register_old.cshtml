@@ -1,0 +1,81 @@
+﻿@using Tax_Tech.Helpers;
+@using Tax_Tech.Classes;
+@{
+    ViewBag.Title = "Register";
+    Layout = "~/Views/Shared/_LayoutLogin.cshtml";
+    SelectList EntitiesList = LookupsHelper.GetLookups().EntitiesList(null);
+}
+
+<div class="col-12 col-sm-8 col-md-6 col-lg-12 px-xl-2 mx-auto">
+    <h4 class="card-title mb-1">@Tax_Tech.Resources.Resource.AdventureStartHere 🚀</h4>
+    @using (Ajax.BeginForm("Register", "Accounts",
+        new AjaxOptions
+        {
+            HttpMethod = "POST",
+            UpdateTargetId = "msg",
+            InsertionMode = InsertionMode.Replace,
+            OnSuccess = "success",
+            OnBegin = "ShowLoading(1)",
+            OnComplete = "HideLoading(1)",
+
+        }, new { @class = "auth-register-form mt-2" }))
+    {
+        <div id="msg"></div>
+
+        <div class="form-group">
+            <label class="form-label" for="username">@Tax_Tech.Resources.Resource.Username<span class="text-danger">*</span></label>
+            <input class="form-control" id="username" type="text" name="username" placeholder="@Tax_Tech.Resources.Resource.Username" aria-describedby="username" autofocus="" tabindex="1" />
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="login-username">@Tax_Tech.Resources.Resource.Entity<span class="text-danger">*</span></label>
+            @if (EntitiesList != null)
+            {
+                @Html.DropDownList("EntityId", LookupsHelper.GetLookups().EntitiesList(null) as SelectList, Tax_Tech.Resources.Resource.Entity,
+                     new
+                     {
+                         @class = "select2 form-control",
+                         @style = "width  100%;"
+                     })
+            }
+            else
+            {
+                <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+            }
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="DisplayName">@Tax_Tech.Resources.Resource.DisplayName<span class="text-danger">*</span> </label>
+            <input class="form-control" id="DisplayName" type="text" name="DisplayName" placeholder="@Tax_Tech.Resources.Resource.DisplayName" aria-describedby="username" autofocus="" tabindex="1" />
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="email">@Tax_Tech.Resources.Resource.Email<span class="text-danger">*</span> </label>
+            <input class="form-control" id="email" type="text" name="email" placeholder="@Tax_Tech.Resources.Resource.Email" aria-describedby="email" tabindex="2" />
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="password">@Tax_Tech.Resources.Resource.Password<span class="text-danger">*</span> </label>
+            <div class="input-group input-group-merge form-password-toggle">
+                <input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="············" aria-describedby="password" tabindex="3" />
+                <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="form-label" for="Confirmpassword">@Tax_Tech.Resources.Resource.ConfirmPassword<span class="text-danger">*</span> </label>
+            <div class="input-group input-group-merge form-password-toggle">
+                <input class="form-control form-control-merge" id="Confirmpassword" type="password" name="Confirmpassword" placeholder="············" aria-describedby="password" tabindex="3" />
+                <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
+            </div>
+        </div>
+        @*<div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input class="custom-control-input" id="register-privacy-policy" type="checkbox" tabindex="4" />
+                    <label class="custom-control-label" for="register-privacy-policy">I agree to<a href="javascript:void(0);">&nbsp;privacy policy & terms</a></label>
+                </div>
+            </div>*@
+        <button type="submit" class="btn btn-primary btn-block" tabindex="4" id="subBtn-1">@Tax_Tech.Resources.Resource.CreateNewAccount</button>
+        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+        </button>
+
+    }
+    <p class="text-center mt-2"><span>@Tax_Tech.Resources.Resource.AlreadyHaveanAccount</span><a href="@Url.Action("Login","Accounts")"><span>&nbsp;@Tax_Tech.Resources.Resource.Login</span></a></p>
+</div>

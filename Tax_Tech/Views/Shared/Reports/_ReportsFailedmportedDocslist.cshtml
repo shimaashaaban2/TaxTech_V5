@@ -1,0 +1,46 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueueDetails>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-responsive-xl table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.InvoiceInternalID</th>
+            <th>@Tax_Tech.Resources.Resource.Date</th>
+            <th>@Tax_Tech.Resources.Resource.ImportResult</th>
+            <th>@Tax_Tech.Resources.Resource.RowIndex</th>
+            <th>@Tax_Tech.Resources.Resource.SheetName</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.DocID</td>
+                        <td>@item.DocDate</td>
+                        <td style="font-weight: bold;color: red;">
+                            @item.ImportResult
+                        </td>
+                        <td>
+                            @item.ExcelRowIndex
+                        </td>
+                        <td>
+                            @item.ExcelSheetName
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="5">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>

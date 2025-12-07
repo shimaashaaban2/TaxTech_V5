@@ -1,0 +1,33 @@
+﻿@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.JobInvoices;
+    long JobID = Convert.ToInt64(ViewBag.JobID);
+}
+<div class="row">
+    <div class="col-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="form-group col-md-3">
+                        <input id="jobvalue" value="@JobID" hidden />
+
+                        <button class="btn btn-primary col-md-12" onclick="CancelSelected()" id="CancelSelectedInvoices" disabled type="button">@Tax_Tech.Resources.Resource.Invoicestobecancelled</button>
+                    </div>
+                </div>
+                <div id="errMsg"></div>
+                <div class="my-3">
+                    <div id="list">
+                        <h4 class="text-center"></h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Custom/Invoice.js"></script>
+<script src="~/Scripts/Custom/JobInvoies.js"></script>
+<script>
+    window.addEventListener('load', function () {
+        getMasterReport('@ViewBag.JobID')
+    });
+
+</script>

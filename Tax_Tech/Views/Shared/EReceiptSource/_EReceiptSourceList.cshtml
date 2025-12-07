@@ -1,0 +1,83 @@
+﻿@model Tax_Tech.ApiModels.EReceiptSourceListModel
+
+@{
+    int pageSize = 50;
+    int totalPages = (int)Math.Ceiling((double)Model.totalCount / pageSize);
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int maxPagesToShow = 10;
+    int startPage = ((currentPage - 1) / maxPagesToShow) * maxPagesToShow + 1;
+    int endPage = Math.Min(startPage + maxPagesToShow - 1, totalPages);
+}
+
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+
+<script>
+
+
+    $(document).ready(function () {
+        var pageNo = parseInt(localStorage.getItem("pageNo")) || 1;
+        var pageSize = 50;
+        var startNo = (pageNo - 1) * pageSize;
+
+        // REMOVE or COMMENT OUT this part - it's overwriting your EReceipt IDs
+        // $("#thebasic-datatable tbody tr").each(function (index) {
+        //     var rowNo = startNo + index + 1;
+        //     $(this).find("td:first").text(rowNo); // This overwrites EReceipt ID
+        // });
+    });
+</script>
+
+<table class="table table-striped table-responsive table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th width="10%">EReceipt ID</th>
+            <th width="10%">Date Time Issued</th>
+            <th width="10%">Receipt Type</th>
+            <th width="10%">EReceiptSource</th>
+            <th width="10%">Source</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.totalCount == 0)
+        {
+            <tr>
+                <td colspan="10">
+                    <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                </td>
+            </tr>
+        }
+        @foreach (var item in Model.Data)
+        {
+            <tr>
+                <td width="10%">@item.eReceiptID</td>
+                <td width="10%">@item.dateTimeIssued</td>
+                <td width="10%">@item.receiptType</td>
+                <td width="10%">@item.eReceiptSource</td>
+                <td width="10%">@item.source</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<ul class="pagination mt-2" id="pagination-controls">
+    @if (startPage > 1)
+    {
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" onclick="GetErectPageNo(@(startPage - 1))">« Prev</a>
+        </li>
+    }
+
+    @for (var i = startPage; i <= endPage; i++)
+    {
+        <li class="page-item @(i == currentPage ? "active" : "")">
+            <a class="page-link" href="javascript:void(0)" onclick="GetErectPageNo(@i)">@i</a>
+        </li>
+    }
+
+    @if (endPage < totalPages)
+    {
+        <li class="page-item">
+            <a class="page-link" href="javascript:void(0)" onclick="GetErectPageNo(@(endPage + 1))">Next »</a>
+        </li>
+    }
+</ul>

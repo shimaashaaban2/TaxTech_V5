@@ -1,0 +1,67 @@
+﻿@{
+    string docType = ViewBag.DocType;
+    string actionName = "FilterDocsByInternalID";
+    string controller = "Invoice";
+
+    if (docType == "1")
+    {
+        actionName = "FilterInvoicesByInternalID";
+    }
+    else if(docType == "2")
+    {
+        actionName = "FilterCreditNotesByInternalID";
+        controller = "CreditNote";
+    }
+    else if(docType == "3")
+    {
+        actionName = "FilterDebitNotesByInternalID";
+        controller = "DebitNote";
+    }
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.SearchByInternalID</h4>
+                <button type="button" class="close" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="PopupMsg"></div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm(actionName, new { controller = controller, area = "" },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "ShowLoading(1)",
+                            OnComplete = "showPopUpResult"
+                        }, new
+                        {
+                            @class = "form-horizontal"
+                        }))
+                {
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label" for="internalID">@Tax_Tech.Resources.Resource.InternalID</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.InternalID" name="internalID" id="internalID" tabindex="1" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="7">@Tax_Tech.Resources.Resource.Search</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,744 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>DEFC.Util.DataValidation</name>
+    </assembly>
+    <members>
+        <member name="T:DEFC.Util.DataValidation.Comparison">
+            <summary>
+            To compare a value with other values 
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Decimal,System.Decimal,System.Decimal)">
+            <summary>Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong>A decimal value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong>A decimal value that represents the maximum measurement value.
+             </summary>  
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>         
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Int32,System.Int32,System.Int32)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A int to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A int value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A int value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Byte,System.Byte,System.Byte)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A byte to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A byte value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A byte value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Double,System.Double,System.Double)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A double to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A double value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A double value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Int64,System.Int64,System.Int64)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A long to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A long value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A long value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Int16,System.Int16,System.Int16)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A short to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A short value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A short value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.Single,System.Single,System.Single)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A float to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A float value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A float value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetween(System.DateTime,System.DateTime,System.DateTime)">
+             <summary>
+                 Determines whether the value is between two values.
+            <br/><strong>valueToCheck:</strong> A dateTime to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A dateTime value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A dateTime value that represents the maximum measurement value.
+             </summary> 
+            <returns>true if the value of the valueToCheck parameter is a value between minValue and maxValue; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Decimal,System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A decimal to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A decimal value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A decimal value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Int32,System.Int32,System.Int32)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A int to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A int value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A int value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Byte,System.Byte,System.Byte)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A byte to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A byte value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A byte value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Double,System.Double,System.Double)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A double to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A double value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A double value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Int64,System.Int64,System.Int64)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A long to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A long value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A long value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Int16,System.Int16,System.Int16)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A short to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A short value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A short value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.Single,System.Single,System.Single)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A float to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A float value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A float value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsBetweenOrEqual(System.DateTime,System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is between two values or it is equal to one of them.
+            <br/><strong>valueToCheck:</strong> A dateTime to compare with the minValue and the maxValue.
+            <br/><strong>minValue:</strong> A dateTime value that represents the minimum measurement value.
+            <br/><strong>maxValue:</strong> A dateTime value that represents the maximum measurement value.
+             </summary> 
+            <returns> true if the value of the valueToCheck parameter is a value between minValue and maxValue or it is equal to one of them;otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A decimal value that will be compared to. </strong>
+             </summary> 
+            <returns> true if the both given values are equivalent to each other; otherwise, false.</returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Int32,System.Int32)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A int to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A int value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Byte,System.Byte)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A byte to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A byte value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Double,System.Double)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A double to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A double value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Int64,System.Int64)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A long to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A long value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Int16,System.Int16)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A short to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A short value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.Single,System.Single)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A float to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A float value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A dateTime to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:A dateTime value that will be compared to. </strong>
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsEqual(System.String,System.String)">
+             <summary>Determines whether the value is equal to another.
+            <br/><strong>valueToCheck:</strong>A string to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A string value that will be compared to. 
+             </summary> 
+            <returns>true if the both given values are equivalent to each other; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A decimal value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Int32,System.Int32)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A int to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A int value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Byte,System.Byte)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A byte to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A byte value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Double,System.Double)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A double to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A double value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Int64,System.Int64)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A long to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A long value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Int16,System.Int16)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A short to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A short value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.Single,System.Single)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A float to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A float value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThan(System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is greater than another.
+            <br/><strong>valueToCheck:</strong>A dateTime to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A dateTime value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A decimal value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Int32,System.Int32)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A int to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A int value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Byte,System.Byte)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A byte to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A byte value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Double,System.Double)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A double to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A double value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Int64,System.Int64)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A long to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A long value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Int16,System.Int16)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A short to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A short value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.Single,System.Single)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A float to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A float value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsGreaterThanOrEqual(System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is greater than or equal to another.
+            <br/><strong>valueToCheck:</strong>A dateTime to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A dateTime value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is greater than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A decimal value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Int32,System.Int32)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A int to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A int value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Byte,System.Byte)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A byte to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A byte value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Double,System.Double)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A double to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A double value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Int64,System.Int64)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A long to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A long value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Int16,System.Int16)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A short to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A short value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.Single,System.Single)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A float to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A float value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThan(System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is Less than another.
+            <br/><strong>valueToCheck:</strong>A dateTime to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A dateTime value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Decimal,System.Decimal)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A decimal to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A decimal value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Int32,System.Int32)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A int to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A int value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Byte,System.Byte)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A byte to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A byte value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Double,System.Double)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A double to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A double value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Int64,System.Int64)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A long to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A long value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Int16,System.Int16)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A short to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A short value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.Single,System.Single)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A float to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A float value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Comparison.IsLessThanOrEqual(System.DateTime,System.DateTime)">
+             <summary>Determines whether the value is Less than or equal to another.
+            <br/><strong>valueToCheck:</strong>A dateTime to compare with comparisonValue parameter.
+            <br/><strong>comparisonValue:</strong>A dateTime value that will be compared to.
+             </summary> 
+            <returns>true if the both given values are equivalent to each other or valueToCheck is Less than comparisonValue; otherwise, false. </returns>  
+            
+        </member>
+        <member name="T:DEFC.Util.DataValidation.DataType">
+            <summary>
+            To validate value data type
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsNullOrEmptyOrWhiteSpace(System.String)">
+            <summary>Indicates whether a specified string is null, empty, or consists only of white-space  characters.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is null, empty, or consists only of white-space  characters; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsAlphanumeric(System.String)">
+            <summary>Indicates whether a specified string is an alphanumeric.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is alphanumeric; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsAlpha(System.String)">
+            <summary>Indicates whether a specified string is an alphabet.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is alphabet; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsGUID(System.String)">
+            <summary>Indicates whether a specified string is a guid.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is guid; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsBase64(System.String)">
+            <summary>Indicates whether a specified string is a base64.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is base64; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsEmail(System.String)">
+            <summary>Indicates whether a specified string is an email.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is email; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsURL(System.String)">
+            <summary>Indicates whether a specified string is a URi.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is URi; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsDateTime(System.String)">
+            <summary>Indicates whether a specified string is a datetime.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is datetime; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsNumber(System.String)">
+            <summary>Indicates whether a specified string is a number.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is number; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsByte(System.String)">
+            <summary>Indicates whether a specified string is a byte.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is byte; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsShort(System.String)">
+            <summary>Indicates whether a specified string is a short.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is short; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsInt(System.String)">
+            <summary>Indicates whether a specified string is a int.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is int; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsLong(System.String)">
+            <summary>Indicates whether a specified string is a long.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is long; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsDecimal(System.String)">
+            <summary>Indicates whether a specified string is a decimal.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is decimal; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsDouble(System.String)">
+            <summary>Indicates whether a specified string is a double.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is double; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsFloat(System.String)">
+            <summary>Indicates whether a specified string is a float.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is float; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsIPv4(System.String)">
+            <summary>Indicates whether a specified string is a IPv4.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is IPv4; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsIPv6(System.String)">
+            <summary>Indicates whether a specified string is a IPv6.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is IPv6; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsIP(System.String)">
+            <summary>Indicates whether a specified string is a IPv4 or IPv6.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is IPv4 or IPv6; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsMACAddress(System.String)">
+            <summary>Indicates whether a specified string is a MAC address.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is MAC address; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.DataType.IsLatitudeLongitude(System.String)">
+            <summary>Indicates whether a specified string is latitude and longitude.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is latitude and longitude; otherwise, false.</returns>           
+        </member>
+        <member name="T:DEFC.Util.DataValidation.Math">
+            <summary>
+            To make some mathematic validates to a value
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Math.IsZero(System.Double)">
+            <summary>Indicates whether a specified value is zero.
+            <br/><strong>value: A double the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is Zero; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Math.IsPositive(System.Double)">
+            <summary>Indicates whether a specified value is Positive.
+            <br/><strong>value: A double the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is Positive; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Math.IsNegative(System.Double)">
+            <summary>Indicates whether a specified value is Negative.
+            <br/><strong>value: A double the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is Negative; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Math.IsEven(System.Double)">
+            <summary>Indicates whether a specified value is Even.
+            <br/><strong>value: A double the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is Even; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Math.IsOdd(System.Double)">
+            <summary>Indicates whether a specified value is Odd.
+            <br/><strong>value: A double the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value is Odd; otherwise, false.</returns>  
+        </member>
+        <member name="T:DEFC.Util.DataValidation.Password">
+            <summary>
+            To check password validation
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Password.IsMatch(System.String,System.String)">
+            <summary>Determines whether the password  is same as the confirmed password.
+            <br/><strong>password:</strong>A string represents the password that will be checked.
+            <br/><strong>confirmPassword:</strong>A string represents the confirm password that will be checked with.
+             </summary>  
+            <returns>true if the password  is same as confirm password; otherwise, false.</returns>  
+        </member>
+        <member name="M:DEFC.Util.DataValidation.Password.ValidatRules(DEFC.Util.DataValidation.PasswordRules)">
+            <summary>
+            Validate password based on some rules specified by passwordData class
+            </summary>
+            <param name="passwordData">a class hass a list of rules available in the method </param>
+            <returns>true if the password is valid based on password rules entered</returns>
+        </member>
+        <member name="T:DEFC.Util.DataValidation.PasswordRules">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.Password">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.symbols">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.passwordMinLength">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.HasLower">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.HasUpper">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.HasSymbols">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.HasDigit">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="P:DEFC.Util.DataValidation.PasswordRules.HasLength">
+            <summary>
+            
+            </summary>
+        </member>
+        <member name="T:DEFC.Util.DataValidation.RegularExpression">
+            <summary>
+            To match a value with a Regular Expression
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.RegularExpression.IsMatch(System.String,System.Text.RegularExpressions.Regex)">
+            <summary>Validating the a string according to a regular expression.
+            <br/><strong>value:</strong>A string represents the value that will be checked.
+            <br/><strong>regex:</strong>A Regular expression that will be used to validate the value.
+             </summary>  
+            <returns>true if the value is meeting the regular expression condition; otherwise, false.</returns>  
+        </member>
+        <member name="T:DEFC.Util.DataValidation.SQLInjection">
+            <summary>
+            To check if a value has a isSQL Injection word or a sign
+            </summary>
+        </member>
+        <member name="M:DEFC.Util.DataValidation.SQLInjection.IsExists(System.String)">
+            <summary>Indicates whether a string has a SQL injection.
+            <br/><strong>value: A string the value to be checked.</strong>
+             </summary>  
+            <returns>true if the value has a SQL injection; otherwise, false.</returns>  
+        </member>
+    </members>
+</doc>

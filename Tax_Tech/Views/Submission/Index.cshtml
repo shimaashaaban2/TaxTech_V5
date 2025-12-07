@@ -1,0 +1,50 @@
+﻿
+@{
+    ViewBag.Title = @Tax_Tech.Resources.Resource.SubmissionLog;
+}
+<input type="hidden" value="1" id="Hlog" />
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row  form-group">
+                        <div class="col-12">
+                            <div class="dt-action-buttons text-left">
+
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        <span id="filterTxt">@Tax_Tech.Resources.Resource.Search</span>
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" onclick="ShowFilterForm('Sub-log-InternalID', '@Tax_Tech.Resources.Resource.InternalID',3)" href="javascript:void(0);"> @Tax_Tech.Resources.Resource.InternalID</a>
+                                        <a class="dropdown-item" onclick="ShowFilterForm('Sub-log-FilterDate', '@Tax_Tech.Resources.Resource.Date',4)" href="javascript:void(0);"> @Tax_Tech.Resources.Resource.Date</a>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div id="main-err"></div>
+                        </div>
+                    </div>
+                    <div class="row form-group">
+                        <div class="col-12">
+                            <div id="frm"> </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body" id="list" style="overflow-x: auto">
+                    <h4 class="text-center my-4">@Tax_Tech.Resources.Resource.SearchForLog</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+ <script src="~/Scripts/Custom/SubmissionLog.js"></script>
+<script src="~/Areas/Configuration/Scripts/Custom/CustomToolbar.js"></script>

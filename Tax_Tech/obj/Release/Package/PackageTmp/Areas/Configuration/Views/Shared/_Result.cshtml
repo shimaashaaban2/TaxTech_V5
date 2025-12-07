@@ -1,0 +1,131 @@
+﻿@{
+    if (ViewBag.ScrollTop == "1")
+    {
+        <script>
+            ScrollTop();
+        </script>
+    }
+    if (ViewBag.ErrorLginMsg != null)
+    {
+        <input type="hidden" id="resType" value="0" />
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="fa fa-times"></i>  @ViewBag.ErrorLginMsg
+        </div>
+    }
+    if (ViewBag.ErrorMsg != null)
+    {
+
+        <input type="hidden" id="resType" value="0" />
+        <div class="alert alert-danger alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="fa fa-times"></i>  @ViewBag.ErrorMsg
+        </div>
+        if (ViewBag.ScrollTopHalf == "1")
+        {
+            <script>
+                ScrollTopHalf();
+            </script>
+        }
+
+        if (ViewBag.ScrollTop == "1")
+        {
+            <script>
+                ScrollTop();
+            </script>
+        }
+    }
+    if (ViewBag.SingleValid != null)
+    {
+
+        <input type="hidden" id="resType" value="1" />
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="glyphicon glyphicon-bell"></i>  @ViewBag.SingleValid
+        </div>
+        if (ViewBag.ScrollTopHalf == "1")
+        {
+            <script>
+                ScrollTopHalf();
+            </script>
+        }
+
+        if (ViewBag.ScrollTop == "1")
+        {
+            <script>
+                ScrollTop();
+            </script>
+        }
+    }
+    if (ViewBag.Validation != null)
+    {
+        if (ViewBag.StopLoader == 1)
+        {
+            <script>HideProgress();</script>
+        }
+        <input type="hidden" id="resType" value="1" />
+        <div class="alert alert-warning alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            @foreach (string error in ViewBag.Validation)
+            {
+                <i class="glyphicon glyphicon-bell"></i> @Html.Raw(error) <br />
+            }
+        </div>
+        if (ViewBag.ScrollTopHalf == "1")
+        {
+            <script>
+                ScrollTopHalf();
+            </script>
+        }
+
+        if (ViewBag.ScrollTop == "1")
+        {
+            <script>
+                ScrollTop();
+            </script>
+        }
+    }
+
+    if (ViewBag.Success != null)
+    {
+
+        <input type="hidden" id="resType" value="2" />
+        <span id="Res" class="hidden">Filled</span>
+        <div class="alert alert-success alert-dismissable">
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+            <i class="glyphicon glyphicon-check"></i> @ViewBag.Success
+        </div>
+        if (ViewBag.EnableSaveBtn != null)
+        {
+            <script>
+                disableBTN();
+            </script>
+        }
+
+        if (ViewBag.ScrollTopHalf == "1")
+        {
+            <script>
+                ScrollTopHalf();
+            </script>
+        }
+
+        if (ViewBag.ScrollTop == "1")
+        {
+            <script>
+                ScrollTop();
+            </script>
+        }
+    }
+
+    if (ViewBag.UploadStatus != null)
+    {
+        foreach (string status in ViewBag.UploadStatus)
+        {
+            <div class="col-md-12 text-success">
+                <h3> @Html.Raw(status)</h3>
+            </div>
+        }
+    }
+}
+ 
+<script src="~/Scripts/Custom/Public.js"></script>

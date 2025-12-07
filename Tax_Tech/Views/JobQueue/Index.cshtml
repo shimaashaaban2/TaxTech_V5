@@ -1,0 +1,134 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueue>
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.JobQueue;
+}
+
+
+@*<section id="basic-datatable">
+        <div class="row">
+            <div class="col-3">
+                <div class="card">
+
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label>@Tax_Tech.Resources.Resource.From</label>
+                                    <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12 form-group">
+                                    <label>@Tax_Tech.Resources.Resource.To</label>
+                                    <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class=" col-12 form-group">
+                                    <div class="form-check form-check-inline">
+                                        <input value="true" class="form-check-input" type="checkbox" name="Branches" id="Branches"  checked />
+                                        <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllBranches</label>
+                                    </div>
+                                    </div>
+                                    <div class="col-md-12 mb-1 form-group">
+                                        <select class="select2 form-control form-control-lg">
+                                            <option value="Branch">@Tax_Tech.Resources.Resource.Branches</option>
+                                            <option value="1">Eastern Egypt</option>
+                                            <option value="2">Vodefone Tele</option>
+                                            <option value="3">Orange Tele</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div class=" col-12 form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input value="true" class="form-check-input" type="checkbox" name="Status" id="Status" checked />
+                                            <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllStatuses</label>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-12 mb-1 form-group">
+                                            <select class="select2 form-control form-control-lg">
+                                                <option value="Status"> @Tax_Tech.Resources.Resource.Status</option>
+                                                <option value="1">Vaild</option>
+                                                <option value="2">Invaild</option>
+                                                <option value="3">Submitted</option>
+                                                <option value="4">cancelled</option>
+                                                <option value="5">Rejected</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                <div class="row">
+                                    <div class=" col-12 form-group">
+                                        <div class="form-check form-check-inline">
+                                            <input value="true" class="form-check-input" type="checkbox" name="JobType" id="JobType" checked />
+                                            <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllJobTypes</label>
+                                        </div>
+                                        </div>
+                                        <div class="col-md-12 mb-1 form-group">
+                                            <select class="select2 form-control form-control-lg">
+                                                <option value="Status"> @Tax_Tech.Resources.Resource.JobTypes</option>
+                                                <option value="1">Documents Import</option>
+                                                <option value="2">Items Import</option>
+                                                <option value="3">Customers Import</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-12">
+                                            <button type="button" class="btn btn-primary col-12" aria-haspopup="true" aria-expanded="false" id="filterDropDown">
+                                                @Tax_Tech.Resources.Resource.Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                </div>
+            </div>
+            <div class="col-md-9">
+                <div class="card">
+
+                        <div class="card-body mt-2 table responsive-table" id="JobQueueContainer" style="overflow-x: auto">
+                            <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                        </div>
+
+                </div>
+            </div>
+
+        </div>
+    </section>*@
+<section id="basic-datatable">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="dt-action-buttons text-left d-flex">
+
+                            @*<div class="btn-group" style="margin-left: 10px;">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" id="filterDropDown">
+                                    @Tax_Tech.Resources.Resource.Search
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="filterBy(event, '1')">@Tax_Tech.Resources.Resource.ByJobType</a>
+                                </div>
+                            </div>*@
+                                <div id="main-err"></div>
+                        </div>
+                        <div id="filterContainer" style="display: none;width: 40%;margin-top: 20px">
+                            <span class="text-center">@Tax_Tech.Resources.Resource.Loading...</span>
+                        </div>
+                    </div>
+
+                    <div class="card-body mt-2" id="JobQueueContainer" style="overflow-x: auto">
+                        <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </section>
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/JobQueue.js"></script>
+<script src="~/Scripts/Custom/JobQueueV2.js"></script>

@@ -1,0 +1,121 @@
+﻿@model List<Tax_Tech.ApiModels.InvoicingApi.RecentDocument>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-responsive-xl table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>UUID / Submission ID</th>
+            <th>@Tax_Tech.Resources.Resource.Details</th>
+            <th>@Tax_Tech.Resources.Resource.IssuerName</th>
+            <th>@Tax_Tech.Resources.Resource.Total</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <div>
+                                <span style="color: #2196F3;">UUID</span>:
+                                @item.UUID
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">Submission ID</span>:
+                                @item.SubmissionUUID
+                            </div>
+                            @if (item.Status.ToLower() == "valid")
+                            {
+                                <div>
+                                    <span class="badge badge-success">@item.Status</span>
+                                    <span>
+                                        <a href="@item.PublicUrl" target="_blank" class="badge badge-primary">@Tax_Tech.Resources.Resource.PublicURL</a>
+                                    </span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <span class="badge badge-danger">@item.Status</span>
+                                    <span>
+                                        <a href="@item.PublicUrl" target="_blank" class="badge badge-primary">@Tax_Tech.Resources.Resource.PublicURL</a>
+                                    </span>
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InternalID</span>: @item.InternalId</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssueDate</span>: @item.DateTimeIssued</div>
+
+                            @if (Request.Cookies != null && Request.Cookies["lang"] != null && Request.Cookies["lang"].Value.Contains("ar"))
+                            {
+                                <div>
+                                    <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InvoiceType</span>:
+                                    @(item.DocumentTypeNameSecondaryLang ?? item.DocumentTypeNamePrimaryLang)
+                                </div>
+                            }
+                            else
+                            {
+                                <div>
+                                    <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InvoiceType</span>:
+                                    @item.DocumentTypeNamePrimaryLang
+                                </div>
+                            }
+                        </td>
+                        <td>
+                            @item.IssuerName
+                        </td>
+                        <td style="width: 25% !important">
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TotalSales</span>:
+                                <span>@item.TotalSales</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Discount</span>:
+                                <span>@item.TotalDiscount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.NetAmount</span>:
+                                <span>@item.NetAmount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Total</span>:
+                                <span>@item.Total</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="@Url.Action("DownloadDocumentPdf", new { controller = "Invoice", area = "", uuid = item.UUID })" target="_blank">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-download"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                            <span>@Tax_Tech.Resources.Resource.DownloadAsPdf</span>
+                                        </a>
+                                    
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getCancelDocReasonPopup('@item.UUID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.CancelDoc</span>
+                                    </a>
+                                </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="8">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+<script src="~/Scripts/Custom/DownloadPDF.js"></script>

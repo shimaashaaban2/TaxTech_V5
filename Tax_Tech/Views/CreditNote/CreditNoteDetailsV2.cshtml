@@ -1,0 +1,261 @@
+﻿@model Tax_Tech.ViewModels.DocumentViewModel
+
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.CreditNote;
+    List<Tax_Tech.ViewModels.BranchViewModel> branches = ViewBag.Branches;
+    List<Tax_Tech.ViewModels.VendorViewModel> vendors = ViewBag.Vendors;
+    List<Tax_Tech.ApiModels.BankAccount> payments = ViewBag.Payments;
+
+    Tax_Tech.ApiModels.DocumentTotal docTotals = ViewBag.DocTotals;
+
+    // extracting the linked invoices values to calculate the count total
+    int count = 0;
+
+    if (!string.IsNullOrWhiteSpace(Model.LinkedInvoice))
+    {
+        count = Model.LinkedInvoice.Split(',').Count();
+    }
+}
+
+<div class="content-body" data-select2-id="13">
+
+    <section class="invoice-add-wrapper" data-select2-id="12">
+        <div class="col-12">
+            <div class="row invoice-add" data-select2-id="11">
+                <!-- Credit Note  Add Left starts -->
+                <div class="col-md-9" data-select2-id="10">
+                    <div class="card invoice-preview-card" data-select2-id="9">
+
+                        <div class="card-header">
+                            <h4 class="card-title">@Tax_Tech.Resources.Resource.CreditNoteBasicInfo</h4>
+                            <div class="heading-elements">
+                                <ul class="list-inline mb-0">
+                                    <li>
+                                        <a data-action="collapse" class=""><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Header starts -->
+                        <div class="card-content collapse show">
+
+                            @using (Ajax.BeginForm("UpdateCreditNoteHead", new { controller = "CreditNote", area = "", invoiceID = Model.DocumentID },
+                                new AjaxOptions
+                                {
+                                    UpdateTargetId = "PopupMsg",
+                                    InsertionMode = InsertionMode.Replace,
+                                    OnBegin = "ShowLoading(2)",
+                                    OnComplete = "showFormResult"
+                                }))
+                            {
+                                <div class="card-body">
+                                    <div id="result-msg"></div>
+                                    <div class="row">
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label" for="InvoiceInternalID">
+                                                @Tax_Tech.Resources.Resource.InvoiceInternalID
+                                                <span class="req">*</span>
+                                            </label>
+                                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.InvoiceInternalID" name="InvoiceInternalIDHead" id="InvoiceInternalIDHead" tabindex="1" autofocus value="@Model.InternalID" />
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label" for="InvoiceIssueDate">
+                                                @Tax_Tech.Resources.Resource.InvoiceIssueDate
+                                                <span class="req">*</span>
+                                            </label>
+                                            <input tabindex="2" type="text" id="InvoiceIssueDate" name="InvoiceIssueDate" class="form-control flatpickr-date-time flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@(Convert.ToDateTime(Model.DateTimeIssued).ToString("yyyy-MM-dd"))">
+                                        </div>
+
+                                        <div class="form-group col-md-4">
+                                            <label class="control-label" for="ActivityCode">
+                                                @Tax_Tech.Resources.Resource.TaxPayerActiCode
+                                                <span class="req">*</span>
+                                            </label>
+                                            <input type="text" tabindex="3" class="form-control" id="ActivityCode" name="ActivityCode" placeholder="@Tax_Tech.Resources.Resource.TaxPayerActiCode" value="@Model.ActivityCode" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label" for="OwnerID">
+                                                    @Tax_Tech.Resources.Resource.Branch
+                                                    <span class="req">*</span>
+                                                </label>
+                                                @if (branches != null)
+                                                {
+                                                    @Html.DropDownList("OwnerID", new SelectList(branches, "BranchID", "BranchName", Model.OwnerID), Tax_Tech.Resources.Resource.Branch, new { @class = "select2 form-control form-control-lg select2-hidden-accessible", tabindex = "4" })
+                                                }
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6" data-select2-id="20">
+                                            <label class="control-label" for="VendorID">
+                                                @Tax_Tech.Resources.Resource.InvoiceTo
+                                                <span class="req">*</span>
+                                            </label>
+                                            <div class="invoice-customer">
+                                                @if (vendors != null)
+                                                {
+                                                    @Html.DropDownList("VendorID", new SelectList(vendors, "VendorID", "VendorName", Model.VendorID), Tax_Tech.Resources.Resource.InvoiceTo, new { @class = "select2 form-control form-control-md select2-hidden-accessible", tabindex = "5" })
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!--- newly added code -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label" for="PurchaseOrderReference">
+                                                    @Tax_Tech.Resources.Resource.PurchaseOrderReference
+                                                </label>
+                                                <input type="text" class="form-control" value="@Model.PurchaseOrderReference" name="PurchaseOrderReference" id="PurchaseOrderReference" placeholder="@Tax_Tech.Resources.Resource.PurchaseOrderReference" tabindex="6" />
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="control-label" for="PurchaseOrderDescription">
+                                                    @Tax_Tech.Resources.Resource.PurchaseOrderDescription
+                                                </label>
+                                                <textarea placeholder="@Tax_Tech.Resources.Resource.PurchaseOrderDescription" class="form-control" name="PurchaseOrderDescription" id="PurchaseOrderDescription" tabindex="7">@Model.PurchaseOrderDescription</textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label" for="SalesOrderReference">@Tax_Tech.Resources.Resource.SalesOrderReference</label>
+                                                <input type="text" class="form-control" name="SalesOrderReference" id="SalesOrderReference" value="@Model.SalesOrderReference" placeholder="@Tax_Tech.Resources.Resource.SalesOrderReference" tabindex="8" />
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="control-label" for="SalesOrderDescription">@Tax_Tech.Resources.Resource.SalesOrderDescription</label>
+                                                <textarea class="form-control" name="SalesOrderDescription" id="SalesOrderDescription" placeholder="@Tax_Tech.Resources.Resource.SalesOrderDescription" tabindex="9">@Model.SalesOrderDescription</textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group">
+                                                <label class="control-label" for="ProformaInvoiceNumber">@Tax_Tech.Resources.Resource.ProformaInvoiceNumber</label>
+                                                <input type="text" class="form-control" name="ProformaInvoiceNumber" id="ProformaInvoiceNumber" value="@Model.ProformaInvoiceNumber" placeholder="@Tax_Tech.Resources.Resource.ProformaInvoiceNumber" tabindex="10" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!--- end of newly added code -->
+
+                                    <div class="row">
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">@Tax_Tech.Resources.Resource.Status</label>
+                                            <input class="form-control" id="StatusTitleContainer" value="@Model.ProcessStatusTitle" readonly>
+                                        </div>
+
+                                        <div class="form-group col-md-6">
+                                            <label class="control-label">@Tax_Tech.Resources.Resource.UUID</label>
+                                            <input type="text" class="form-control" placeholder="UUID" readonly value="@Model.UUID" />
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="row m-1">
+                                    <div class="form-group col-md-12">
+                                        <button type="submit" class="btn btn-primary" tabindex="18" id="subBtn-2">@Tax_Tech.Resources.Resource.UpdateInvoice</button>
+                                        <div class="form-group">
+                                            <button id="loadBtn-2" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </div>
+                <!-- Credit Note  Add Left ends -->
+                <!-- Credit Note  Add Right starts -->
+                <div class="col-xl-3 col-md-4 col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <button type="button" class="btn btn-primary btn-block waves-effect" onclick="getGetInvoiceChangeStatusPopup('@Model.DocumentID')">@Tax_Tech.Resources.Resource.ChangeStatus</button>
+                            @*<button type="button" class="btn btn-primary btn-block waves-effect">Save</button>*@
+                            @*<button class="btn btn-primary btn-block mb-75 waves-effect waves-float waves-light" disabled="">Send Invoice</button>*@
+                            <a href="@Url.Action("Preview", new { controller = "CreditNote", area = "", creditId = $"{Model.DocumentID}"})" class="btn btn-outline-primary btn-block mb-75 waves-effect">@Tax_Tech.Resources.Resource.PreviewDoc</a>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        @*<p class="mb-50">Accept payments via</p>
+                            <select class="form-control">
+                                <option value="Bank Account">Bank Account</option>
+                                <option value="Paypal">Paypal</option>
+                                <option value="UPI Transfer">UPI Transfer</option>
+                            </select>*@
+                        <div class="invoice-terms mt-1">
+                            @*<div class="mt-2 card">
+                                    <div class="card-body">
+                                        <div>
+                                            <h5>Payment Terms</h5>
+                                            <input type="text" class="form-control invoice-edit-input" value="">
+                                        </div>
+                                    </div>
+                                </div>*@
+
+                            <div class="mt-2 card">
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <button class="btn btn-primary w-100" onclick="getCreditNotLinkedInvoicesPopup('@ViewBag.CreditNoteId')">
+                                                @Tax_Tech.Resources.Resource.LinkedInvoices (@count)
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-external-link"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mt-2 card">
+                                <div class="card-body" id="invoiceTotals">
+                                    @Html.Partial("Invoice/_DocumentTotals", docTotals)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Credit Note  Add Right ends -->
+            </div>
+
+        </div>
+
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body">
+                    <div class="source-item">
+                        <div id="items-container"></div>
+                        <div class="row mt-1">
+                            <div class="col-12 px-0">
+                                <button type="button" onclick="getCreateCreditLine('@Model.DocumentID')" class="btn btn-primary btn-sm btn-add-new waves-effect waves-float waves-light ml-1" data-repeater-create="">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-plus mr-25"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+                                    <span class="align-middle">@Tax_Tech.Resources.Resource.AddLine</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="list" class="mb-2 ml-2">
+                    <h4 class="text-center mt-2">@Tax_Tech.Resources.Resource.Loading...</h4>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</div>
+
+<script src="~/Scripts/Custom/Public.js"></script>
+<script src="~/Scripts/Custom/CreditNoteDetails.js"></script>
+<script>
+    window.addEventListener('load', function (e) {
+        getCreditNoteLines('@Model.DocumentID');
+    });
+</script>

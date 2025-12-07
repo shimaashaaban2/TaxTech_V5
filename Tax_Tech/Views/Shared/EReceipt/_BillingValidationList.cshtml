@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.BillingValidationLogModel>
+
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="content-body col-md-12">
+            <div class="card">
+                <div class="card-datatable">
+                    <table class="datatables-basic table table-striped table-responsive-lg table-bordered" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+
+                                <th>@Tax_Tech.Resources.Resource.CustomerCode</th>
+                                <th>@Tax_Tech.Resources.Resource.InvoiceDate</th>
+                                <th>@Tax_Tech.Resources.Resource.Invoice</th>
+                                <th>@Tax_Tech.Resources.Resource.TMCODE</th>
+                                <th>@Tax_Tech.Resources.Resource.Amount</th>
+                                @*<th>GROSS AMOUNT</th>
+                                <th>DISC AMOUNT</th>*@
+                            <th>@Tax_Tech.Resources.Resource.ResultMsg</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @*<td>@item.LogID</td>*@
+                                        <td>@item.CUSTCODE</td>
+                                        <td>@item.INVOICE_DATE</td>
+                                        <td>@item.INVOICE_NUMBER</td>
+                                        <td>@item.TMCODE</td>
+                                        <td>
+                                          <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Amount</span>: @item.AMOUNT</div>
+                                           <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.GROSSAMOUNT</span>: @item.GROSS_AMOUNT</div>
+                                           <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.DISCAMOUNT</span>: @item.DISC_AMOUNT</div>
+                                        </td>
+                                        
+                                        <td>@item.Msg</td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8">
+                                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

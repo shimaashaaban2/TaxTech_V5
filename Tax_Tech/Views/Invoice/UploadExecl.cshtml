@@ -1,0 +1,149 @@
+﻿@model List<Tax_Tech.ApiModels.Templates>
+@{
+    Uri title = ViewBag.Title;
+    if (title != null)
+    {
+        if (title.AbsolutePath.Contains("Invoice"))
+        {
+            ViewBag.Title = $"{Tax_Tech.Resources.Resource.Documents} - {Tax_Tech.Resources.Resource.UploadExcel}";
+        }
+        else if (title.AbsolutePath.Contains("Vendor"))
+        {
+            ViewBag.Title = $"{Tax_Tech.Resources.Resource.Vendors} - {Tax_Tech.Resources.Resource.UploadExcel}";
+        }
+        else if (title.AbsolutePath.Contains("Item"))
+        {
+            ViewBag.Title = $"{Tax_Tech.Resources.Resource.Items} - {Tax_Tech.Resources.Resource.UploadExcel}";
+        }
+        else
+        {
+            ViewBag.Title = Tax_Tech.Resources.Resource.UploadExcelFile;
+        }
+    }
+    else
+    {
+        ViewBag.Title = Tax_Tech.Resources.Resource.UploadExcel;
+    }
+    string jobType = ViewBag.JobType;
+}
+
+<section class="horizontal-wizard">
+    <div class="bs-stepper horizontal-wizard-example">
+        <div class="bs-stepper-header">
+            <div class="step" data-target="#account-details">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-box">1</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">@Tax_Tech.Resources.Resource.UploadExcelFile</span>
+                        <span class="bs-stepper-subtitle">@Tax_Tech.Resources.Resource.UploadExcelFile</span>
+                    </span>
+                </button>
+            </div>
+            <div class="line">
+                <i data-feather="chevron-right" class="font-medium-2"></i>
+            </div>
+            <div class="step" data-target="#address-step">
+                <button type="button" class="step-trigger">
+                    <span class="bs-stepper-box">2</span>
+                    <span class="bs-stepper-label">
+                        <span class="bs-stepper-title">@Tax_Tech.Resources.Resource.ValidationResult</span>
+                        <span class="bs-stepper-subtitle">@Tax_Tech.Resources.Resource.ValidationResult</span>
+                    </span>
+                </button>
+            </div>
+
+        </div>
+        <div class="bs-stepper-content">
+            <div id="account-details" class="content">
+
+                <div id="ErrMsg1"></div>
+                <div class="row m-1">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            @if (Model != null)
+                            {
+                                @* Assuming the default selected value for the placeholder text results in '0' or a value that needs to be checked. *@
+                                @Html.DropDownList("TemplateID", new SelectList(Model, "TemplateID", "TemplateName"), Tax_Tech.Resources.Resource.DocStatus, new { @class = "form-control form-control-md select2", tabindex = "5", @Onchange = "DownloadURl()" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <a id="btnDownloadTemplate" class="btn btn-primary">@Tax_Tech.Resources.Resource.DownloadTemplate</a>
+                    </div>
+                </div>
+
+                <div class="row m-2">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <input type="file" class="custom-file-input" name="ExeclFile" id="ExeclFile" />
+                            <label class="custom-file-label" for="customFile">@Tax_Tech.Resources.Resource.ChooseFile</label>
+                        </div>
+                        <div>
+                            <small class="text-danger font-weight-bold">@Tax_Tech.Resources.Resource.SupportedFormats</small>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between">
+                        <button type="button" class="btn btn-outline-prim0ary" disabled>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-left align-middle ml-sm-25 ml-0"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <span class="align-middle d-sm-inline-block d-none">@Tax_Tech.Resources.Resource.Previous</span>
+                        </button>
+
+                        <div class="row">
+                            <button type="button" id="subBtn-4" class="btn btn-primary" onclick="uploadFile(@jobType, '@Tax_Tech.Resources.Resource.ChooseFile')">
+                                <span class="align-middle d-sm-inline-block d-none">@Tax_Tech.Resources.Resource.Next</span>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-arrow-right align-middle mr-sm-25 mr-0"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            </button>
+                            <button id="loadBtn-4" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="address-step" class="content">
+                <div id="lastStep">
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/InvoiceUpload.js"></script>
+
+<script>
+    function DownloadURl() {
+        var TemplateID = $("#TemplateID").val();
+        var errMsgElement = document.getElementById('ErrMsg1');
+
+        // Clear previous error messages
+        errMsgElement.innerHTML = '';
+        document.querySelector('#btnDownloadTemplate').href = '#'; // Reset link
+
+        // Check if TemplateID is '0' or an empty string (representing the unselected default option)
+        if (TemplateID === "0" || TemplateID === "") {
+            errMsgElement.innerHTML = '<div class="text-danger font-weight-bold">Please select a template type.</div>';
+            // Optionally disable the next button or take other actions
+            return; // Stop execution if nothing is selected
+        }
+
+        // Proceed with AJAX call only if a valid ID is selected
+        sendGetRequest(`/Invoice/GetTemplateURL?TemplateID=${TemplateID}`, function (e) {
+            if (e && e.Url) {
+                document.querySelector('#btnDownloadTemplate').href = '/Content/files/' + e.Url;
+                console.log(document.querySelector('#btnDownloadTemplate').href);
+            } else {
+                errMsgElement.innerHTML = '<div class="text-danger font-weight-bold">Could not retrieve template download link.</div>';
+            }
+        });
+    }
+</script>

@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.UsersManagment;
+    Tax_Tech.Areas.Configuration.Repository.PermissionRepository _permissionRepository = new Tax_Tech.Areas.Configuration.Repository.PermissionRepository();
+    long actionBy = Convert.ToInt32(Session["ID"]);
+    var hasPermissionsResult = _permissionRepository.HasPermission(150, actionBy);
+}
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12 form-group">
+                        <button class="btn btn-success btn-block" onclick="getCreateAccountPopup()">@Tax_Tech.Resources.Resource.NewUser</button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="position-relative">
+
+                            <select id="UserFilterSelect" class="select2 form-control" name="Quick Filter" style="width:100%;" tabindex="-1" aria-hidden="true">
+                                <option hidden value="">Quick Filter</option>
+                                <option value="1">All By Entity</option>
+                                <option value="2">All Active By Entity</option>
+                                <option value="3">All InActive By Entity</option>
+                                @if (hasPermissionsResult.CustomeRespons.HasPermission != "0")
+                                {
+                                    <option value="4">All Users</option>
+                                    <option value="5">All Active</option>
+                                    <option value="6">All InActive</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-9">
+        <section id="basic-datatable">
+            <div class="card">
+                <div id="main-err"></div>
+                <div class="card-body" id="list">   <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4> </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+
+
+<script src="~/Areas/Configuration/Scripts/Custom/Accounts.js"></script>

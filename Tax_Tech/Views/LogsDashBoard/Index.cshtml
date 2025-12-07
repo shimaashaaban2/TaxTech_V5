@@ -1,0 +1,111 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.DashBoardModel>
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.LogsDashboard;
+}
+
+
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex">
+                    <div class="btn-group justify-content-around align-items-end" style="margin-left: 10px;">
+                        <div class="form-group mx-2">
+                            <label for="fromDate">@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" id="From" name="From" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                        </div>
+                        <div class="form-group mx-2">
+                            <label for="toDate">@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" id="To" name="To" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                        </div>
+                        <div class="form-group mx-2">
+                            <button type="submit" class="btn btn-primary" id="btn-logDashboard" tabindex="18" onclick="GetDashboard()">@Tax_Tech.Resources.Resource.Submit</button>
+
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnlogDashboard-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-12">
+                        <div id="msg"></div>
+                    </div>
+                </div>
+                <div id="totalReceived"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*Submitted & ByStatus*@
+
+
+<div class="row">
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-info">@Tax_Tech.Resources.Resource.Submitted</h4>
+
+                <div id="SubmittedChart" style="width:100%;"></div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="col-6">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-primary">@Tax_Tech.Resources.Resource.Status</h4>
+                <div id="StatusChart" style="width:100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+@*Success & error*@
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="text-success">@Tax_Tech.Resources.Resource.SystemIntegrationSummary</h4>
+                <div id="SystemIntegrationSummary" style="width:100%;"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@*<script src="~/Scripts/Charts/jquery-1.10.2.min.js"></script>
+
+    <script src="~/Scripts/Charts/DevExpressChartJS/Chart.js"></script>
+    <script src="~/Scripts/Charts/DevExpressChartJS/Chart.min.js"></script>
+    <script src="~/Scripts/Charts/DevExpressChartJS/demo-charts.js"></script>*@
+@*<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn3.devexpress.com/jslib/21.2.7/js/dx.all.js"></script>*@
+<script src="~/Scripts/Charts/jquery-3.6.0.min.js"></script>
+<script src="~/Scripts/Charts/dx.all.js"></script>
+
+<script src="~/Scripts/Custom/Logs-chart/LogsDashBoardChart.js"></script>
+
+
+<script src="~/Areas/Configuration/Scripts/Custom/Public.js"></script>
+<script src="~/Areas/Configuration/Scripts/Custom/Popup.js"></script>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>

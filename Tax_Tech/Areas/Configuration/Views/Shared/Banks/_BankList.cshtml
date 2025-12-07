@@ -1,0 +1,74 @@
+﻿@model List<Tax_Tech.ApiModels.Bank>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.Bankname</th>
+            <th>@Tax_Tech.Resources.Resource.Status</th>
+            <th colspan="2">@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span id="bankNametxt-@item.BankID">@item.BankName</span>
+                            <input type="text" class="form-control" id="bankName-@item.BankID" style="display: none" />
+                        </td>
+                        @if (item.IsActive.HasValue && item.IsActive.Value)
+                        {
+                            <td>@Tax_Tech.Resources.Resource.Active</td>
+                        }
+                        else
+                        {
+                            <td>@Tax_Tech.Resources.Resource.InActive</td>
+                        }
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="toggleInlineEdit('btnSaveContainer-@item.BankID', 'bankNametxt-@item.BankID', 'bankName-@item.BankID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                    </a>
+                                    @if (item.IsActive.HasValue && item.IsActive.Value)
+                                    {
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="changeBankFieldStatus(false, '@item.BankID')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                            <span>@Tax_Tech.Resources.Resource.SetAsActive</span>
+                                        </a>
+                                    }
+                                    else
+                                    {
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="changeBankFieldStatus(true, '@item.BankID')">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                            <span>@Tax_Tech.Resources.Resource.SetInActive</span>
+                                        </a>
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                        <td id="btnSaveContainer-@item.BankID" style="display: none;">
+                            <button class="btn btn-success" onclick="saveData('@item.BankID', 'btnSaveContainer-@item.BankID', 'bankNametxt-@item.BankID', 'bankName-@item.BankID')">@Tax_Tech.Resources.Resource.Save</button>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

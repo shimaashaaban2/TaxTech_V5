@@ -1,0 +1,164 @@
+﻿@model  Tax_Tech.ApiModels.EReceiptApi.EReceiptTrackingViewModel
+
+@{ if (Model.eReceiptTrackings != null)
+    {
+        if (Model.eReceiptTrackings.Count()>0)
+        {
+            <div class="col-12">
+                <div id="Msg"></div>
+                <ul class="timeline">
+                    @foreach (var item in Model.eReceiptTrackings)
+                    {
+                        <li id="receipttracking">
+                            <div class="card-header">
+                                <a style="font-weight:bold"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptNumber</span>: @item.EReceiptNumber</a> @*onclick="EReceiptNumberDetails()"*@ @*href="#" class="link-underline-primary" onclick="GetEReceiptDetailsPopup(@item.LogID)"*@
+                                <a href="javascript:void(0)" class="btn btn-primary" onclick="GetEReceiptDetailsPopup(@item.LogID)">Log</a>
+                                @{ if (item.AllowResubmit>0 && item.SubmitStatus==7)
+                                    {
+                                        <a href="javascript:void(0)" class="btn btn-dark" onclick="ReSubmitReceipt(@item.LogID)">Resubmit</a>
+                                    }}
+                                <span style="width:250px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.OfflineUUID</span>: @item.UUID</span>
+
+                                <span><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.LogDatetime</span>: @item.LogDatetime</span>
+                            </div>
+                        </li>
+
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <h6 class="mb-50 fw-semibold"><b>Store:</b>  <span>@item.StroeCode</span></h6>
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <h6 class="mb-50 fw-semibold"><b>@Tax_Tech.Resources.Resource.EReceiptSource:</b> <span>@item.Source</span></h6>
+
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-primary timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <h6 class="mb-50 fw-semibold"><b>@Tax_Tech.Resources.Resource.SubmissionStatus:</b> <span>@item.SubmitStatusTitle</span></h6>
+                                </div> 
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-success timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <h6 class="mb-50 fw-semibold"><b>@Tax_Tech.Resources.Resource.EReceiptStatus:</b> <span>@item.EReceiptStatus</span></h6>
+
+                            </div>
+                        </li>
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-info timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <h6 class="mb-50 fw-semibold"><b>@Tax_Tech.Resources.Resource.Message</b></h6>
+                                </div>
+                                <div class="media-body ml-50">
+                                    <span>@item.Msg</span>
+                                </div>
+                            </div>
+                        </li>
+
+                        <li class="timeline-item">
+                            <span class="timeline-point timeline-point-danger timeline-point-indicator"></span>
+                            <div class="timeline-event">
+                                <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                    <h6 class="mb-50 fw-semibold"><b>@Tax_Tech.Resources.Resource.Error</b></h6>
+                                </div>
+                                <div class="media-body ml-50">
+                                    <span>@item.Error</span>
+                                </div>
+
+
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+
+            </div>
+        }
+
+
+    }}
+
+@{ if (Model.billingTrackings != null)
+    {
+        if (Model.billingTrackings.Count() > 0)
+        { <div id="myTable1div">
+                <table class="dt-multilingual table table-responsive billing col-12" id="thebasic-datatable">
+                    <thead>
+                        <tr>
+                            <th width="40%">@Tax_Tech.Resources.Resource.Date</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.CustomerCode</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.ItemCode</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.Amount</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.BillingStatus</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.Message</th>
+                            <th width="20%">@Tax_Tech.Resources.Resource.IsValid</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{ foreach (var billing in Model.billingTrackings)
+                            {
+                                <tr>
+                                    <td width="20%">@billing.INVOICE_DATE</td>
+                                    <td width="20%">@billing.CUSTCODE</td>
+                                    <td width="20%">@billing.TMCODE</td>
+                                    <td width="20%">@billing.AMOUNT</td>
+                                    <td width="20%">@billing.BillingStatus</td>
+                                    <td width="20%">@billing.Msg</td>
+                                    <td width="20%">
+                                        @if (billing.IsValid == false)
+                                        {
+                                            <span class="text-danger">@Tax_Tech.Resources.Resource.Invalid</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="text-success">@Tax_Tech.Resources.Resource.Valid</span>
+                                        }
+
+                                    </td>
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+
+
+                </table>
+            </div>
+            <script>
+
+                $(document).ready(function () {
+                    addclass();
+                });
+                function addclass() {
+                    if ($('#thebasic-datatable').html(e.view)) {
+                        $('#myTable1div').removeClass("d-none");
+                    }
+                    else {
+                        $('#myTable1div').addClass("d-none");
+                    }
+                }
+            </script>
+
+
+        }
+
+    }
+}
+
+
+
+
+
+
+
+
+
+

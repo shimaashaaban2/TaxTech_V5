@@ -1,0 +1,90 @@
+﻿@model List<Tax_Tech.ApiModels.TaxUpdate.JobTrackingModel>
+
+
+
+@{
+
+    var x = Model;
+}
+
+<script>
+   
+   alert("XXXX")
+</script>
+
+<table class="table table-striped table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+
+            <th>job ID</th>
+            <th>total Count</th>
+            <th>Status</th>
+            <th>Head</th>
+            <th> Date </th>
+            <th>Lines</th>
+
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null&& Model.Count()>0)
+        {
+            foreach (var item in Model)
+            {
+
+                <tr>
+                    @*<td><a href="@Url.Action("FailedJobLogList", "JobTracking", new {jobID=item.jobID})">@item.jobID</a></td>*@
+                    <td>@item.jobID</td>
+                    @*onclick="FailedJobLogList(@item.jobID)"*@
+                    <td>@item.totalCount</td>
+                    <td>@item.status</td>
+                    <td>
+                        <div><span style="color: #2196F3;">Inserted</span>: @item.insertedDocuments</div>
+                        @if (@item.notInsertedDocuments > 0)
+                        {
+                            <script>
+
+                                window.localStorage.setItem("logType", "Head")
+                            </script>
+                            <a href="@Url.Action("FailedJobLogList", "JobTracking", new {jobID=item.jobID, logtype="Head"})"><div><span style="color: #2196F3;">Not Inserted</span>: @item.notInsertedDocuments</div></a>
+
+                        }
+                        else
+                        {
+                            <div><span style="color: #2196F3;">Not Inserted</span>:@item.notInsertedDocuments</div>
+                        }
+                    </td>
+                    <td>
+                        <div><span style="color: #2196F3;">created At</span>: @item.createdAt</div>
+                        <div><span style="color: #2196F3;">updated At</span>:@item.updatedAt</div>
+                    </td>
+
+                    <td>
+
+                        <div><span style="color: #2196F3;">Inserted</span>: @item.insertedLines</div>
+                        @if (@item.notInsertedLines > 0)
+                        {
+
+                           <a href="@Url.Action("FailedJobLogList", "JobTracking", new { jobID = item.jobID, logtype = "Line" })"><div><span style="color:#2196F3;">Not Inserted</span>:@item.notInsertedLines</div></a>
+
+                        }
+                        else
+                        {
+                            <div><span style="color:#2196F3;">Not Inserted</span>:@item.notInsertedLines</div>
+                        }
+                    </td>
+
+                </tr>
+
+
+            }
+        }
+        else
+        {
+            <tr>
+                <td>
+                    <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

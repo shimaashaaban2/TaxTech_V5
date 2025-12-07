@@ -1,0 +1,21 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueueType>
+
+<div class="row">
+    <div class="col-md-12 form-group">
+        <label class="control-label" for="JobType">@Tax_Tech.Resources.Resource.ByJobType<span class="text-danger">*</span> </label>
+        @if (Model != null)
+        {
+            @Html.DropDownList("JobType", new SelectList(Model, "JobTypeID", "JobTypeTitle"), Tax_Tech.Resources.Resource.ByJobType,
+            new
+            {
+                @class = "select2 form-control",
+                @tabindex = "2",
+                @oninput = "filterJobsByJobType(this.value)"
+            })
+        }
+        else
+        {
+            <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+        }
+    </div>
+</div>

@@ -1,0 +1,42 @@
+﻿ 
+@{
+    Layout = "~/Views/Shared/_LayoutBlankMsg.cshtml";
+}
+@{ if (ViewBag.EmailRes == true)
+    {
+        <div class="w-100 text-center">
+            <h2 class="mb-1">@ViewBag.Success 🚀</h2>
+            <p class="mb-3">@Tax_Tech.Resources.Resource.EmailSentSuccessfully</p>
+            <a class="btn btn-primary mb-1 btn-sm-block" href="@Url.Action("Login","Accounts",new {area="" })">@Tax_Tech.Resources.Resource.Login</a>
+        </div>
+    }
+    else
+    {
+        <div class="w-100 text-center">
+            <h2 class="mb-1">@ViewBag.Success 🚀</h2>
+            <p class="mb-3">@Tax_Tech.Resources.Resource.EmailSentFail</p>
+            <div id="msg">@Html.Partial("_Result")</div>
+
+            @using (Ajax.BeginForm("ResendConfirmEmail", "Accounts",
+new AjaxOptions
+{
+HttpMethod = "POST",
+UpdateTargetId = "msg",
+InsertionMode = InsertionMode.Replace,
+OnSuccess = "success",
+OnBegin = "ShowLoading(1)",
+OnComplete = "HideLoading(1)",
+
+}, new { @class = "form-inline justify-content-center row m-0 mb-2" }))
+    {
+
+        <input type="hidden" name="ent" value="@ViewBag.Entity" />
+        <input name="email" class="form-control col-12 col-md-5 mb-1 mr-md-2" id="notify-email" type="text" value="@ViewBag.email" placeholder="john@example.com" />
+        <button class="btn btn-primary mb-1 btn-sm-block" type="submit" id="subBtn-1">@Tax_Tech.Resources.Resource.ResendEmail</button>
+        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load"  type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+        </button>
+}<img class="img-fluid" src="~/Content/app-assets/images/pages/coming-soon.svg" alt="Coming soon page" />
+        </div>
+    }}

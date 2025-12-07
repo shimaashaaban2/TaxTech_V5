@@ -1,0 +1,161 @@
+﻿@using Tax_Tech.Helpers
+@using PagedList
+@using PagedList.Mvc
+
+@model List<Tax_Tech.ViewModels.DocumentViewModel>
+
+@{ 
+    int? totalCount = Model.FirstOrDefault()?.TotalCount, totalPages = 1;
+    Tax_Tech.ViewModels.PageModel pageModel = ViewBag.PageModel;
+
+    if (totalCount != null && totalCount != 0)
+    {
+        int? qotient = (totalCount / pageModel.PageSize);
+        totalPages = qotient == 0 ? 1 : qotient;
+    }
+}
+
+@*<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />*@
+
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-responsive-xl table-bordered" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.DocStatus</th>
+            <th>@Tax_Tech.Resources.Resource.DocType</th>
+            <th>@Tax_Tech.Resources.Resource.Details</th>
+            <th>@Tax_Tech.Resources.Resource.ClientName</th> <!-- on hover show client details -->
+            <th>@Tax_Tech.Resources.Resource.TaxPayerActiCode</th> <!-- on hover show code title -->
+            <th>@Tax_Tech.Resources.Resource.NetTotal</th>
+            <th>@Tax_Tech.Resources.Resource.TaxTotal</th>
+            <th>@Tax_Tech.Resources.Resource.TotalAmount</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr id="invoice-@item.DocumentID">
+                        <td>
+                            @item.ProcessStatusTitle
+                        </td>
+                        <td>
+                            @((InvoiceType)item.DocumentType)
+                        </td>
+                        <td>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InternalID</span>: @item.InternalID</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssueDate</span>: @item.DateTimeIssued</div>
+                        </td>
+
+                        <td rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="<div><div>@Tax_Tech.Resources.Resource.ID: @item.VendorID</div><div>@Tax_Tech.Resources.Resource.Name: @item.VendorName</div></div>">
+                            <span>@item.VendorName</span>
+
+                        </td>
+
+                        <td rel="tooltip" data-placement="right" data-original-title="@item.ActivityEN">
+                            <span>@item.ActivityCode</span>
+                        </td>
+                        <td>
+                            <span>@(item.TotalAmount - item.TaxTotals)</span>
+                        </td>
+                        <td>
+                            <span>@item.TaxTotals</span>
+                        </td>
+                        <td>
+                            <span>@item.TotalAmount</span>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a href="@Url.Action("DownloadDocumentPdf", new { controller = "Invoice", area = "", uuid = $"{item.UUID}"})" class="dropdown-item">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.DownloadAsPdf</span>
+                                    </a>
+                                    <a class="dropdown-item" href="@Url.Action("Preview", "Invoice", new { invoiceId = item.DocumentID, invoiceType = item.DocumentType })">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Details</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getGetInvoiceInternalRejectPopup('@item.DocumentID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.InternalReject</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getGetInvoiceMOFRejectPopup('@item.DocumentID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.RejectedDocuments</span>
+                                    </a>
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getGetInvoiceTrackSubmissionPopup('@item.DocumentID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-info"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.TrackSubmission</span>
+                                    </a>
+
+                                    @if (Tax_Tech.Classes.PublicConfig.CreateDocumentVersion == "1")
+    {
+                                <a class="dropdown-item" href="@Url.Action("InvoiceDetails", "InvoiceLine", new { invoiceId = item.DocumentID, invoiceType = item.DocumentType })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                </a>
+}
+else
+{
+                                <a class="dropdown-item" href="@Url.Action("InvoiceDetailsV2", "InvoiceLine", new { invoiceId = item.DocumentID, invoiceType = item.DocumentType })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                </a>
+}
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getGetInvoiceChangeStatusPopup('@item.DocumentID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.ChangeStatus</span>
+                                    </a>
+
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getDocActionLog('@item.DocumentID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-database"><ellipse cx="12" cy="5" rx="9" ry="3"></ellipse><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"></path><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.ActionLog</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="9">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+
+    </tbody>
+</table>
+
+<div class="d-flex justify-content-center">
+    <ul class="pagination">
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", "Invoice", new { Status = 0, PageNo = pageModel.PageNo == 1 ? 1 : pageModel.PageNo - 1})">
+                @Tax_Tech.Resources.Resource.Previous
+            </a>
+        </li>
+        @for (int i = 1; i <= totalPages; i++)
+        {
+            <li class="page-item @(i == pageModel.PageNo ? "active" : "")">
+                <a class="page-link" href="@Url.Action("Index", "Invoice", new { Status = 0, PageNo = i })">
+                    @i
+                </a>
+            </li>
+        }
+        <li class="page-item">
+            <a class="page-link" href="@Url.Action("Index", "Invoice", new { PageNo = pageModel.PageNo < totalPages ? pageModel.PageNo + 1 : totalPages, Status = 0 })">
+                @Tax_Tech.Resources.Resource.Next
+            </a>
+        </li>
+    </ul>
+</div>

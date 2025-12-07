@@ -1,0 +1,60 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueueDetails>
+
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.JobQueueDetails;
+}
+
+<div class="card">
+    <div class="card-body">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <td>@Tax_Tech.Resources.Resource.InternalID</td>
+                    <td>@Tax_Tech.Resources.Resource.RowIndex</td>
+                    <td>@Tax_Tech.Resources.Resource.SheetName</td>
+                    <td>@Tax_Tech.Resources.Resource.Date</td>
+                    <td>@Tax_Tech.Resources.Resource.ImportResult</td>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    if (Model.Count > 0)
+                    {
+                        foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.DocID</td>
+                                <td>@item.ExcelRowIndex</td>
+                                <td>@item.ExcelSheetName</td>
+                                <td>@item.DocDate</td>
+                                <td>
+                                    @if (item.ImportResult.ToLower().Contains("fail"))
+                                    {
+                                        <span style="color: red;font-weight: bold">@item.ImportResult</span>
+                                    }
+                                    else
+                                    {
+                                        <span style="color: green;font-weight: bold">@item.ImportResult</span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="5" class="text-center">@Tax_Tech.Resources.Resource.ApiDown</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

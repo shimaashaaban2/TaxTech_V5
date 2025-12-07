@@ -1,0 +1,92 @@
+﻿
+@{
+    ViewBag.Title = "Create Delivery";
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Create Delivery</h4>
+                <button type="button" class="close" onclick="DismissPopupOf('#AddDeliveryModal')" id="AddDeliveryModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="AddDeliveryModalErr"></div>
+            <div class="modal-body">
+
+                @using (Ajax.BeginForm("CreateDelivery", "Delivery", null,
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "ShowProgress",
+                OnComplete = ""
+            }, new
+            {
+                @class = "form-horizontal"
+            }))
+                {
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="DeliveryApproach">Delivery Approach</label>
+                            <input type="text" class="form-control" placeholder="Enter Delivery Approach" name="DeliveryApproach" id="DeliveryApproach" tabindex="1" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="DeliveryPacking">Delivery Packing</label>
+                            <input type="text" class="form-control" placeholder="Enter Delivery Packing" name="DeliveryPacking" id="DeliveryPacking" tabindex="2" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="DeliveryTerm">Delivery Term</label>
+                            <input type="text" class="form-control" placeholder="Enter Delivery Term" name="DeliveryTerm" id="Delivery Term" tabindex="8" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="DateValidity">Date Validity</label>
+                            <input type="text" id="DateValidity" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" name="DateValidity">
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ExportPort">Export Port</label>
+                            <input type="text" class="form-control" placeholder="Enter Export Port" name="ExportPort" id="ExportPort" tabindex="4" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="CountryofOrigin">Country of Origin</label>
+                            <input type="text" class="form-control" placeholder="Enter Country of Origin" name="CountryofOrigin" id="CountryofOrigin" tabindex="5" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="GrossWeight">Gross Weight</label>
+                            <input type="text" class="form-control" placeholder="Enter Gross Weight" name="GrossWeight" id="GrossWeight" tabindex="6" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="NetWeight">Net Weight</label>
+                            <input type="text" class="form-control" placeholder="Enter Net Weight" name="NetWeight" id="NetWeight" tabindex="7" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary btn-submit">Create Delivery</button>
+                            <div class="form-group">
+                                <button id="loadBtn" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

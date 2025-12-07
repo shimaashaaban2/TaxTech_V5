@@ -1,0 +1,136 @@
+﻿
+@{
+    ViewBag.Title = "Create Vendor";
+    List<Tax_Tech.Areas.Configuration.ApiModels.VendorType> vendorTypes = ViewBag.VendorTypes;
+    List<Tax_Tech.Areas.Configuration.ApiModels.Country> countries = ViewBag.Countries;
+}
+
+<div class="card">
+    <div class="card-header">
+        <h4 class="card-title">Basic Info</h4>
+        <div class="heading-elements">
+            <ul class="list-inline mb-0">
+                <li>
+                    <a data-action="collapse" class="rotate"><svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down"><polyline points="6 9 12 15 18 9"></polyline></svg></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="card-content collapse show" style="">
+        <div class="card-body">
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="VendorName">Vendor Name</label>
+                    <input type="text" class="form-control" placeholder="Enter Vendor Name" name="VendorName" id="VendorName" tabindex="1" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="VendorType">Vendor Type</label>
+                    @if(vendorTypes != null)
+                    {
+                        @Html.DropDownList("VendorType", new SelectList(vendorTypes, "VendorTypeID", "VendorTypeList"), "Select Vendor Type", new { @class = "form-control form-control-lg select2", tabindex = "2" })
+                    }
+                    else
+                    {
+                        <div class="req">Failed to reterive data from api</div>
+                    }
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="ERPID">ERP ID</label>
+                    <input type="text" class="form-control" placeholder="Enter ERP ID" name="ERPID" id="ERPID" tabindex="3" />
+                </div>
+
+                <div class="form-group col-md-6">
+                    <label class="control-label" for="APIID">API ID</label>
+                    <input type="text" class="form-control" placeholder="Enter API ID" name="APIID" id="APIID" tabindex="4" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Country">Country</label>
+                    @if(countries != null)
+                    {
+                        @Html.DropDownList("Country", new SelectList(countries, "ISO2", "CountryName"), "Select Country", new { @class = "form-control form-control-lg select2", tabindex = "5" })
+                    }
+                    else
+                    {
+                        <div class="req">Failed to reterive data from Api</div>
+                    }
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Governate">Governate</label>
+                    <input type="text" class="form-control" placeholder="Enter Governate Name" name="Governate" id="Governate" tabindex="6" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="City">City</label>
+                    <input type="text" class="form-control" placeholder="Enter City Name" name="City" id="City" tabindex="7" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Street">Street</label>
+                    <input type="text" class="form-control" placeholder="Enter Street" name="Street" id="Street" tabindex="8" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="BuildingNo">Building No.</label>
+                    <input type="text" class="form-control" placeholder="Enter Building No." name="BuildingNo" id="BuildingNo" tabindex="9" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="PostalCode">Postal Code</label>
+                    <input type="text" class="form-control" placeholder="Enter Postal Code" name="PostalCode" id="PostalCode" tabindex="10" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Floor">Floor</label>
+                    <input type="text" class="form-control" placeholder="Enter Floor" name="Floor" id="Floor" tabindex="11" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Flat">Flat</label>
+                    <input type="text" class="form-control" placeholder="Enter Flat No." name="Flat" id="Flat" tabindex="12" />
+                </div>
+
+                <div class="form-group col-md-4">
+                    <label class="control-label" for="Landmark">Landmark</label>
+                    <input type="text" class="form-control" placeholder="Enter Landmark" name="Landmark" id="Landmark" tabindex="13" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-12">
+                    <label class="control-label" for="AddtionalInfo">Addtional Info</label>
+                    <textarea class="form-control" id="AddtionalInfo" name="AddtionalInfo" placeholder="Enter Addtional Info"></textarea>
+                </div>
+            </div>
+
+            <div class="row mt-2">
+                <div class="form-group col-md-12">
+                    <button type="submit" class="btn btn-primary btn-submit">Create Vendor</button>
+                    <div class="form-group">
+                        <button id="loadBtn" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">Loading...</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="card-footer">
+        
+    </div>
+</div>

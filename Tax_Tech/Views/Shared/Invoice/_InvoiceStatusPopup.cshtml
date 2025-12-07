@@ -1,0 +1,54 @@
+﻿@model Tax_Tech.ApiModels.InvoicingApi.DocumentDetailsResult
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Document Info</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="docActionLogModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                @if (Model != null)
+                {
+                    <table class="table table-bordered">
+                        <tbody style="font-weight: bold">
+                            <tr>
+                                <td>Submission ID</td>
+                                <td>@Model.SubmissionUUID</td>
+                            </tr>
+                            <tr>
+                                <td>UUID</td>
+                                <td>@Model.UUID</td>
+                            </tr>
+                            <tr>
+                                <td>Submission Date</td>
+                                <td>@Model.DateTimeRecevied</td>
+                            </tr>
+                            <tr>
+                                <td>Document Status</td>
+                                @if (Model.ValidationResults.Status.Contains("Valid"))
+                                {
+                                    <td style="color: green">@Model.ValidationResults.Status</td>
+                                }
+                                else
+                                {
+                                    <td style="color: red">@Model.ValidationResults.Status</td>
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
+                }
+            </div>
+            <div class="modal-footer">
+                <div class="row">
+                    <div class="col-md-6">
+                        <button class="btn btn-primary" onclick="DismissPopup()">OK</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

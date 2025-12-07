@@ -1,0 +1,67 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.EReceiptTracking;
+    //IEnumerable<Tax_Tech.ApiModels.EReceiptApi.BillingTrackingModel> billingTrackings = ViewBag.BillingTrack;
+
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+
+                @using (Ajax.BeginForm("EReceiptTrackingData", "EReceipt", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "Post",
+OnBegin = "showLoader('btn-eReceiptnumber','btn-eReceiptnumber-loader')",
+OnComplete = "EReceipttracking"
+
+}, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="eReceiptnumber" name="eReceiptnumber" placeholder="@Tax_Tech.Resources.Resource.EReceiptNumber" value="@ViewBag.eReceiptnumber"/>
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-eReceiptnumber" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-eReceiptnumber-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div  class="row"id="EReceiptTracking"></div>
+            </div>
+            
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Scripts/Custom/EReceipt.js"></script>
+<script>
+    window.addEventListener('load', function () {
+        if ($('#eReceiptnumber').val()) {
+            $('#btn-eReceiptnumber').submit();
+        }
+    })
+</script>

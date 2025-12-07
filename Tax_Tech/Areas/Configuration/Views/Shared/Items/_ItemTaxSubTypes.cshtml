@@ -1,0 +1,27 @@
+﻿@model List<Tax_Tech.ApiModels.TaxType>
+
+<div class="form-group">
+    <label class="control-label" for="TaxSubTypeID">@Tax_Tech.Resources.Resource.SubTax</label>
+    @if (Model != null)
+    {
+        @Html.DropDownList("TaxSubTypeID", new SelectList(Model, "TaxTypeID", "TaxTypeNameEN"), Tax_Tech.Resources.Resource.SubTax, new { @class = "form-control form-control-md select2", tabindex = "2" })
+    }
+    else
+    {
+        <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+    }
+</div>
+
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            // the following code is used to disable x-scrollbar when click in select input and
+            // take 100% width in responsive also
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+</script>

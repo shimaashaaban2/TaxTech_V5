@@ -1,0 +1,24 @@
+[22 04 2021 10:26:05] - 
+
+1.Prepared the file name and set it to c89492bd8c894b58861e231bf77a0594.xlsx
+
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\c89492bd8c894b58861e231bf77a0594.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\c89492bd8c894b58861e231bf77a0594.xlsx'.
+1.Prepared the file name and set it to 3381a2ce33d64f3a9566dce8dfb153aa.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\3381a2ce33d64f3a9566dce8dfb153aa.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\3381a2ce33d64f3a9566dce8dfb153aa.xlsx'.
+1.Prepared the file name and set it to 0f7eb042db444af49b7dde74b52f74a4.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\0f7eb042db444af49b7dde74b52f74a4.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\0f7eb042db444af49b7dde74b52f74a4.xlsx'.
+1.Prepared the file name and set it to 760789b1070c46d799e56a8e2d4bb8a1.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\760789b1070c46d799e56a8e2d4bb8a1.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\760789b1070c46d799e56a8e2d4bb8a1.xlsx'.
+1.Prepared the file name and set it to 44e232485e1f49d9a8746860d8ca457c.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\44e232485e1f49d9a8746860d8ca457c.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\44e232485e1f49d9a8746860d8ca457c.xlsx'.
+1.Prepared the file name and set it to 9a80db4f99b041eea84fcdca278413f0.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\9a80db4f99b041eea84fcdca278413f0.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\9a80db4f99b041eea84fcdca278413f0.xlsx'.
+1.Prepared the file name and set it to 69a91a2b78934479a32c43c720ea6ad8.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\69a91a2b78934479a32c43c720ea6ad8.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\69a91a2b78934479a32c43c720ea6ad8.xlsx'.

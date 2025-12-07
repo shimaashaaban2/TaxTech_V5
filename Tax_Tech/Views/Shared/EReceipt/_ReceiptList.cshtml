@@ -1,0 +1,104 @@
+﻿@model  IEnumerable<Tax_Tech.ApiModels.EReceiptApi.ReceiptListModel>
+
+
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="content-body col-md-12">
+            <div class="card">
+                <div class="card-datatable">
+                    <table class="datatables-basic table table-striped table-responsive table-bordered" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+                                <th width="20%">@Tax_Tech.Resources.Resource.dateTimeIssued</th>
+                                <th width="30%">@Tax_Tech.Resources.Resource.EReceiptData</th>
+                                <th width="10%">@Tax_Tech.Resources.Resource.Status</th>
+                                @*<th width="30%">@Tax_Tech.Resources.Resource.buyerDetails</th>
+                                <th width="20%">@Tax_Tech.Resources.Resource.sellerDetails</th>*@
+                                <th width="35%">@Tax_Tech.Resources.Resource.ProcessingDetails</th>
+                                <th>@Tax_Tech.Resources.Resource.Total</th>
+                              
+
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model != null&& Model.Count()>0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        @*href="javascript:void(0);"*@
+                                        <td width="20%">
+                                            @item.dateTimeIssued
+                                            <a class="btn btn-primary btn-sm col-md-12" href="@Url.Action("ReceiptPreview", "EReceipt", new { EReceiptID = item.EReceiptID})">@Tax_Tech.Resources.Resource.Review</a>
+                                            <a class="btn btn-outline-primary btn-sm btn-block col-md-12 mt-1 text-primary"  onclick="GetEReceiptQRPopup(@item.EReceiptID)">@Tax_Tech.Resources.Resource.QRCode</a>
+                                            <a class="btn btn-outline-primary btn-md btn-block col-md-12 mt-1 text-primary" href="@Url.Action("EReceiptTracking","EReceipt", new { eReceiptnumber = item.receiptNumber})">@Tax_Tech.Resources.Resource.EReceiptTracking</a>
+
+                                        </td>
+                                        <td width="20%">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptNumber</span>: @item.receiptNumber</div>
+                                            <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.UUID</span>: @item.UUID</div>
+                                            <div style="width: 200px !important;">
+                                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ReceiptType</span>:
+                                                @if (item.receiptType == "S")
+                                                {
+                                                   <span> @Tax_Tech.Resources.Resource.EReceipt</span>
+                                                }
+                                                else
+                                                {
+                                                 <span>@Tax_Tech.Resources.Resource.Refund</span>
+                                                  <p>@item.previousUUID</p> 
+                                                }
+                                            </div>
+                                            @*<div  style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ETAQRCode</span>: @item.ETAQRCode</div>*@
+                                            <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ETAUUID</span>: @item.ETAUUID</div>
+                                        </td>
+
+                                        <td width="10%">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptStatus</span>:@item.EReceiptStatus</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptSource</span>:@item.Source</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.SubmitStatus</span>:@item.SubmitStatusTitle</div>
+                                        </td>
+
+                                        
+
+                                        <td width="20%">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.buyerID</span>: @item.buyerID</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.buyerType</span>: @item.buyerType</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.buyerPhone</span>: @item.buyerPhone</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.PersonalID</span>: @item.PersonalID</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.BranchName</span>:@item.BranchName</div>
+
+             
+                                        <td width="20%">
+                                            <div class="invoice-total-wrapper">
+                                                <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TotalAmount</span>: @item.totalAmount</div>
+                                                <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.NetAmount</span>: @item.netAmount</div>
+                                                <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TaxTotal</span>: @item.taxTotals</div>
+                                            </div>
+                                        </td>
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">
+                                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/EReceipt.js"></script>

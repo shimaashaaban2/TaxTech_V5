@@ -1,0 +1,92 @@
+﻿@model Tax_Tech.ApiModels.EReceiptJobLogsModel
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Tax_Tech.Resources.Resource.JobTracking;
+    int pageSize = 50;
+    int totalPages = (int)Math.Ceiling((double)Model.totalCount / pageSize);
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int maxPagesToShow = 10;
+    int startPage = ((currentPage - 1) / maxPagesToShow) * maxPagesToShow + 1;
+    int endPage = Math.Min(startPage + maxPagesToShow - 1, totalPages);
+    ViewBag.Title = Model.logtype;
+}
+
+<input type="hidden" id="TotalCount" value="@Model.totalCount" />
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped" id="thebasic-datatable">
+            <thead>
+                <tr>
+                    <th>@Tax_Tech.Resources.Resource.JobID</th>
+                    <th>@Tax_Tech.Resources.Resource.LogID</th>
+                    <th>@Tax_Tech.Resources.Resource.OperationDate</th>
+                    <th>@Tax_Tech.Resources.Resource.InternalID</th>
+                    <th>@Tax_Tech.Resources.Resource.Details</th>
+                </tr>
+            </thead>
+            <tbody id="FailedJobListBody">
+                @foreach (var item in Model.Logs)
+                {
+                    <tr>
+                        <td>@item.jobID</td>
+                        <td>@item.logID</td>
+                        <td>@item.logDate</td>
+                        <td>@item.docID</td>
+                        <td>@item.desc</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination mt-2" id="pagination">
+                @if (startPage > 1)
+                {
+                    <li class="page-item">
+
+                        <a class="page-link" href="@Url.Action("EReceiptFailedJobLogList", "EReceiptTracking", new {
+                jobId = Model.Logs.FirstOrDefault()?.jobID,
+                logType = Model.logtype,
+                pageNumber = (startPage - 1),
+                pageSize = 50
+            })">« Prev</a>
+                    </li>
+                }
+
+                @for (var i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("EReceiptFailedJobLogList", "EReceiptTracking", new {
+    jobId = Model.Logs.FirstOrDefault()?.jobID,
+    logType = Model.logtype,
+    pageNumber = i,
+    pageSize = 50
+})">   @i</a>
+</li>
+}
+
+                @if (endPage < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("EReceiptFailedJobLogList", "EReceiptTracking", new {
+    jobId = Model.Logs.FirstOrDefault()?.jobID,
+    logType = Model.logtype,
+    pageNumber = (endPage + 1),
+    pageSize = 50
+})">Next »</a>
+
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<script src="~/Scripts/Custom/EReceiptTracking.js"></script>

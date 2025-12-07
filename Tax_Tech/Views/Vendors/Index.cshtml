@@ -1,0 +1,73 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.Vendors;
+    string jobType = "3";
+}
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/xlsx.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.8.0/jszip.js"></script>
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <button class="btn btn-outline-secondary" onclick="getCreateVendorPopup()">@Tax_Tech.Resources.Resource.New</button>
+                        <div class="btn-group ml-1">
+                            @*<button class="btn btn-outline-secondary" onclick="ExportVendorsToExcel()" id="VendorsExcel">@Tax_Tech.Resources.Resource.Execl</button>*@
+                            <button class="btn btn-outline-secondary" onclick="ExportVendorsToExcel()" id="VendorsExcel">@Tax_Tech.Resources.Resource.ExportToExcel</button>
+                        </div>
+                        @*<div class="btn-group mx-1">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    @Tax_Tech.Resources.Resource.Export
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" target="_blank" href="@Url.Action("ExportToExecl", "Vendors")">@Tax_Tech.Resources.Resource.Execl</a>
+                                </div>
+                            </div>*@
+                        <div class="btn-group ml-1">
+                            <a href="@Url.Action("UploadExecl", new { controller = "Invoice", area = "", jobType = jobType })" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.UploadExcel</a>
+                        </div>
+                    </div>
+                    <div class="dt-action-buttons text-right d-flex">
+                        <div id="count" class="btn-group ml-1 pull-right"></div>
+                    </div>
+                    <div id="main-err"></div>
+                </div>
+
+                <div class="d-flex justify-content-start" id="filterContainer">
+                    <div class="btn-group justify-content-around align-items-end" style="margin-left: 10px;">
+                        <div class="form-group col-md-7">
+                            <label class="control-label" for="fromDate">@Tax_Tech.Resources.Resource.FreeTextSearch</label>
+                            <input autofocus type="text" id="FilterBy" name="FilterBy" class="form-control" placeholder="@Tax_Tech.Resources.Resource.FreeTextSearch" onkeydown="onKeyDownSearchText(event)" value="@ViewBag.Filter" />
+                        </div>
+                        <div class="form-group col-md-5">
+                            <button type="submit" class="btn btn-primary" id="btnFilterCustomer" tabindex="18" onclick="getVendorsByFilter()">@Tax_Tech.Resources.Resource.Search</button>
+                            <button id="btnFilterCustomerLoader" class="btn btn-outline-primary waves-effect btn-load" style="display: none;" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div id="err-msg"></div>
+                <div class="card-body" id="list" style="overflow-x: auto">
+                    @*<h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>*@
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/Vendors.js"></script>
+<script src="~/Scripts/Custom/VendorsV2.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        if ($("#FilterBy").val()) {
+            getVendorsByFilter('@ViewBag.PageNo', '@ViewBag.PageSize');
+        }
+    });
+</script>

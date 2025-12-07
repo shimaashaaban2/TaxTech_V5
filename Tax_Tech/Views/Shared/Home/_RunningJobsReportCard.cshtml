@@ -1,0 +1,283 @@
+﻿@model List<Tax_Tech.ApiModels.RuningJobQueueApiModel>
+@{
+    long UserID = Convert.ToInt64(Session["ID"]);
+    int RoleID = Convert.ToInt32(Session["RoleID"]);
+}
+
+
+@foreach (var item in Model)
+{
+    try
+    {
+        var rep1Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics(item.SessionID).FirstOrDefault();
+        var rep2Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics2(item.SessionID).FirstOrDefault();
+        var rep3Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics3(item.SessionID);
+
+        <div class="card">
+            <div class="card-header" id="headingCollapse-@item.SessionID" data-toggle="collapse" role="button" data-target="#collapse-@item.SessionID" aria-expanded="true" aria-controls="collapse1">
+                <h3 class="text-warning"><span title="Session ID">@item.SessionID</span> - @item.JobStatusTitle - @item.OrginalFN</h3>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                    </button>
+                    <div class="dropdown-menu">
+
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '0')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            <span>@Tax_Tech.Resources.Resource.GlobalErrors</span>
+                        </a>
+                        @{ if (RoleID != 2)
+                            {
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getRunningJobsRecord()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>@Tax_Tech.Resources.Resource.RefreshJobs</span>
+                                </a>
+
+                                if (item.JobStatus > 2)
+                                {
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getCloseJobV2(@item.SessionID,3,@UserID)">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.CloseJob</span>
+                                    </a>
+                                }
+
+                                <a class="dropdown-item" href="@Url.Action("JobIvoices", "Invoice", new { JobID = @item.SessionID })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>@Tax_Tech.Resources.Resource.JobInvoices</span>
+                                </a>
+
+                                <a class="dropdown-item" href="@Url.Action("JobIvoices", "Invoice", new { JobID = @item.SessionID })">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>@Tax_Tech.Resources.Resource.Reason-Submit Fail Invoices</span>
+                                </a>
+                                <a class="dropdown-item" onclick="GetJobStopPopup()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>Stop</span>
+                                </a>
+                                <a class="dropdown-item" onclick="GetJobResumePopup()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>Resume</span>
+                                </a>
+                                <a class="dropdown-item" onclick="GetJobPriorityPopup()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>Highest Priority</span>
+                                </a>
+                                <a class="dropdown-item" onclick="GetJobResubmitPopup()">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-refresh-cw"><polyline points="23 4 23 10 17 10"></polyline><polyline points="1 20 1 14 7 14"></polyline><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path></svg>
+                                    <span>Resubmit</span>
+                                </a>
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            @{ if (item.TemplateID == 1 || item.TemplateID == 2 || item.TemplateID == 7 || item.TemplateID == 15 || item.TemplateID == 16)
+                {
+                    <div id="collapse-@item.SessionID" role="tabpanel" aria-labelledby="headingCollapse1" class="collapse show" style="">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <p class="font-weight-bolder"><span title="Job Type">@item.JobTypeTitle</span> - @Tax_Tech.Resources.Resource.StartDate: @(item.CreationDate?.ToString("ddd dd MMM yyyy - hh:mm tt"))</p>
+                            </div>
+                            <div class="mt-2" id="runningJobReportContainer">
+                                <div class="">
+
+
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <h4>@Tax_Tech.Resources.Resource.Import - @Tax_Tech.Resources.Resource.Validation</h4>
+                                        </div>
+                                        <div class="col-md-9 row">
+                                            <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-warning">@(rep1Result?.TotalRecords)</h3>
+                                                    <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.TotalDocs</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-warning">@(rep1Result?.ImportInProgress)</h3>
+                                                    <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.InProgress</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mx-1 stats-card" style="background: #e5f8ed;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-success">@(rep1Result?.ImportSuccess)</h3>
+                                                    <h5 class="text-center text-success">@Tax_Tech.Resources.Resource.ImportedDocs</h5>
+                                                </div>
+                                            </div>
+
+                                            <a href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '1')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-danger">@(rep1Result?.ImportFail)</h3>
+                                                    <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.ImportFail</h5>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                else
+                {
+                    <div id="collapse-@item.SessionID" role="tabpanel" aria-labelledby="headingCollapse1" class="collapse show" style="">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center">
+                                <p class="font-weight-bolder"><span title="Job Type">@item.JobTypeTitle</span> - @Tax_Tech.Resources.Resource.StartDate: @(item.CreationDate?.ToString("ddd dd MMM yyyy - hh:mm tt"))</p>
+                            </div>
+                            <div class="mt-2" id="runningJobReportContainer">
+                                <div class="">
+
+
+                                    <div class="row align-items-center">
+                                        <div class="col-md-3">
+                                            <h4>@Tax_Tech.Resources.Resource.Import - @Tax_Tech.Resources.Resource.Validation</h4>
+                                        </div>
+                                        <div class="col-md-9 row">
+                                            <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-warning">@(rep1Result?.TotalRecords)</h3>
+                                                    <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.TotalDocs</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-warning">@(rep1Result?.ImportInProgress)</h3>
+                                                    <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.InProgress</h5>
+                                                </div>
+                                            </div>
+
+                                            <div class="card mx-1 stats-card" style="background: #e5f8ed;">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-success">@(rep1Result?.ImportSuccess)</h3>
+                                                    <h5 class="text-center text-success">@Tax_Tech.Resources.Resource.ImportedDocs</h5>
+                                                </div>
+                                            </div>
+
+                                            <a href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '1')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                                <div class="card-body">
+                                                    <h3 class="text-center text-danger">@(rep1Result?.ImportFail)</h3>
+                                                    <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.ImportFail</h5>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                    @if (item.JobTypeID == 1)
+                                    {
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
+                                                <h4>@Tax_Tech.Resources.Resource.SignUp - @Tax_Tech.Resources.Resource.Sign - @Tax_Tech.Resources.Resource.Submittied </h4>
+                                            </div>
+                                            <div class="col-md-7 row">
+                                                <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-warning">@(rep2Result?.TotalSignUp)</h3>
+                                                        <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.SignUp</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mx-1 stats-card" style="background: #fff3e8; ">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-warning">@(rep2Result?.SignedInvoices)</h3>
+                                                        <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.ESigned</h5>
+                                                    </div>
+                                                </div>
+
+                                                <div class="card mx-1 stats-card" style="background: #e5f8ed; ">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-success">@(rep2Result?.SubmittedSueccs)</h3>
+                                                        <h5 class="text-center text-success">@Tax_Tech.Resources.Resource.Submittied</h5>
+                                                    </div>
+                                                </div>
+
+                                                <a href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '2')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-danger">@(rep2Result?.SignupFaliuer)</h3>
+                                                        <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.SignupFailed</h5>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '3')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-danger">@(rep2Result?.ESignedFaliuer)</h3>
+                                                        <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.ESignedFailed</h5>
+                                                    </div>
+                                                </a>
+
+                                                <a href="javascript:void(0);" onclick="getTaxesPopup(@item.SessionID, '4')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                                    <div class="card-body">
+                                                        <h3 class="text-center text-danger">@(rep2Result?.SubmittedFaliuer)</h3>
+                                                        <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.SubmitFailed</h5>
+                                                    </div>
+                                                </a>
+                                            </div>
+                                        </div>
+
+                                        <div class="row align-items-center">
+                                            <div class="col-md-3">
+                                                <h4>@Tax_Tech.Resources.Resource.Status - @Tax_Tech.Resources.Resource.Update </h4>
+                                            </div>
+
+                                            <div class="col-md-9 row">
+                                                @foreach (var card in rep3Result)
+                                                {
+                                                    if (card.SOrder == 5)
+                                                    {<!-- rejected -->
+                                                        <a href="javascript:void(0);" onclick="getMOFStatus('@item.SessionID','@card.STitle')" class="card mx-1" style="background: #fde8e8; ">
+                                                            <div class="card-body">
+                                                                <h4 class="text-center text-danger">@(card.SCount)</h4>
+                                                                <h5 class="text-center text-danger">@(card.STitle)</h5>
+                                                            </div>
+                                                        </a> }
+                                                    else if (card.SOrder == 3)
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="getTaxesPopup('@item.SessionID',5)" class="card mx-1" style="background: #fde8e8; ">
+                                                            <div class="card-body">
+                                                                <h4 class="text-center text-danger">@(card.SCount)</h4>
+                                                                <h5 class="text-center text-danger">@(card.STitle)</h5>
+                                                            </div>
+                                                        </a> }
+                                                    else if (card.SOrder == 2)
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="getMOFStatus('@item.SessionID','@card.STitle')" class="card mx-1" style="background: #e5f8ed; ">
+                                                            <div class="card-body">
+                                                                <h4 class="text-center text-success">@(card.SCount)</h4>
+                                                                <h5 class="text-center text-success">@(card.STitle)</h5>
+                                                            </div>
+                                                        </a> }
+                                                    else
+                                                    {
+                                                        <a href="javascript:void(0);" onclick="getMOFStatus('@item.SessionID','@card.STitle')" class="card mx-1" style="background: #fff3e8;">
+                                                            <div class="card-body">
+                                                                <h4 class="text-center text-warning">@(card.SCount)</h4>
+                                                                <h5 class="text-center text-warning">@(card.STitle)</h5>
+                                                            </div>
+                                                        </a>}
+                                                }
+
+                                            </div>
+                                        </div>
+
+                                    }
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                }
+            }
+
+        </div>
+    }
+    catch (Exception ex)
+    {
+        <div class="alert alert-danger">@ex.Message</div>
+    }
+}
+<script src="~/Scripts/Custom/JobQueueV2.js"></script>

@@ -1,0 +1,86 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Tax_Tech.Resources.Resource.DocumentSource;
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+
+            <div class="card-body">
+                @using (Ajax.BeginForm("GetDocFilterBySource", "DocumentSource", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "GET",
+OnBegin = "DocumentSourceShowLoader",
+OnComplete = "DocumentSourceList"
+
+}, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    @*<input type="hidden" id="PageNo" name="PageNo" value="1" />
+                    <input type="hidden" id="PageSize" name="PageSize" value="50" />*@
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Issue @Tax_Tech.Resources.Resource.Date </label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />@*value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")"*@
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                   
+                     
+                        <div class="col-md-12 mb-1 form-group">
+                            @*@Html.DropDownList("EReceiptSource", new SelectList(Model.eReceiptSources, "SourceID", "Source"), @Tax_Tech.Resources.Resource.Sources, new { @class = "form-control select2 select2-hidden-accessible", @onchange = "UncheckBox('EReceiptSourceId')" })*@
+                            <select name="source" class="form-control select2 select2-hidden-accessible" id="source">
+                                <option value="all">All Sources</option>
+                                <option value="GSM">GSM</option>
+                                <option value="GSM_Credit">GSM_Credit</option>
+                                <option value="LeasedLine">LeasedLine</option>
+                                <option value="ADSL">ADSL</option>
+                                <option value="WinCash">WinCash</option>
+                            </select>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-DocSourceList" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-DocSourceList-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+                
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                @*<div id="errMsg"></div>*@
+                <div id="DocSource">
+                    <h4 class="text-center"></h4>
+
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Custom/DocumentSource.js"></script>

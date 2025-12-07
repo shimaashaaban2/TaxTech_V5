@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.UserPermissions;
+    IEnumerable<Tax_Tech.ApiModels.UserApiModel> users = ViewBag.Users;
+}
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-12" id="main-err-area">
+
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-3">
+                @Html.DropDownList("UserID", new SelectList(users, "UserID", "DisplayName"), Tax_Tech.Resources.Resource.SelectUser, new { @class = "select2 form-control select2-hidden-accessible", tabindex = "1", oninput= "filterByUserId()" })
+            </div>
+            @*<div class="col-md-5">
+                <button id="btnSearch" tabindex="2" class="btn btn-primary" onclick="">@Tax_Tech.Resources.Resource.Search</button>
+                <button id="btnSearchLoader" class="btn btn-outline-primary waves-effect" type="button" disabled="" style="display: none;">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                </button>
+            </div>*@
+        </div>
+        <div class="row my-2">
+            <div class="col-md-12" id="list">
+                <h4 class="mt-5 text-center">@Tax_Tech.Resources.Resource.SelectUser</h4>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Areas/Configuration/Scripts/Custom/Permissions.js"></script>

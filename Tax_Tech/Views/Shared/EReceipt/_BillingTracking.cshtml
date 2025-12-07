@@ -1,0 +1,53 @@
+﻿@model  IEnumerable<Tax_Tech.ApiModels.EReceiptApi.BillingTrackingModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        @*<div class="card">*@
+            @*<div class="card-header">
+                <div style="width: 250px !important;font-weight:bold"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptNumber</span>: @item.INVOICE_NUMBER</div>
+            </div>*@
+            @*<div class="card-body">*@
+                @*<ul class="timeline">*@
+                    <div style="width: 250px !important;font-weight:bold"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptNumber</span>: @item.INVOICE_NUMBER</div>
+                    <li class="timeline-item">
+                        <span class="timeline-point timeline-point-secondary timeline-point-indicator"></span>
+                        <div class="timeline-event">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                <h6 class="mb-50">@Tax_Tech.Resources.Resource.BillingStatus</h6>
+
+                            </div>
+                            <div class="media-body ml-50">
+                                <span>@item.BillingStatus</span>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="timeline-item">
+                        <span class="timeline-point timeline-point-primary timeline-point-indicator"></span>
+                        <div class="timeline-event">
+                            <div class="d-flex justify-content-between flex-sm-row flex-column mb-sm-0 mb-1">
+                                <h6 class="mb-50">@Tax_Tech.Resources.Resource.Message</h6>
+
+                            </div>
+                            <div class="media-body ml-50">
+
+                                <span>@item.Msg</span>
+                            </div>
+                        </div>
+                    </li>
+
+
+                @*</ul>
+            </div>
+        </div>*@
+      
+
+    }
+}
+else
+{
+    <div class="card-body">
+        <div class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</div>
+    </div>
+}

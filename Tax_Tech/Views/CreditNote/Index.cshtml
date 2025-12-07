@@ -1,0 +1,70 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.CreditNote;
+    string jobType = "2";
+}
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.New
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreateCreditHead()">@Tax_Tech.Resources.Resource.CreditNote</a>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.QuickFilter
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getFilterDocByInternalIDPopup('2')">@Tax_Tech.Resources.Resource.SearchByInternalID</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreditNotes()">@Tax_Tech.Resources.Resource.AllCreditNotes</a>
+                                @*<a class="dropdown-item" href="javascript:void(0);" onclick="getInvoicesOf('6')">@Tax_Tech.Resources.Resource.RejectedDocuments</a>*@
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary" onclick="getFilterFormPopup()">
+                                @Tax_Tech.Resources.Resource.Search
+                            </button>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.Export
+                            </button>
+                            <div class="dropdown-menu" id="exportType">
+                                @*@Html.Partial("_ExcelExportLastWeek")*@
+                                <a class="dropdown-item" href="@Url.Action("ExportToExecl", "CreditNote")">@Tax_Tech.Resources.Resource.Excel</a>
+                            </div>
+                        </div>
+                        <div class="btn-group ml-1">
+                            <a href="@Url.Action("UploadExecl", "Invoice", new { jobType = jobType })" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.UploadExcel</a>
+
+                        </div>
+                        <div id="main-err"></div>
+                    </div>
+                </div>
+                
+                <div class="card-body mt-3" id="list">
+                    <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/CreditNote.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        getAllCreditNotes('@ViewBag.PageNo', '@ViewBag.PageSize');
+    })
+</script>

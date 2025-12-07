@@ -1,0 +1,148 @@
+﻿@model Tax_Tech.Models.ReceivedDocumentListsModel
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.ReceivedDocs;
+}
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-4">
+                        <h4 id="totalCount"></h4>
+                    </div>
+                </div>
+                @using (Ajax.BeginForm("GetRecentDocsByFilterList", "Invoice",
+        new AjaxOptions
+         {
+           HttpMethod = "GET",
+             OnBegin = "showLoader('btn-load', 'btn-load-loader')",
+                OnComplete = "OnGetRecentDocsByFilterList"
+
+             }, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        @*<div class="col-md-3 form-group">
+                    <label>@Tax_Tech.Resources.Resource.PageNo</label>
+                    <input type="number" min="1" class="form-control" id="inPageNo" placeholder="@Tax_Tech.Resources.Resource.PageNo" />
+                </div>*@
+
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <div class="form-check form-check-inline">
+                                <input value="true" class="form-check-input" type="checkbox" name="docTypeOption" id="docTypeOption" onchange="UnSelectOption('docTypeOption','mDocTypeID') " checked />
+                                <label class="form-check-label" for="docTypeOption">@Tax_Tech.Resources.Resource.AllTypes</label>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.DropDownList("mDocTypeID", new SelectList(Model.DocumentType, "DocumentID", "DocumentTypeName"), @Tax_Tech.Resources.Resource.DocumentType, new { @class = "select2 form-control", @onchange = "UncheckBox('docTypeOption')" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class=" col-12 form-group">
+                            <div class="form-check form-check-inline">
+                                <input value="true" class="form-check-input" type="checkbox" name="accountOption" id="accountOption" onchange="UnSelectOption('accountOption','accountName') " checked />
+                                <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllVendors</label>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.DropDownList("accountName", new SelectList(Model.ReceivedVendors, "issuerName", "issuerName"), @Tax_Tech.Resources.Resource.ReceivedVendors, new { @class = "select2 form-control", @onchange = "UncheckBox('accountOption')" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <div class="form-check form-check-inline">
+                                <input value="true" class="form-check-input" type="checkbox" name="mOFStatusOption" id="mOFStatusOption" onchange="UnSelectOption('mOFStatusOption','mOStatus') " checked />
+                                <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllStatuses</label>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.DropDownList("mOStatus", new SelectList(Model.MOFStatus, "SubmitStatusTitle", "SubmitStatusTitle"), @Tax_Tech.Resources.Resource.MOFStatus, new { @class = "select2 form-control", @onchange = "UncheckBox('mOFStatusOption')" })
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <button class="btn btn-primary col-md-12" id="btn-load">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-load-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <button class="btn btn-outline-primary col-md-12" id="btnExportToExecl" onclick="exportToExecl()">@Tax_Tech.Resources.Resource.ExportToExcel</button>
+                    </div>
+                </div>
+
+                <hr />
+                <div class="row">
+                    <div class="col-md-12 form-group">
+                        <a class="btn btn-primary col-md-12" onclick="getReboundPopup()"> @Tax_Tech.Resources.Resource.Rebound</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div class="my-3">
+                    @*<div class="d-flex justify-content-start mb-3">
+                            <button class="btn btn-success mx-1" disabled id="btnInsertAll" onclick="insertDocs(event)">@Tax_Tech.Resources.Resource.InsertSelected</button>
+                        </div>*@
+                    @*<div class="d-flex justify-content-start mb-3">
+                            <button class="btn btn-danger mx-1" disabled id="btnRejectAll" onclick="getRejectDocumentPopup()">@Tax_Tech.Resources.Resource.RejectSelected</button>
+                        </div>*@
+                    <div id="list">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>@Tax_Tech.Resources.Resource.UUID</th>
+                                    <th>@Tax_Tech.Resources.Resource.Details</th>
+                                    <th>@Tax_Tech.Resources.Resource.IssuerName / @Tax_Tech.Resources.Resource.TaxID</th>
+                                    <th>@Tax_Tech.Resources.Resource.Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="5">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/Areas/Configuration/Scripts/select2.full.min.js"></script>
+
+<script src="~/Scripts/select2.full.min.js"></script>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+
+<script src="~/Scripts/Custom/RecentDocs.js"></script>
+<script src="~/Scripts/Custom/Checkbox.js"></script>

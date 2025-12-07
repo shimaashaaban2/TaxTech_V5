@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.ViewModels.PriceDetailsViewModel>
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+                <table class="datatables-basic table table-responsive-md" id="thebasic-datatable1">
+                    <thead>
+                        <tr>
+                            <th>@Tax_Tech.Resources.Resource.Price</th>
+                            <th>@Tax_Tech.Resources.Resource.ChangeDate </th>
+                            <th>@Tax_Tech.Resources.Resource.ChangedBy</th>
+                            <th>@Tax_Tech.Resources.Resource.BasicPrice</th>
+                            <th>@Tax_Tech.Resources.Resource.T2</th>
+                            <th>@Tax_Tech.Resources.Resource.T3</th>
+                            <th>@Tax_Tech.Resources.Resource.MI02</th>
+                            <th>@Tax_Tech.Resources.Resource.MI04</th>
+                            <th>@Tax_Tech.Resources.Resource.Distribution</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @{
+                            if (Model != null)
+                            {
+
+                                if (Model.Count() > 0)
+                                {
+                                    foreach (var item in Model)
+                                    {
+                                        <tr>
+                                            <td>@item.NetPrice</td>
+                                            <td>@Convert.ToDateTime(@item.SwitchDate).ToShortDateString()</td>
+                                            <td>@item.DisplayName</td>
+                                            <td>@item.BasicPrice</td>
+                                            <td>@item.TaxT2</td>
+                                            <td>@item.TaxT3</td>
+                                            <td>@item.HealtInsuranceMI02</td>
+                                            <td>@item.HealtInsuranceMI04</td>
+                                            <td>@item.SellingDistributionExpenses</td>
+                                        </tr>
+                                    }
+                                }
+                            }
+
+                            else
+                            {
+                                <tr><td colspan="3">No Records Found</td></tr>
+                            }
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+</section>

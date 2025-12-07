@@ -1,0 +1,118 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Tax_Tech.Resources.Resource.EReceiptSource;
+}
+
+<!-- Add these script references -->
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-ajax-unobtrusive/3.2.6/jquery.unobtrusive-ajax.min.js"></script>
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                @using (Ajax.BeginForm("GetEReceiptSource", "EReceiptSource", new { area = "" },
+                new AjaxOptions
+                {
+                    HttpMethod = "GET",
+                    OnBegin = "onBegin",
+                    OnComplete = "onComplete",
+                    UpdateTargetId = "ERectSource"
+                }, new { @class = "form-horizontal" }))
+                {
+                    <input type="hidden" id="PageNo" name="PageNo" value="1" />
+                    <input type="hidden" id="PageSize" name="PageSize" value="50" />
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>Issue @Tax_Tech.Resources.Resource.Date </label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 mb-1 form-group">
+                            <select name="source" class="form-control select2 select2-hidden-accessible" id="ERecesource">
+                                <option value="all">All Sources</option>
+                                @*<option value="WinCash">WinCash</option>*@
+                            <option value="EreceiptBilling">EreceiptBilling</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-ERectSourceList" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-ERectSourceList-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="ERectSource">
+                    <!-- Content will be loaded here via AJAX -->
+                    <h4 class="text-center">Use the filters to load data</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Loading handlers
+    function onBegin() {
+        $('#btn-ERectSourceList').hide();
+        $('#btn-ERectSourceList-loader').show();
+    }
+
+    function onComplete() {
+        $('#btn-ERectSourceList').show();
+        $('#btn-ERectSourceList-loader').hide();
+    }
+
+    // Page number click handler
+    function GetErectPageNo(pageNo) {
+        localStorage.setItem("pageNo", pageNo);
+        var source = $("#ERecesource").val(); // Fixed ID
+        var from = $('#From').val();
+        var to = $('#To').val();
+        var pageSize = $("#PageSize").val();
+
+        $.ajax({
+            type: "GET",
+            url: '@Url.Action("GetEReceiptSource", "EReceiptSource")' + `?FromDate=${from}&ToDate=${to}&source=${source}&PageNumber=${pageNo}&pageSize=${pageSize}`,
+            data: {},
+            success: function (data) {
+                $("#ERectSource").html(data); // Fixed ID - removed extra 'c'
+                $("#pageInfo").text(`Page ${pageNo}`);
+            },
+            error: function(xhr, status, error) {
+                console.error("Error loading page:", error);
+                alert("Error loading data");
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var pageNo = parseInt(localStorage.getItem("pageNo")) || 1;
+        var pageSize = 50;
+        var startNo = (pageNo - 1) * pageSize;
+
+        $("#thebasic-datatable tbody tr").each(function (index) {
+            var rowNo = startNo + index + 1;
+            $(this).find("td:first").text(rowNo);
+        });
+    });
+</script>

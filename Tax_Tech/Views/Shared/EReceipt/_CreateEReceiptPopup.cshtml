@@ -1,0 +1,107 @@
+﻿@using Tax_Tech.Repository;
+@{
+    InvoiceApiRepository _invoiceApiRepository = new InvoiceApiRepository();
+    List<Tax_Tech.ViewModels.BranchViewModel> branches = ViewBag.Branches;
+    List<Tax_Tech.ViewModels.VendorViewModel> vendors = ViewBag.Vendors;
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">New E-Receipt</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+
+
+                <div class="card-body">
+                    <div id="PopupMsg"></div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="InvoiceInternalID">
+                                @Tax_Tech.Resources.Resource.DocumentEReceiptNumber
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.DocumentEReceiptNumber" name="InvoiceInternalID" id="InvoiceInternalID" tabindex="1" autofocus />
+                        </div>
+
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="Invoice-IssueDate">
+                                @Tax_Tech.Resources.Resource.InvoiceIssueDate
+                                <span class="req">*</span>
+                            </label>
+                            <input tabindex="2" value="@DateTime.Now.ToString("yyyy-MM-dd")" type="text" id="Invoice-IssueDate" name="Invoice-IssueDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly">
+                        </div>
+                    </div>
+
+                    <div class="row">
+                     
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label class="control-label" for="OwnerID">
+                                    @Tax_Tech.Resources.Resource.Branch
+                                    <span class="req">*</span>
+                                </label>
+                                @if (branches != null)
+                                {
+                                    @Html.DropDownList("OwnerID", new SelectList(branches, "BranchID", "BranchName"), Tax_Tech.Resources.Resource.Branch, new { @class = "select2 form-control form-control-lg select2-hidden-accessible", tabindex = "4" })
+                                }
+                            </div>
+                        </div>
+                        <div class="col-md-6" data-select2-id="20">
+                            <label class="control-label" for="VendorID">
+                                @Tax_Tech.Resources.Resource.InvoiceTo
+                                <span class="req">*</span>
+                            </label>
+                            <div class="position-relative">
+                                <input type="text" tabindex="3" class="form-control" id="autocomplete-input" name="InvoiceTo" placeholder="Type at least 3 characters" autocomplete="off" />
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="card-footer">
+                                <button type="submit" class="btn btn-primary" id="EReceipt-Btn" tabindex="18">Create E-Receipt</button>
+                                <button id="EReceipt-Btn-loader" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<link rel="stylesheet" href="~/Content/style/AutoComplete.css">
+<script src="~/Scripts/Custom/EReceipt-autocomplete.js"></script>
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+    var basicPickr = $('.flatpickr-basic');
+    if (basicPickr.length) {
+        basicPickr.flatpickr({
+            format: 'YYYY/MM/dd'
+        });
+    }
+</script>

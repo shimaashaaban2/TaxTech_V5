@@ -1,0 +1,156 @@
+﻿@model  Tax_Tech.Models.EReceiptStatusListsModel
+@{
+
+    ViewBag.Title = @Tax_Tech.Resources.Resource.CancelReceipt;
+
+}
+
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                @using (Ajax.BeginForm("CancelbyReceiptNumber", "EReceipt", new { area = "" },
+                  new AjaxOptions
+                  {
+                      HttpMethod = "Post",
+                      OnBegin = "OnGetAllReceiptsByFilterShowLoader",
+                      OnComplete = "OnGetAllReceiptsByFilterHideLoader"
+
+                  }, new
+                  {
+                      @class = "form-horizontal"
+                  }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="EReceiptNumber" name="EReceiptNumber" placeholder="@Tax_Tech.Resources.Resource.EReceiptNumber" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-EReceipt-number" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-EReceiptNumber-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+                @using (Ajax.BeginForm("CancelbyReceiptUUID", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "OnGetAllReceiptsByFilterShowLoader",
+                   OnComplete = "OnGetAllReceiptsByFilterHideLoader"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" id="EReceiptUUID" name="EReceiptUUID" class="form-control active" placeholder="@Tax_Tech.Resources.Resource.UUID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="Btn-EReceipt-UUID" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="Btn-EReceiptUUID-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+
+
+                @using (Ajax.BeginForm("GetCancelbyDateWithPagination", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "OnGetAllReceiptsByFilterShowLoader",
+                   OnComplete = "OnGetAllReceiptsByFilterHideLoader"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <input type="hidden" id="PageNo" name="PageNo" value="1" />
+                    <input type="hidden" id="PageSize" name="PageSize" value="100" />
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.RequestDate</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.SendDate" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    @*<div class="row hidden">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>*@
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-ReceiptGetLogs" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-ReceiptGetLogs-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+
+
+                @*<div class="row">
+                    <div class="form-group col-md-12">
+                        <button class="btn btn-success col-md-12" disabled id="btnCancelAll" onclick="changeRefundBulk()">@Tax_Tech.Resources.Resource.Cancel</button>
+
+                        <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnCancelAll-loader" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                        </button>
+                    </div>
+
+                </div>*@
+
+
+            </div>
+
+        </div>
+    </div>
+
+    <div class="col-md-9">
+
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div id="successMsg"></div>
+
+                <div id="EReceipt-Logs">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        ClearLogInputs();
+    });
+</script>
+<script src="~/Scripts/Custom/Public.js"></script>
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/EReceipt.js"></script>
+<script src="~/Scripts/Custom/Checkbox.js"></script>

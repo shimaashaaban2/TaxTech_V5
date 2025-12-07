@@ -1,0 +1,52 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.InternalReject;
+}
+
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.QuickFilter
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getRejectedInvoices('7')">@Tax_Tech.Resources.Resource.AllInternallyRejectedDocs</a>
+                            </div>
+                        </div> 
+                        <div class="btn-group" style="margin-left: 10px;">
+                            @*<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.Export
+                            </button>
+                            <div class="dropdown-menu">*@
+                                @*<a class="dropdown-item" href="javascript:void(0);">PDF</a>*@
+                               @* <a target="_blank" class="dropdown-item" href="@Url.Action("ExportToExecl", "Invoice",new { status=7})">@Tax_Tech.Resources.Resource.Execl</a>*@
+                                <a class="btn btn-outline-secondary" onclick="ExportToExcel(7)" id="InternalRejectToExcel">@Tax_Tech.Resources.Resource.Excel</a>
+                            @*</div>*@
+                        </div>
+                        <div id="main-err"></div>
+                    </div>
+                </div>
+                
+                <div class="card-body mt-3" id="list">
+                    <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/Invoice.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        getRejectedInvoices(7);
+    });
+</script>

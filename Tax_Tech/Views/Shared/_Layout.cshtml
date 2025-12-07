@@ -1,0 +1,896 @@
+﻿<!DOCTYPE html>
+<html class="loading" lang="en" data-textdirection="ltr">
+<!-- BEGIN: Head-->
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0, minimal-ui">
+
+    <link href="~/Content/PagedList.css" rel="stylesheet" />
+
+    <title>Tax Tech - @ViewBag.Title</title>
+    @if (Request.Cookies["lang"] != null && Request.Cookies["lang"].Value.Contains("ar"))
+    {
+        <link href="~/Areas/Configuration/Content/app-assets/vendors/css/forms/wizard/bs-stepper.min.css" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap" rel="stylesheet">
+        <style>
+            * {
+                font-family: 'Cairo', sans-serif;
+            }
+
+            .alert {
+                padding: 10px !important;
+            }
+        </style>
+        <script src="~/Scripts/Custom/Cookie.js"></script>
+        <link href="~/Content/app-assets/vendors/css/forms/wizard/bs-stepper.min.css" rel="stylesheet" />
+        <!-- BEGIN: Vendor CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/vendors-rtl.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/charts/apexcharts.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/extensions/toastr.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/katex.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/monokai-sublime.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/quill.snow.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/forms/select/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/extensions/dragula.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/pickers/pickadate/pickadate.css">
+        <!-- END: Vendor CSS-->
+        <!-- BEGIN: Theme CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/bootstrap-extended.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/colors.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/components.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/themes/dark-layout.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/themes/bordered-layout.css">
+        <!-- END: Theme CSS-->
+        <!-- BEGIN: Page CSS-->
+
+        <link href="~/Content/app-assets/css/pages/app-invoice-list.css" rel="stylesheet" />
+        <link href="~/Content/app-assets/css/pages/app-invoice.min.css" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/core/menu/menu-types/vertical-menu.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/pages/dashboard-ecommerce.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/plugins/charts/chart-apex.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/plugins/extensions/ext-component-toastr.css">
+        <!-- END: Page CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/custom-rtl.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/assets/css/style-rtl.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/plugins/forms/form-validation.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css-rtl/plugins/forms/form-wizard.css">
+    }
+    else
+    {
+        <link href="~/Areas/Configuration/Content/app-assets/vendors/css/forms/wizard/bs-stepper.min.css" rel="stylesheet" />
+        <style>
+            * {
+                font-family: 'Poppins', sans-serif;
+            }
+        </style>
+        <script src="~/Scripts/Custom/Cookie.js"></script>
+        <!-- BEGIN: Vendor CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/vendors.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/charts/apexcharts.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/extensions/toastr.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/katex.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/monokai-sublime.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/editors/quill/quill.snow.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/forms/select/select2.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/pickers/flatpickr/flatpickr.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/extensions/dragula.min.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/vendors/css/pickers/pickadate/pickadate.css">
+        <!-- END: Vendor CSS-->
+        <!-- BEGIN: Theme CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/bootstrap.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/bootstrap-extended.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/colors.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/components.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/themes/dark-layout.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/themes/bordered-layout.css">
+        <link href="~/Content/app-assets/css/pages/app-invoice-list.css" rel="stylesheet" />
+        <link href="~/Content/app-assets/css/pages/app-invoice.min.css" rel="stylesheet" />
+        <!-- END: Theme CSS-->
+        <!-- BEGIN: Page CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/core/menu/menu-types/vertical-menu.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/plugins/extensions/ext-component-toastr.css">
+        <!-- END: Page CSS-->
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/plugins/forms/form-validation.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/plugins/forms/form-wizard.css">
+
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/pages/dashboard-ecommerce.css">
+        <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/plugins/charts/chart-apex.css">
+    }
+
+    @* Sweet Alert *@
+    <script src="~/Scripts/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="~/Content/sweetalert2.min.css">
+
+    <!-- Template files -->
+    <link rel="stylesheet" type="text/css" href="~/Content/app-assets/css/plugins/extensions/ext-component-sweet-alerts.css">
+
+    <!-- END: Page CSS-->
+    <!-- BEGIN: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/Content/assets/css/style.css">
+    <!-- END: Custom CSS-->
+    <!-- END: Custom CSS-->
+    <link rel="stylesheet" type="text/css" href="~/Content/DataTables/datatables.min.css" />
+    <link href="~/Content/Site.css" rel="stylesheet" />
+    <style>
+        #list {
+            overflow-x: auto;
+            margin-right: 20px !important;
+        }
+    </style>
+</head>
+<!-- END: Head-->
+<!-- BEGIN: Body-->
+@if (Request.Cookies["mode"] != null && Request.Cookies["mode"].Value.Contains("white"))
+{
+    <body class="vertical-layout vertical-menu-modern  navbar-floating footer-static" data-open="click" data-menu="vertical-menu-modern" data-col="">
+        <!-- BEGIN: Header-->
+        <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow">
+            <div class="navbar-container d-flex content">
+                <div class="bookmark-wrapper d-flex align-items-center">
+                    <ul class="nav navbar-nav d-xl-none">
+                        <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
+                    </ul>
+
+                    @*<ul class="nav navbar-nav">
+
+                        </ul>*@
+
+                    <h2 class="nav navbar-nav" id="navbar-title-special">@ViewBag.title : @Convert.ToString(Session["EntityName"])...</h2>
+                </div>
+                <!-- Right Menu Bar -->
+                <ul class="nav navbar-nav align-items-center ml-auto">
+
+                    <li class="nav-item dropdown dropdown-language">
+
+                        @if (Request.Cookies["lang"] != null && Request.Cookies["lang"].Value.Contains("ar"))
+                        {
+                            <a class="dropdown-item" href="@Url.Action("Index", "Lang", new { lang = "en-US" })" data-language="en">
+                                English
+                            </a>
+
+                        }
+                        else
+                        {
+                            <a class="dropdown-item" href="@Url.Action("Index", "Lang", new { lang = "ar" })" data-language="ar">
+                                Arabic
+                            </a>
+                        }
+                    </li>
+
+                    @if (Request.Cookies["mode"] != null && Request.Cookies["mode"].Value.Contains("white"))
+                    {
+                        <li class="nav-item d-none d-lg-block"><a href="@Url.Action("DarkMode", "Lang", new { mode = "dark" })" class="nav-link nav-link-style" data-prev-layout=""><i class="ficon" data-feather="moon"></i></a></li>
+                    }
+                    else
+                    {
+                        <li class="nav-item d-none d-lg-block"><a href="@Url.Action("DarkMode", "Lang", new { mode = "white" })" class="nav-link nav-link-style"><i class="ficon" data-feather="sun"></i></a></li>
+                    }
+
+                    <li class="nav-item dropdown dropdown-user">
+                        <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">@Session["DisplayName"]</span><span class="user-status"></span></div>
+                            <span class="avatar">
+                                @if (Session["ProfileImage"] != null)
+                                {
+                                    <img class="round" src="data:image\/jpg;base64,@Html.Raw(Convert.ToBase64String((byte[])Session["ProfileImage"]))" alt="My-Profile" height="40" width="40">
+                                }
+                                else
+                                {
+                                    <img class="round" src="~/Content/imgs/avater.png" alt="avatar" height="40" width="40">
+                                }
+
+                                <span class="avatar-status-online"></span>
+                            </span>
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user" style="width: 100% !important;">
+                            <a class="dropdown-item" href="JavaScript:void(0)" onclick="getChangeMyPasswordPopup(@Session["ID"])">
+                                @*onclick="getChangeMyPasswordPopup(@Session["ID"])"*@
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                                <span style="word-wrap: break-word !important">@Tax_Tech.Resources.Resource.Password</span>
+                            </a>
+                            <a class="dropdown-item" href="@Url.Action("Logout","Accounts",new { area=""})"><i class="mr-50" data-feather="power"></i> @Tax_Tech.Resources.Resource.Logout</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+        <!-- END: Header-->
+        <!-- BEGIN: Main Menu-->
+        <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+            <div class="navbar-header">
+                <ul class="nav navbar-nav flex-row">
+                    <li class="nav-item mr-auto">
+                        <a class="navbar-brand" href="#">
+                            <img src="~/Content/imgs/Logo.png" height="42" alt="TaxTech" /><span class="brand-logo"></span>
+
+                        </a>
+                    </li>
+                    <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+                </ul>
+            </div>
+            <div class="shadow-bottom"></div>
+            <div class="main-menu-content">
+                <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                    @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "2")
+                    {
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","Home")"><i data-feather="home"></i><span class="menu-item" data-i18n="Analytics">@(Tax_Tech.Resources.Resource.Home)</span></a>
+                        </li>
+
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.MasterData)</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Index", "Vendors")"><i data-feather="users"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Vendors</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Index", "Items")"><i data-feather="list"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ItemsManagment</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.New)</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="d-flex align-items-center" onclick="getCreateInvoiceHead()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Invoice</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" onclick="getCreateDebitHead()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.DebitNote</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="javascript:void(0);" onclick="getCreateCreditHead()"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.CreditNote</span></a>
+                                </li>
+
+                                @*<li>
+                        <a class="d-flex align-items-center" onclick="getCreateEReceiptPopup()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.EReceipt)</span></a>
+                    </li>*@
+
+                            </ul>
+                        </li>
+
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Documents)</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("AllDoc","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.SubmittedDocs)</span></a>
+                                </li>
+
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Index","Submission")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.TrackSubmission)</span></a>
+                                </li>
+
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("PendingDocs","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.PendingApproval)</span></a>
+                                </li>
+
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "1")
+                    {
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","LogsDashBoard")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.LogsDashboard)</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("AllReceipts","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ReceiptList</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("EReceiptTracking","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.EReceiptTracking)</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("CancelReceipt","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.CancelReceipt</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("RefundReceiptFilter","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.RefundedReceipt</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("TotalReport","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TotalReports</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","EReceiptTracking")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.JobTracking</span></a>
+                        </li>
+                        <li>
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","EReceiptSource")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.EReceiptSource</span></a>
+                        </li>
+
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Logs)</span></a>
+                            <ul class="menu-content">
+
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("SubmissionLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ETASubmissionLog</span></a>
+                                </li>
+                                @*<li>
+                        <a class="d-flex align-items-center" href="@Url.Action("WinCashLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.WinCashLog)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("BillingLogs","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.BillingLog)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("BillingValidationLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.BillingValidationLog)</span></a>
+                    </li>*@
+                            </ul>
+                        </li>
+                    }
+
+
+                    @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "2")
+                    {
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather='pie-chart'></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Reports)</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Vendors","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Vendors)</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Branches","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Branches)</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("Items","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Items)</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("DocumentsCount","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.DocCount</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("DocumentsValues","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TaxValues</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("MOFResult","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate" title="@Tax_Tech.Resources.Resource.MOFResult">@Tax_Tech.Resources.Resource.MOFResult</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("FailedImportedDocs","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate" title="@Tax_Tech.Resources.Resource.DocImportFailed">@Tax_Tech.Resources.Resource.DocImportFailed</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("GetSearchDocs", "Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.SearchDocs</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("RejectedLocally","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.InternalReject</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("MOFReject","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.RejectedDocuments</span></a>
+                                </li>
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("TaxDetailsReport","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TaxDetailsReport</span></a>
+                                </li>
+                            </ul>
+
+                        </li>
+                        <li class="nav-item has-sub">
+                            <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.ReceivedDocs)</span></a>
+                            <ul class="menu-content">
+                                <li>
+                                    <a class="d-flex align-items-center" href="@Url.Action("GetRecentDocs", "Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ReceivedDocs</span></a>
+                                </li>
+                            </ul>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","JobQueue")"><i data-feather="clock"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.JobQueue</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","JobTracking")"><i data-feather="clock"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.JobTracking</span></a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","DocumentSource")"><i data-feather="clock"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.DocumentSource</span></a>
+                        </li>
+                       
+                        <li class="nav-item">
+                            <a class="d-flex align-items-center" href="@Url.Action("Index","Configuration/Home")"><i data-feather="settings"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Configuration</span></a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </div>
+        <!-- END: Main Menu-->
+        <!-- BEGIN: Content-->
+        <div class="app-content content ">
+            <div class="content-overlay"></div>
+            <div class="header-navbar-shadow"></div>
+            <div class="content-wrapper">
+                <div class="content-header row">
+                </div>
+                <!-- BEGIN: Vendor JS-->
+                <script src="~/Content/app-assets/vendors/js/vendors.min.js"></script>
+                @*<script src="~/Scripts/underscore-min.js"></script>*@
+                <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+                <script src="~/Scripts/Custom/Public.js"></script>
+                <!-- BEGIN Vendor JS-->
+                <!-- END: Theme JS-->
+                <div class="content-body">
+                    @RenderBody()
+                </div>
+            </div>
+        </div>
+        <button type="button" class="btn btn-outline-secondary" id="ShowCreateModal" data-toggle="modal" data-target="#NewAccount"></button>
+        <!-- END: Content-->
+        <div class="sidenav-overlay"></div>
+        <div class="drag-target"></div>
+        <!-- BEGIN: Footer-->
+        <footer class="footer footer-static footer-light">
+            <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021 <span class="d-none d-sm-inline-block">, All rights Reserved Version 4.0</span></span></p>
+        </footer>
+        <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+        <div id="popupDev"></div>
+        <!-- END: Footer-->
+        <!-- BEGIN: Page Vendor JS-->
+        @*<script src="~/Content/app-assets/vendors/js/charts/apexcharts.min.js"></script>*@
+        <script src="~/Content/app-assets/vendors/js/extensions/toastr.min.js"></script>
+        <!-- END: Page Vendor JS-->
+        <!-- BEGIN: Theme JS-->
+        <script src="~/Content/app-assets/js/core/app-menu.js"></script>
+        <script src="~/Content/app-assets/js/core/app.js"></script>
+        @*<script src="~/Content/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>*@
+
+        @*ahmed*@
+        <script src="~/Content/app-assets/js/scripts/forms/form-wizard.js"></script>
+        <script src="~/Content/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+        <script src="~/Content/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+        <script src="~/Content/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+        <!-- BEGIN: Page JS-->
+        <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+        <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+        <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+        <script src="~/Content/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+        <script src="~/Content/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+
+        @*<script src="~/Content/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>*@
+        <!-- END: Page JS-->
+        <script src="~/Content/app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
+        <script type="text/javascript" src="~/Content/DataTables/datatables.min.js"></script>
+
+        <script src="~/Scripts/select2.full.min.js"></script>
+        <script src="~/Scripts/Custom/Popup.js"></script>
+        <script src="~/Scripts/Custom/PublicConfig.js"></script>
+
+        <script src="~/Content/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+        <script src="~/Content/app-assets/js/core/app-invoice.min.js"></script>
+        @*<script src="~/Content/app-assets/vendors/js/charts/apexcharts.min.js"></script>*@
+        @*<script src="~/Content/app-assets/js/scripts/pages/dashboard-analytics.js"></script>*@
+        @*<script src="~/Scripts/card-statistics.js"></script>*@
+        <script src="~/Content/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+
+        <script>
+            $(window).on('load', function () {
+                if (feather) {
+                    feather.replace({
+                        width: 14,
+                        height: 14
+                    });
+                }
+            })
+        </script>
+        <script>
+            window.addEventListener('load', function () {
+
+                if (location.href.includes('Home')) {
+                    $.app.nav.navItem[0].classList.add('active');
+                }
+                else if (localStorage.getItem('current-nav-item')) {
+                    let index = localStorage.getItem('current-nav-item');
+                    if (localStorage.getItem('has-sub')) {
+                        $.app.nav.navItem[localStorage.getItem('has-sub')].classList.add('open');
+                    }
+                    $.app.nav.navItem[parseInt(index)].classList.add('active');
+                }
+                [...$.app.nav.navItem].forEach((e, i) => {
+                    if (!e.className.includes('has-sub')) {
+                        e.onclick = function () {
+                            [...$.app.nav.navItem].forEach((e, i) => {
+                                e.classList.remove('active');
+                            });
+                            localStorage.setItem('current-nav-item', i);
+                            e.classList.add('active');
+                            localStorage.removeItem('has-sub');
+                        }
+                    }
+                    else {
+                        e.onclick = function () {
+                            if (![...document.body.classList].includes('menu-collapsed'))
+                                localStorage.setItem('has-sub', i);
+                        }
+                    }
+                });
+            });
+        </script>
+        <script src="~/Scripts/Custom/menu_collapse.js"></script>
+        @*<script src="~/Scripts/Custom/darkMode.js"></script>*@
+    </body>
+}
+else
+{
+<body class="vertical-layout vertical-menu-modern navbar-floating footer-static dark-layout" data-open="click" data-menu="vertical-menu-modern" data-col="">
+    <!-- BEGIN: Header-->
+    <nav class="header-navbar navbar navbar-expand-lg align-items-center floating-nav navbar-light navbar-shadow">
+        <div class="navbar-container d-flex content">
+            <div class="bookmark-wrapper d-flex align-items-center">
+                <ul class="nav navbar-nav d-xl-none">
+                    <li class="nav-item"><a class="nav-link menu-toggle" href="javascript:void(0);"><i class="ficon" data-feather="menu"></i></a></li>
+                </ul>
+
+                @*<ul class="nav navbar-nav">
+
+                    </ul>*@
+
+                <h2 class="nav navbar-nav" id="navbar-title-special">@ViewBag.title : @Convert.ToString(Session["EntityName"])...</h2>
+            </div>
+            <!-- Right Menu Bar -->
+            <ul class="nav navbar-nav align-items-center ml-auto">
+
+                <li class="nav-item dropdown dropdown-language">
+                    <a class="nav-link dropdown-toggle" id="dropdown-flag" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                        @if (Request.Cookies["lang"] != null && Request.Cookies["lang"].Value.Contains("ar"))
+                        {
+                            <span class="selected-language">
+                                Arabic
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="selected-language">
+                                English
+                            </span>
+                        }
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-flag">
+                        <a class="dropdown-item" href="@Url.Action("Index", "Lang", new { lang = "en-US" })" data-language="en">
+                            English
+                        </a>
+                        <a class="dropdown-item" href="@Url.Action("Index", "Lang", new { lang = "ar" })" data-language="ar">
+                            Arabic
+                        </a>
+                    </div>
+                </li>
+
+                @if (Request.Cookies["mode"] != null && Request.Cookies["mode"].Value.Contains("white"))
+                {
+                    <li class="nav-item d-none d-lg-block"><a href="@Url.Action("DarkMode", "Lang", new { mode = "dark" })" class="nav-link nav-link-style" data-prev-layout=""><i class="ficon" data-feather="moon"></i></a></li>
+                }
+                else
+                {
+                    <li class="nav-item d-none d-lg-block"><a href="@Url.Action("DarkMode", "Lang", new { mode = "white" })" class="nav-link nav-link-style"><i class="ficon" data-feather="sun"></i></a></li>
+                }
+
+                <li class="nav-item dropdown dropdown-user">
+                    <a class="nav-link dropdown-toggle dropdown-user-link" id="dropdown-user" href="javascript:void(0);" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <div class="user-nav d-sm-flex d-none"><span class="user-name font-weight-bolder">@Session["DisplayName"]</span><span class="user-status"></span></div>
+                        <span class="avatar">
+                            @if (Session["ProfileImage"] != null)
+                            {
+                                <img class="round" src="data:image\/jpg;base64,@Html.Raw(Convert.ToBase64String((byte[])Session["ProfileImage"]))" alt="My-Profile" height="40" width="40">
+                            }
+                            else
+                            {
+                                <img class="round" src="~/Content/imgs/avater.png" alt="avatar" height="40" width="40">
+                            }
+
+                            <span class="avatar-status-online"></span>
+                        </span>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdown-user" style="width: 100% !important;">
+                        <a class="dropdown-item" href="JavaScript:void(0)" onclick="getChangeMyPasswordPopup(@Session["ID"])">
+                            @*onclick="getChangeMyPasswordPopup(@Session["ID"])"*@
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-lock"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span style="word-wrap: break-word !important">@Tax_Tech.Resources.Resource.Password</span>
+                        </a>
+                        <a class="dropdown-item" href="@Url.Action("Logout","Accounts",new { area=""})"><i class="mr-50" data-feather="power"></i> @Tax_Tech.Resources.Resource.Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <!-- END: Header-->
+    <!-- BEGIN: Main Menu-->
+    <div class="main-menu menu-fixed menu-light menu-accordion menu-shadow" data-scroll-to-active="true">
+        <div class="navbar-header">
+            <ul class="nav navbar-nav flex-row">
+                <li class="nav-item mr-auto">
+                    <a class="navbar-brand" href="#">
+                        <img src="~/Content/imgs/Logo.png" height="42" alt="TaxTech" /><span class="brand-logo"></span>
+
+                    </a>
+                </li>
+                <li class="nav-item nav-toggle"><a class="nav-link modern-nav-toggle pr-0" data-toggle="collapse"><i class="d-block d-xl-none text-primary toggle-icon font-medium-4" data-feather="x"></i><i class="d-none d-xl-block collapse-toggle-icon font-medium-4  text-primary" data-feather="disc" data-ticon="disc"></i></a></li>
+            </ul>
+        </div>
+        <div class="shadow-bottom"></div>
+        <div class="main-menu-content">
+            <ul class="navigation navigation-main" id="main-menu-navigation" data-menu="menu-navigation">
+                @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "2")
+                {
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","Home")"><i data-feather="home"></i><span class="menu-item" data-i18n="Analytics">@(Tax_Tech.Resources.Resource.Home)</span></a>
+                    </li>
+
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.MasterData)</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Index", "Vendors")"><i data-feather="users"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Vendors</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Index", "Items")"><i data-feather="list"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ItemsManagment</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.New)</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a class="d-flex align-items-center" onclick="getCreateInvoiceHead()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Invoice</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" onclick="getCreateDebitHead()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.DebitNote</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="javascript:void(0);" onclick="getCreateCreditHead()"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.CreditNote</span></a>
+                            </li>
+
+                            @*<li>
+                        <a class="d-flex align-items-center" onclick="getCreateEReceiptPopup()" href="javascript:void(0);"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.EReceipt)</span></a>
+                    </li>*@
+
+                        </ul>
+                    </li>
+
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Documents)</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("AllDoc","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.SubmittedDocs)</span></a>
+                            </li>
+
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Index","Submission")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.TrackSubmission)</span></a>
+                            </li>
+
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("PendingDocs","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.PendingApproval)</span></a>
+                            </li>
+
+                        </ul>
+                    </li>
+                }
+
+
+                @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "1")
+                {
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","LogsDashBoard")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.LogsDashboard)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("AllReceipts","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ReceiptList</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("EReceiptTracking","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.EReceiptTracking)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("CancelReceipt","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.CancelReceipt</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("RefundReceiptFilter","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.RefundedReceipt</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("TotalReport","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TotalReports</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","EReceiptTracking")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.JobTracking</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","EReceiptSource")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.EReceiptSource</span></a>
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Logs)</span></a>
+                        <ul class="menu-content">
+
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("SubmissionLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ETASubmissionLog</span></a>
+                            </li>
+                            @*<li>
+                        <a class="d-flex align-items-center" href="@Url.Action("WinCashLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.WinCashLog)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("BillingLogs","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.BillingLog)</span></a>
+                    </li>
+                    <li>
+                        <a class="d-flex align-items-center" href="@Url.Action("BillingValidationLog","EReceipt")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.BillingValidationLog)</span></a>
+                    </li>*@
+                        </ul>
+                    </li>
+                }
+
+                @if (Tax_Tech.Classes.PublicConfig.IsErecipt == "2")
+                {
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather='pie-chart'></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Reports)</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Vendors","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Vendors)</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Branches","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Branches)</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("Items","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.Items)</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("DocumentsCount","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.DocCount</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("DocumentsValues","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TaxValues</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("MOFResult","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate" title="@Tax_Tech.Resources.Resource.MOFResult">@Tax_Tech.Resources.Resource.MOFResult</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("FailedImportedDocs","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate" title="@Tax_Tech.Resources.Resource.DocImportFailed">@Tax_Tech.Resources.Resource.DocImportFailed</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("GetSearchDocs", "Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.SearchDocs</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("RejectedLocally","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.InternalReject</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("MOFReject","Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.RejectedDocuments</span></a>
+                            </li>
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("TaxDetailsReport","Reports")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.TaxDetailsReport</span></a>
+                            </li>
+                        </ul>
+
+                    </li>
+                    <li class="nav-item has-sub">
+                        <a class="d-flex align-items-center" href="#"><i data-feather="file-text"></i><span class="menu-title text-truncate">@(Tax_Tech.Resources.Resource.ReceivedDocs)</span></a>
+                        <ul class="menu-content">
+                            <li>
+                                <a class="d-flex align-items-center" href="@Url.Action("GetRecentDocs", "Invoice")"><i data-feather="check-square"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.ReceivedDocs</span></a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","JobQueue")"><i data-feather="clock"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.JobQueue</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","JobTracking")"><i data-feather="clock"></i><span class="menu-title text-truncate">Job Tracking</span></a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","DocumentSource")"><i data-feather="clock"></i><span class="menu-title text-truncate">Document Source</span></a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="d-flex align-items-center" href="@Url.Action("Index","Configuration/Home")"><i data-feather="settings"></i><span class="menu-title text-truncate">@Tax_Tech.Resources.Resource.Configuration</span></a>
+                    </li>
+
+                }
+            </ul>
+        </div>
+    </div>
+
+    <!-- END: Main Menu-->
+    <!-- BEGIN: Content-->
+    <div class="app-content content ">
+        <div class="content-overlay"></div>
+        <div class="header-navbar-shadow"></div>
+        <div class="content-wrapper">
+            <div class="content-header row">
+            </div>
+            <!-- BEGIN: Vendor JS-->
+            <script src="~/Content/app-assets/vendors/js/vendors.min.js"></script>
+            @*<script src="~/Scripts/underscore-min.js"></script>*@
+            <script src="~/Scripts/jquery.unobtrusive-ajax.js"></script>
+            <script src="~/Scripts/Custom/Public.js"></script>
+            <!-- BEGIN Vendor JS-->
+            <!-- END: Theme JS-->
+            <div class="content-body">
+                @RenderBody()
+            </div>
+        </div>
+    </div>
+    <button type="button" class="btn btn-outline-secondary" id="ShowCreateModal" data-toggle="modal" data-target="#NewAccount"></button>
+    <!-- END: Content-->
+    <div class="sidenav-overlay"></div>
+    <div class="drag-target"></div>
+    <!-- BEGIN: Footer-->
+    <footer class="footer footer-static footer-light">
+        <p class="clearfix mb-0"><span class="float-md-left d-block d-md-inline-block mt-25">COPYRIGHT &copy; 2021 <span class="d-none d-sm-inline-block">, All rights Reserved Version 4.0</span></span></p>
+    </footer>
+    <button class="btn btn-primary btn-icon scroll-top" type="button"><i data-feather="arrow-up"></i></button>
+    <div id="popupDev"></div>
+    <!-- END: Footer-->
+    <!-- BEGIN: Page Vendor JS-->
+    @*<script src="~/Content/app-assets/vendors/js/charts/apexcharts.min.js"></script>*@
+
+  
+
+    <script src="~/Content/app-assets/vendors/js/extensions/toastr.min.js"></script>
+    <!-- END: Page Vendor JS-->
+    <!-- BEGIN: Theme JS-->
+    <script src="~/Content/app-assets/js/core/app-menu.js"></script>
+    <script src="~/Content/app-assets/js/core/app.js"></script>
+    @*<script src="~/Content/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>*@
+
+    @*ahmed*@
+    <script src="~/Content/app-assets/js/scripts/forms/form-wizard.js"></script>
+    <script src="~/Content/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+    <script src="~/Content/app-assets/vendors/js/forms/select/select2.full.min.js"></script>
+    <script src="~/Content/app-assets/vendors/js/forms/validation/jquery.validate.min.js"></script>
+    <!-- BEGIN: Page JS-->
+    <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.js"></script>
+    <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.date.js"></script>
+    <script src="~/Content/app-assets/vendors/js/pickers/pickadate/picker.time.js"></script>
+    <script src="~/Content/app-assets/vendors/js/pickers/pickadate/legacy.js"></script>
+    <script src="~/Content/app-assets/vendors/js/pickers/flatpickr/flatpickr.min.js"></script>
+
+    @*<script src="~/Content/app-assets/js/scripts/pages/dashboard-ecommerce.js"></script>*@
+    <!-- END: Page JS-->
+    <script src="~/Content/app-assets/js/scripts/forms/pickers/form-pickers.js"></script>
+    <script type="text/javascript" src="~/Content/DataTables/datatables.min.js"></script>
+
+    <script src="~/Scripts/select2.full.min.js"></script>
+    <script src="~/Scripts/Custom/Popup.js"></script>
+    <script src="~/Scripts/Custom/PublicConfig.js"></script>
+
+    <script src="~/Content/app-assets/vendors/js/forms/repeater/jquery.repeater.min.js"></script>
+    <script src="~/Content/app-assets/js/core/app-invoice.min.js"></script>
+    @*<script src="~/Content/app-assets/vendors/js/charts/apexcharts.min.js"></script>*@
+    @*<script src="~/Content/app-assets/js/scripts/pages/dashboard-analytics.js"></script>*@
+    @*<script src="~/Scripts/card-statistics.js"></script>*@
+    <script src="~/Content/app-assets/vendors/js/forms/wizard/bs-stepper.min.js"></script>
+
+    <script>
+        $(window).on('load', function () {
+            if (feather) {
+                feather.replace({
+                    width: 14,
+                    height: 14
+                });
+            }
+        })
+    </script>
+    <script>
+        window.addEventListener('load', function () {
+
+            if (location.href.includes('Home')) {
+                $.app.nav.navItem[0].classList.add('active');
+            }
+            else if (localStorage.getItem('current-nav-item')) {
+                let index = localStorage.getItem('current-nav-item');
+                if (localStorage.getItem('has-sub')) {
+                    $.app.nav.navItem[localStorage.getItem('has-sub')].classList.add('open');
+                }
+                $.app.nav.navItem[parseInt(index)].classList.add('active');
+            }
+            [...$.app.nav.navItem].forEach((e, i) => {
+                if (!e.className.includes('has-sub')) {
+                    e.onclick = function () {
+                        [...$.app.nav.navItem].forEach((e, i) => {
+                            e.classList.remove('active');
+                        });
+                        localStorage.setItem('current-nav-item', i);
+                        e.classList.add('active');
+                        localStorage.removeItem('has-sub');
+                    }
+                }
+                else {
+                    e.onclick = function () {
+                        if (![...document.body.classList].includes('menu-collapsed'))
+                            localStorage.setItem('has-sub', i);
+                    }
+                }
+            });
+        });
+    </script>
+    <script src="~/Scripts/Custom/menu_collapse.js"></script>
+</body>
+}
+<!-- END: Body-->
+</html>

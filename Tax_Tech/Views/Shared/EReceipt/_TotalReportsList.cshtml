@@ -1,0 +1,76 @@
+﻿@model  IEnumerable<Tax_Tech.ApiModels.EReceiptApi.TotalReportsModel>
+
+
+<a class="btn btn-primary" onclick="exportTotalReportsToExecl()">@Tax_Tech.Resources.Resource.ExportToExcel</a>
+
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="content-body col-md-12">
+            <div class="card">
+                <div class="card-datatable">
+                    <table class="datatables-basic table table-striped table-responsive table-bordered" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+                                <th style="width:20%" > @Tax_Tech.Resources.Resource.Date </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.Sources </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.ReceiptType </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.SalesTotal </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.ItemsDiscount </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.NetTotal </th>
+                                <th style="width:10%"> @Tax_Tech.Resources.Resource.TaxTotals </th>
+                                <th style="width:20%"> @Tax_Tech.Resources.Resource.extraDiscountAmount </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @String.Format("{0:yyyy-MM-dd}", item.dateTimeIssued)
+                                        </td>
+                                        <td>
+                                            @item.Source
+                                        </td>
+                                        <td>
+                                            @item.receiptType
+                                        </td>
+                                        <td>
+                                            @item.SalesTotal
+                                        </td>
+                                        <td>
+                                            @item.ItemsDiscount
+                                        </td>
+                                        <td>
+                                            @item.NetTotal
+                                        </td>
+                                        <td>
+                                            @item.TaxTotals
+                                        </td>
+                                        <td>
+                                            @item.extraDiscountAmount
+                                        </td>
+                                     </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">
+                                        <h5  class="text-center ">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/EReceipt.js"></script>

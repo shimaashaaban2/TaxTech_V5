@@ -1,0 +1,146 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.EReceiptLogsModel>
+@using PagedList
+@using PagedList.Mvc
+
+@{ int? totalCount = Model.FirstOrDefault()?.TotalCount, totalPages = 1;
+
+    
+    int? pageNo = ViewBag.PageNo;
+    int? pageSize = ViewBag.PageSize;
+    long JobID = Convert.ToInt64(ViewBag.JobID);
+    if (totalCount != null && totalCount != 0)
+    {
+        int? qotient = (totalCount / pageSize);
+        totalPages = qotient == 0 ? 1 : qotient;
+    } }
+<div class="row">
+    <div class="form-group btn btn-link btn-sm btn-block col-md-4 mt-1">
+        <button class="btn btn-success col-md-12 btn-block" disabled id="btnCancelAll" onclick="changeRefundBulk()">@Tax_Tech.Resources.Resource.BulkCancel</button>
+
+        <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnCancelAll-loader" type="button" disabled="">
+            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+        </button>
+    </div>
+    <div class="col-md-4"></div>
+    <div class="col-md-4"></div>
+</div>
+<section id="basic-datatable">
+    <div class="row">
+        <div class="content-body col-md-12">
+            <div class="card">
+                <div class="card-datatable">
+                    <table class="table table-striped table-responsive-lg table-bordered" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+                                @*<th width="20%">@Tax_Tech.Resources.Resource.LogID</th>*@
+                                <th>
+                                    <div class="custom-control custom-checkbox">
+                                        <input type="checkbox" class="custom-control-input" id="all-checkBox" oninput="selectAll(event)">
+                                        <label class="custom-control-label" for="all-checkBox"></label>
+                                    </div>
+                                </th>
+                                <th width="25%">@Tax_Tech.Resources.Resource.LogDatetime</th>
+                                <th width="25%">@Tax_Tech.Resources.Resource.Status</th>
+                                <th width="50%">@Tax_Tech.Resources.Resource.EReceiptData</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td>
+
+                                            @if (item.CountOfRefund == 0)
+                                            {
+                                                <div class="custom-control custom-checkbox">
+                                                    <input type="checkbox" oninput="onItemSelect(event)" class="custom-control-input" id="checkBox-@item.LogID" data-id="@item.LogID">
+                                                    <label class="custom-control-label" for="checkBox-@item.LogID"></label>
+                                                </div>
+                                            }
+
+
+                                        </td>
+                                        @*<td width="50%">
+
+                                            </td>*@
+                                    <td width="25%">
+                                        @item.LogDatetime
+                                        @if (item.CountOfRefund > 0)
+                                        {
+                                            <span class="text-primary"><b>@Tax_Tech.Resources.Resource.RefundedReceipt</b> </span>
+                                        }
+                                        else
+                                        {
+                                            <a class="btn btn-link btn-sm col-md-12 btn btn-primary" href="javascript:void(0);" onclick="RefundedReceipt(@item.LogID)">@Tax_Tech.Resources.Resource.Cancel</a>
+                                            <br /><br>
+                                            <a class="btn btn-dark btn-sm col-md-12 " href="javascript:void(0);" onclick="GetEReceiptToCancelPopup(@item.LogID,@item.EReceiptID)">@Tax_Tech.Resources.Resource.PartialReturn</a>
+                                        }
+                                        @* <a class="btn btn-link btn-sm col-md-12 btn btn-primary" href="javascript:void(0);" onclick="RefundedReceipt(@item.LogID)">@Tax_Tech.Resources.Resource.CancelReceipt</a>*@
+
+                                    </td>
+                                        <td width="25%">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.SubmitStatus</span>:@item.SubmitStatusTitle</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptStatus</span>:@item.EReceiptStatus</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptSource</span>:@item.Source</div>
+                                        </td>
+                                        <td width="50%">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.EReceiptNumber</span>: @item.EReceiptNumber</div>
+                                            <div style="width: 250px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.UUID</span>: @item.UUID</div>
+                                            <div style="width: 250px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.QRCode</span>: @item.QRCode</div>
+                                            <div style="width: 250px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ETAQRCode</span>: @item.ETAQRCode</div>
+                                            <div style="width: 250px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ETAUUID</span>: @item.ETAUUID</div>
+
+                                        </td>
+
+
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="10">
+                                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                                    </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+
+
+                    <div class="d-flex justify-content-center">
+                        <ul class="pagination">
+                            <li class="page-item">
+                                <a class="page-link" onclick="OnGetCancelWithPagination(1,100)" href="javascript:void(0)">
+                                    @Tax_Tech.Resources.Resource.Previous
+                                </a>
+                            </li>
+                            @for (int i = 1; i <= totalPages; i++)
+                            {
+                                <li class="page-item @(i == pageNo ? "active" : "")">
+                                    <a class="page-link" onclick="OnGetCancelWithPagination(@i,100)" href="javascript:void(0)">
+                                        @i
+                                    </a>
+                                </li>
+}
+                            <li class="page-item">
+                                <a class="page-link" onclick="OnGetCancelWithPagination(@(pageNo < totalPages ? pageNo + 1 : totalPages),100)" href="javascript:void(0)">
+                                    @Tax_Tech.Resources.Resource.Next
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+

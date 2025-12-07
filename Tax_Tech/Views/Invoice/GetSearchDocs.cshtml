@@ -1,0 +1,181 @@
+﻿@model Tax_Tech.Models.ReceivedDocumentListsModel
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.SearchDocument;
+}
+<div class="row">
+    <div class="col-3">
+        <div class="card">
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-3">
+                        <h4 id="totalCount"></h4>
+                    </div>
+                </div>
+
+                @using (Ajax.BeginForm("GetDocumentByInternalID", "Invoice", new { area = "" },
+                new AjaxOptions
+                {
+                    HttpMethod = "Post",
+                    OnBegin = "OnGetSearchDocsByFilterLoader",
+                    OnComplete = "OnGetSearchDocsByFilterList"
+
+                }, new
+                {
+                    @class = "form-horizontal"
+                }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="internalID" name="internalID" placeholder="@Tax_Tech.Resources.Resource.InternalID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-Docinternal" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-Docinternal-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+
+                @using (Ajax.BeginForm("GetDocumentByUUID", "Invoice", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "Post",
+OnBegin = "OnGetSearchDocsByFilterLoader",
+OnComplete = "OnGetSearchDocsByFilterList"
+
+}, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" id="UUID" name="UUID" class="form-control active" placeholder="@Tax_Tech.Resources.Resource.UUID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-DocUUID" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-DocUUID-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+
+                @using (Ajax.BeginForm("GetDocumentByFilters", "Invoice", new { area = "" },
+new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnBegin = "OnGetSearchDocsByFilterLoader",
+    OnComplete = "OnGetSearchDocsByFilterList"
+
+}, new
+{
+    @class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <div class="form-check form-check-inline">
+                                <input value="true" class="form-check-input" type="checkbox" name="AllDoc" id="AllDoc" onchange="UnSelectOption('AllDoc','DocumentType') " checked />
+                                <label class="form-check-label" for="AllDoc">@Tax_Tech.Resources.Resource.AllTypes</label>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.DropDownList("DocumentType", new SelectList(Model.DocumentType, "DocumentTypeName", "DocumentTypeName"), @Tax_Tech.Resources.Resource.DocumentType, new { @class = "select2 form-control", @onchange = "UncheckBox('AllDoc')" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 form-group">
+                            <div class="form-check form-check-inline">
+                                <input value="true" class="form-check-input" type="checkbox" name="AllStatus" id="AllStatus" onchange="UnSelectOption('AllStatus','MOStatus') " checked />
+                                <label class="form-check-label" for="inlineCheckbox2">@Tax_Tech.Resources.Resource.AllStatuses</label>
+                            </div>
+                        </div>
+                        <div class="col-12 form-group">
+                            @Html.DropDownList("MOStatus", new SelectList(Model.MOFStatus, "SubmitStatusTitle", "SubmitStatusTitle"), @Tax_Tech.Resources.Resource.MOFStatus, new { @class = "select2 form-control", @onchange = "UncheckBox('AllStatus')" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <button class="btn btn-primary col-md-12" id="btn-DocGet">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block col-md-12" style="display: none;" id="btn-DocGet-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <button class="btn btn-outline-primary col-md-12" id="btnDocExportToExecl" onclick="exportToExeclSearch()">@Tax_Tech.Resources.Resource.ExportToExcel</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block col-md-12" style="display: none;" id="btnDocExportToExecl-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+
+    <div class="col-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div class="my-3">
+
+                    <div id="list">
+                        <table class="table table-bordered">
+                            <thead>
+                                <tr>
+                                    <th>@Tax_Tech.Resources.Resource.UUID</th>
+                                    <th>@Tax_Tech.Resources.Resource.Details</th>
+                                    <th>@Tax_Tech.Resources.Resource.IssuerName / @Tax_Tech.Resources.Resource.ReceiverName</th>
+                                    <th>@Tax_Tech.Resources.Resource.Total</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center" colspan="5">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/SearchDocs.js"></script>
+<script src="~/Scripts/Custom/Checkbox.js"></script>
+<script src="~/Scripts/Custom/Invoice.js"></script>
+<script>
+    window.addEventListener('load', function () {
+        loadDocs('@ViewBag.PageNo', '@ViewBag.PageSize');
+    });
+</script>

@@ -1,0 +1,27 @@
+﻿@model IEnumerable<Tax_Tech.ViewModels.VendorTaxViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TaxCode - @item.TaxTypeNameEN</td>
+            <td>@item.Rate</td>
+            <td>
+                @Ajax.ActionLink(Tax_Tech.Resources.Resource.Delete, "RemoveTaxExemptation", "Vendors", new { area = "", id = item.RecordID, vendorId = item.VendorID }, new AjaxOptions
+                   {
+                       OnBegin = "ShowLoading(0)",
+                       HttpMethod = "POST",
+                       OnComplete = "onRemoveTaxResult",
+                       Confirm = Tax_Tech.Resources.Resource.AreyouSuretoDelete
+                   })
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+    </tr>
+}

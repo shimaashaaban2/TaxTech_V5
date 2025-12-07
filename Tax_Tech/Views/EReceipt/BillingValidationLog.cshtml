@@ -1,0 +1,96 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.BillingValidationLog;
+}
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                @using (Ajax.BeginForm("BillingValidationList", "EReceipt", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "Post",
+OnBegin = "showLoader('btn-BillingValidationLog','btn-BillingValidationLog-loader')",
+OnComplete = "OnGetBillingValiationLog"
+
+}, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" class="form-control" id="EReceiptNumber" name="EReceiptNumber" placeholder="@Tax_Tech.Resources.Resource.EReceiptNumber" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-BillingValidation" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-BillingValidation-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+                }
+                @using (Ajax.BeginForm("BillingValidationByDate", "EReceipt", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "Post",
+OnBegin = "showLoader('btn-BillingValidationDate','btn-BillingValidationDate-loader')",
+OnComplete = "OnGetBillingValidationDateRange"
+
+}, new
+{
+@class = "form-horizontal"
+}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-BillingValidationDate" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-BillingValidationDate-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div id="billingValiationList">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Custom/EReceipt.js"></script>
+<script>
+    $(document).ready(function () {
+        ClearBillingValidation();
+    });
+        
+   
+</script>

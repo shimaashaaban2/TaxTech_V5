@@ -1,0 +1,152 @@
+﻿@using Tax_Tech.Areas.Configuration.Helpers;
+@{
+    long actionBy = Convert.ToInt64(Session["ID"]);
+    SelectList EntitiesList = LookupsHelper.GetLookups().EntitiesListByUser(null,actionBy);
+    SelectList RoleList = LookupsHelper.GetLookups().RoleList(null);
+
+    List<Tax_Tech.Areas.Configuration.ViewModels.EntityViewModel> entities = ViewBag.EntitiesList;
+}
+
+<div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    @using (Ajax.BeginForm("Create", new { controller = "Accounts", area = "Configuration" },
+        new AjaxOptions
+        {
+            UpdateTargetId = "PopupMsg",
+            InsertionMode = InsertionMode.Replace,
+            OnBegin = "ShowLoading(1)",
+            OnComplete = "showPopUpResult",
+
+        }))
+    {
+
+        <div class="modal-dialog" style="max-width:800px" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.CreateNewAccount</h4>
+                    <button type="button" class="close" onclick="DismissPopup()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <!-- Create New Form Controls -->
+                <div class="modal-body">
+                    <div id="PopupMsg"></div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="username">@Tax_Tech.Resources.Resource.Username<span class="text-danger">*</span></label>
+                                <input class="form-control" id="username" type="text" name="username" placeholder="@Tax_Tech.Resources.Resource.Username" aria-describedby="username" autofocus="" tabindex="1" />
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="DisplayName">@Tax_Tech.Resources.Resource.DisplayName<span class="text-danger">*</span> </label>
+                                <input class="form-control" id="DisplayName" type="text" name="DisplayName" placeholder="@Tax_Tech.Resources.Resource.DisplayName" aria-describedby="username" autofocus="" tabindex="3" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="login-username">@Tax_Tech.Resources.Resource.Entity<span class="text-danger">*</span></label>
+                                @*@if (EntitiesList != null)
+                        {
+                            @Html.DropDownList("EntityId", LookupsHelper.GetLookups().EntitiesListByUser(null,actionBy) as SelectList, Tax_Tech.Resources.Resource.Entity,
+        new
+        {
+        @class = "select2 form-control",
+        @style = "width: 100%;",
+        tabindex = 2
+        })
+                        }
+                        else
+                        {
+                            <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+                        }*@
+                                @Html.DropDownList("EntityId", new SelectList(entities, "EntityId", "EntityTitle"), Tax_Tech.Resources.Resource.Entity,
+new
+{
+@class = "select2 form-control",
+@style = "width  100%;",
+
+})
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="login-username">@Tax_Tech.Resources.Resource.RoleID<span class="text-danger">*</span></label>
+                                @if (RoleList != null)
+                                {
+                                    @Html.DropDownList("RoleID", LookupsHelper.GetLookups().RoleList(null) as SelectList, Tax_Tech.Resources.Resource.RoleID,
+                new
+                {
+                @class = "select2 form-control",
+                @style = "width: 100%;",
+                tabindex = 2
+                })
+                                }
+                                else
+                                {
+                                    <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+                                }
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="email">@Tax_Tech.Resources.Resource.Email<span class="text-danger">*</span> </label>
+                        <input class="form-control" id="email" type="text" name="email" placeholder="@Tax_Tech.Resources.Resource.Email" aria-describedby="email" tabindex="3" />
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="password">@Tax_Tech.Resources.Resource.Password<span class="text-danger">*</span> </label>
+                                <div class="input-group input-group-merge form-password-toggle">
+                                    <input class="form-control form-control-merge" id="password" type="password" name="password" placeholder="@Tax_Tech.Resources.Resource.Password" aria-describedby="password" tabindex="4" />
+                                    <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-6">
+                            <div class="form-group">
+                                <label class="form-label" for="Confirmpassword">@Tax_Tech.Resources.Resource.ConfirmPassword<span class="text-danger">*</span> </label>
+                                <div class="input-group input-group-merge form-password-toggle">
+                                    <input class="form-control form-control-merge" id="Confirmpassword" type="password" name="Confirmpassword" placeholder="@Tax_Tech.Resources.Resource.ConfirmPassword" aria-describedby="password" tabindex="5" />
+                                    <div class="input-group-append"><span class="input-group-text cursor-pointer"><i data-feather="eye"></i></span></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    <button type="submit" class="btn btn-primary btn-block" tabindex="4" id="subBtn-1">@Tax_Tech.Resources.Resource.CreateNewAccount</button>
+                    <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+
+                </div>
+            </div>
+        </div>
+    }
+
+
+
+
+</div>
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+
+</script>

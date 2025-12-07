@@ -1,0 +1,64 @@
+﻿
+@{
+    ViewBag.Title = @Tax_Tech.Resources.Resource.WinCashLog;
+}
+
+
+
+
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+
+                @using (Ajax.BeginForm("WinCashLogByDate", "EReceipt", new { area = "" },
+               new AjaxOptions
+               {
+                   HttpMethod = "Post",
+                   OnBegin = "showLoader('Btn-GetWinCash','Btn-GetWinCash-loader')",
+                   OnComplete = "OnGetWinCashLog"
+
+               }, new
+               {
+                   @class = "form-horizontal"
+               }))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="dateFrom" id="dateFrom" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="dateTo" id="dateTo" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="Btn-GetWinCash" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="Btn-GetWinCash-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+         </div>
+       </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <h4 id="errMsg"></h4>
+                <div id="WincashLog">
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Custom/EReceipt.js"></script>

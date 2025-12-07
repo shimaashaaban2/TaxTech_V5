@@ -1,0 +1,14 @@
+﻿
+<div class="card">
+    <div class="card-body">
+        <h1>@Tax_Tech.Resources.Resource.Error</h1>
+        @if (TempData["ErrorMsg"] != null)
+        {
+            <h2>@TempData["ErrorMsg"]</h2>
+        }
+        else
+        {
+            <h2>@Tax_Tech.Resources.Resource.ErrorOccuredWhileProcessingYourRequest</h2>
+        }
+    </div>
+</div>

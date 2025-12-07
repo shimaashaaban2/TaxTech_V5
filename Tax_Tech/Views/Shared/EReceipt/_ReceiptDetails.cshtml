@@ -1,0 +1,100 @@
+﻿  @model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.EReceiptLogsModel>
+
+
+   <div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+       <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+           <div class="modal-content">
+               <div class="modal-header">
+                   <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.ReceiptDetails</h4>
+                   <button type="button" class="close" data-dismiss="modal" id="addExtraDiscountClose" aria-label="Close">
+                       <span aria-hidden="true">&times;</span>
+                   </button>
+               </div>
+
+               <div class="modal-body">
+
+                   <table class="datatables-basic table table-striped table-responsive table-bordered" id="thebasic-datatable">
+                      
+                       @foreach (var item in Model)
+                       {
+                           <tbody>
+
+                               <tr>
+                                   <th style="background-color: #2196f373;">@Tax_Tech.Resources.Resource.Message</th>
+
+                               </tr>
+
+
+                               <tr>
+                                   <td>@item.Msg</td>
+                               </tr>
+
+                               <tr>
+                                   <th style="background-color: #2196f373;">@Tax_Tech.Resources.Resource.Error</th>
+
+                               </tr>
+
+
+                               <tr>
+                                   <td>@item.Error</td>
+                               </tr>
+
+                               <tr>
+                                   <th style="background-color: #2196f373;">@Tax_Tech.Resources.Resource.WincashPayLoad</th>
+
+                               </tr>
+                               <tr>
+                                   <th>@Tax_Tech.Resources.Resource.Request</th>
+
+                               </tr>
+                               <tr>
+                                   <td>@item.ReuestPayload</td>
+                               </tr>
+                               <tr>
+                                   <th>@Tax_Tech.Resources.Resource.Response</th>
+
+                               </tr>
+
+
+                               <tr>
+                                   <td>@item.ResponsePayload</td>
+                               </tr>
+                               <tr>
+                                   <th style="background-color: #2196f373;">@Tax_Tech.Resources.Resource.ETAPayLoad</th>
+
+                               </tr>
+                               <tr>
+                                   <th>@Tax_Tech.Resources.Resource.Request</th>
+
+                               </tr>
+                               <tr>
+                                   <td>@item.ETARequestPayload</td>
+                               </tr>
+                               <tr>
+                                   <th>@Tax_Tech.Resources.Resource.Response</th>
+
+                               </tr>
+
+
+                               <tr>
+                                   <td>@item.ETAResponsePayload</td>
+                               </tr>
+
+                           </tbody>
+                       }
+
+
+                       @*<tbody>
+            <tr>
+                <td colspan="3" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+            </tr>
+        </tbody>*@
+
+                   </table>
+
+
+               </div>
+           </div>
+       </div>
+
+   </div>

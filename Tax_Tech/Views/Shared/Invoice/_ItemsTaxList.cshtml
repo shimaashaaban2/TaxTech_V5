@@ -1,0 +1,42 @@
+﻿@model List<Tax_Tech.ViewModels.ItemsTaxViewModel>
+
+@if (Model != null)
+{
+    <table class="table table-bordered table-responsive" style="min-height: 300px;width:100%">
+        <thead width="100%">
+            <tr>
+                <th width="30%">@Tax_Tech.Resources.Resource.PrimaryTax</th>
+                <th width="30%">@Tax_Tech.Resources.Resource.SubTax</th>
+                <th width="70%">@Tax_Tech.Resources.Resource.Value</th>
+            </tr>
+        </thead>
+        @if (Model.Count() > 0)
+        {
+            <tbody>
+                @foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.TaxCode / @item.TaxTypeNameEN</td>
+                        @if (!string.IsNullOrWhiteSpace(item.SubTaxName))
+                        {
+                            <td>@item.SubTaxCode / @item.SubTaxName</td>
+                        }
+                        else
+                        {
+                            <td></td>
+                        }
+                        <td>@item.Rate</td>
+                    </tr>
+                }
+            </tbody>
+        }
+        else
+        {
+            <tbody>
+                <tr>
+                    <td colspan="3" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            </tbody>
+        }
+    </table>
+}

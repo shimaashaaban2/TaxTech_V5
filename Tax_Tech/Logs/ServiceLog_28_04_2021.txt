@@ -1,0 +1,7 @@
+[28 04 2021 15:38:11] - 
+
+3.Exception Thrown: Value cannot be null.
+Parameter name: path1
+
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\7118186683f84467b9adf1f3f5fabd93.xlsx'.
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\34ee0211a3e3489f8f0fc398fd1ba578.xlsx'.

@@ -1,0 +1,95 @@
+﻿@using Tax_Tech.Helpers
+@using PagedList
+@using PagedList.Mvc
+
+@model List<Tax_Tech.ViewModels.DocumentViewModel>
+
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.FilterDocs;
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    string jobType = "1";
+}
+
+<link href="~/Content/PagedList.css" rel="stylesheet" type="text/css" />
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.New
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreateInvoiceHead()">@Tax_Tech.Resources.Resource.Invoice</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreateCreditHead()">@Tax_Tech.Resources.Resource.CreditNote</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreateDebitHead()">@Tax_Tech.Resources.Resource.DebitNote</a>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.QuickFilter
+                            </button>
+                            <div class="dropdown-menu">
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getFilterDocByInternalIDPopup('0')">@Tax_Tech.Resources.Resource.SearchByInternalID</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getInvoicesOf('0')">@Tax_Tech.Resources.Resource.AllDocs</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getInvoices(1, 100)">@Tax_Tech.Resources.Resource.AllInvoices</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getCreditNotes()">@Tax_Tech.Resources.Resource.AllCreditNotes</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getDebitNotes()">@Tax_Tech.Resources.Resource.AllDebitNotes</a>
+                                <a class="dropdown-item" href="javascript:void(0);" onclick="getInvoicesOf('6')">@Tax_Tech.Resources.Resource.RejectedDocuments</a>
+                            </div>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary" onclick="getFilterFormPopup()">
+                                @Tax_Tech.Resources.Resource.Search
+                            </button>
+                        </div>
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.Export
+                            </button>
+                            <div class="dropdown-menu">
+                                @*<a class="dropdown-item" href="javascript:void(0);">PDF</a>*@
+                                <a target="_blank" class="dropdown-item" href="@Url.Action("ExportToExecl", "Invoice")">@Tax_Tech.Resources.Resource.Excel</a>
+                            </div>
+                        </div>
+                        <div class="btn-group ml-1">
+                            <a href="@Url.Action("UploadExecl", "Invoice", new { jobType = jobType })" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.UploadExcel</a>
+                        </div>
+                        <div id="main-err"></div>
+                    </div>
+                </div>
+
+                <div class="card-body mt-3">
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Partial("_Result")
+                        </div>
+                    </div>
+                    <div id="list">
+                        @{
+                            ViewBag.FilterModel = ViewBag.FilterModel;
+                        }
+                        @Html.Partial("Invoice/_SearchedInvoiceList", Model)
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/Invoice.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        $('#thebasic-datatable').DataTable({
+            "pageLength": 100
+        });
+        //To Show Tooltip in List
+        $("[rel=tooltip]").tooltip({ html: true });
+    })
+</script>

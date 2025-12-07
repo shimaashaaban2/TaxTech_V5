@@ -1,0 +1,98 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.Title = Tax_Tech.Resources.Resource.JobTracking;
+}
+<div class="row">
+    <div class="col-md-3">
+        <div class="card">
+
+            <div class="card-body">
+                @using (Ajax.BeginForm("JobTrackingByJobID", "EReceiptTracking", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "GET",
+OnBegin = "EReceiptJobIDListShowLoader",
+OnComplete = "EReceiptJobsListByJobID"
+
+}, new{@class = "form-horizontal"}))
+                {
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <input type="text" id="RctJobId" name="RctJobId" class="form-control active" placeholder="@Tax_Tech.Resources.Resource.JobID" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-RctJobID" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-RctJobID-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+                    </div>
+
+                }
+                @using (Ajax.BeginForm("JobTrackingByJobDate", "EReceiptTracking", new { area = "" },
+new AjaxOptions
+{
+HttpMethod = "GET",
+OnBegin = "EReceiptJobDateListShowLoader",
+OnComplete = "EReceiptJobsListByJobDate"
+
+}, new{@class = "form-horizontal"}))
+                {
+                    <div class="row">
+
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.From</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="startDate" id="startDate" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12 form-group">
+                            <label>@Tax_Tech.Resources.Resource.To</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="endDate" id="endDate" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <button class="btn btn-primary col-md-12" id="btn-RctJobDateList" type="submit">@Tax_Tech.Resources.Resource.Get</button>
+                            <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-RctJobDateList-loader" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                            </button>
+                        </div>
+
+                    </div>
+                }
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <a class="btn btn-outline-primary col-md-12" id="btnExportToExecl" onclick="EReceiptexportToExcel()">@Tax_Tech.Resources.Resource.ExportToExcel</a>
+                        <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btnExportToExecl-loader" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-9">
+        <div class="card">
+            <div class="card-body">
+                <div id="errMsg"></div>
+                <div id="EReceiptJobTracking">
+                    <h4 class="text-center"></h4>
+                </div>
+
+            </div>
+
+
+
+        </div>
+    </div>
+</div>
+
+<script src="~/Scripts/Custom/EReceiptTracking.js"></script>

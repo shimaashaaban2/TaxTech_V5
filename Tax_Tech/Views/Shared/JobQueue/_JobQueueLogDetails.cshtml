@@ -1,0 +1,172 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueueSummaryApiModel>
+
+@foreach (var item in Model)
+{
+    try
+    {
+        //var rep1Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics(item.JobID).FirstOrDefault();
+        //var rep2Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics2(item.JobID).FirstOrDefault();
+        var rep3Result = new Tax_Tech.Repository.JobQueueApiRepository().GetImportStatstics3(item.JobID);
+        <div class="card">
+
+
+            <div class="card-header">
+                <h3 class="text-warning"><span title="Session ID">@item.JobID</span> - @item.StatusTitle</h3>
+                <div class="dropdown">
+                    <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown" aria-expanded="false">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                    </button>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="javascript:void(0);" onclick="getTaxesPopup(@item.JobID, '0')">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-list"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+                            <span>@Tax_Tech.Resources.Resource.GlobalErrors</span>
+                        </a>
+                         
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="d-flex align-items-center">
+                    <p><span title="Job Type">@item.StatusTitle</span> - @Tax_Tech.Resources.Resource.StartDate: @(item.CreationDate)</p>
+                </div>
+                <div class="mt-2" id="runningJobReportContainer">
+                    <div class="">
+                        <div class="row align-items-center">
+                            <div class="col-md-3">
+                                <h4>@Tax_Tech.Resources.Resource.Import - @Tax_Tech.Resources.Resource.Validation</h4>
+                            </div>
+                            <div class="col-md-9 row">
+                                <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                    <div class="card-body">
+                                        <h3 class="text-center text-warning">@(item.TotalRecords)</h3>
+                                        <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.TotalDocs</h5>
+                                    </div>
+                                </div>
+
+                                <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                    <div class="card-body">
+                                        <h3 class="text-center text-warning">@(item.ImportInProgress)</h3>
+                                        <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.InProgress</h5>
+                                    </div>
+                                </div>
+
+                                <div class="card mx-1 stats-card" style="background: #e5f8ed;">
+                                    <div class="card-body">
+                                        <h3 class="text-center text-success">@(item.ImportSuccess)</h3>
+                                        <h5 class="text-center text-success">@Tax_Tech.Resources.Resource.ImportedDocs</h5>
+                                    </div>
+                                </div>
+
+                                <a href="javascript:void(0);" onclick="getTaxesPopup(@item.JobID, '1')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                    <div class="card-body">
+                                        <h3 class="text-center text-danger">@(item.ImportFail)</h3>
+                                        <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.ImportFail</h5>
+                                    </div>
+                                </a>
+                            </div>
+                        </div>
+
+                        @if (item.JobTypeID == 1)
+                        {
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <h4>@Tax_Tech.Resources.Resource.SignUp - @Tax_Tech.Resources.Resource.Sign - @Tax_Tech.Resources.Resource.Submittied </h4>
+                                </div>
+                                <div class="col-md-7 row">
+                                    <div class="card mx-1 stats-card" style="background: #fff3e8;">
+                                        <div class="card-body">
+                                            <h3 class="text-center text-warning">@(item.TotalSignUp)</h3>
+                                            <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.SignUp</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mx-1 stats-card" style="background: #fff3e8; ">
+                                        <div class="card-body">
+                                            <h3 class="text-center text-warning">@(item.SignedInvoices)</h3>
+                                            <h5 class="text-center text-warning">@Tax_Tech.Resources.Resource.ESigned</h5>
+                                        </div>
+                                    </div>
+
+                                    <div class="card mx-1 stats-card" style="background: #e5f8ed; ">
+                                        <div class="card-body">
+                                            <h3 class="text-center text-success">@(item.SubmittedSueccs)</h3>
+                                            <h5 class="text-center text-success">@Tax_Tech.Resources.Resource.Submittied</h5>
+                                        </div>
+                                    </div>
+
+                                    <a href="javascript:void(0);" onclick="getTaxesPopup(@item.JobID, '2')" class="card mx-1 stats-card" style="background: #fde8e8; ">
+                                        <div class="card-body">
+                                            <h3 class="text-center text-danger">@(item.SubmittedFaliuer)</h3>
+                                            <h5 class="text-center text-danger">@Tax_Tech.Resources.Resource.SubmitFailed</h5>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+
+                            <div class="row align-items-center">
+                                <div class="col-md-3">
+                                    <h4>@Tax_Tech.Resources.Resource.Status - @Tax_Tech.Resources.Resource.Update </h4>
+                                </div>
+
+                                <div class="col-md-9 row">
+                                    @foreach (var card in rep3Result)
+                                    {
+                                        if (card.SOrder == 5)
+                                        {
+                                            <!-- rejected -->
+                                            <a href="javascript:void(0);" onclick="" class="card mx-1" style="background: #fde8e8; ">
+                                                <div class="card-body">
+                                                    <h4 class="text-center text-danger">@(card.SCount)</h4>
+                                                    <h5 class="text-center text-danger">@(card.STitle)</h5>
+                                                </div>
+                                            </a>
+                                        }
+                                        else if (card.SOrder == 3)
+                                        {
+                                            <a href="javascript:void(0);" onclick="getTaxesPopup('@item.JobID', '3')" class="card mx-1" style="background: #fde8e8; ">
+                                                <div class="card-body">
+                                                    <h4 class="text-center text-danger">@(card.SCount)</h4>
+                                                    <h5 class="text-center text-danger">@(card.STitle)</h5>
+                                                </div>
+                                            </a>
+                                        }
+                                        else if (card.SOrder == 2)
+                                        {
+                                            <a href="" class="card mx-1" style="background: #e5f8ed; ">
+                                                <div class="card-body">
+                                                    <h4 class="text-center text-success">@(card.SCount)</h4>
+                                                    <h5 class="text-center text-success">@(card.STitle)</h5>
+                                                </div>
+                                            </a>
+                                        }
+                                        else
+                                        {
+                                            <a href="" class="card mx-1" style="background: #fff3e8;">
+                                                <div class="card-body">
+                                                    <h4 class="text-center text-warning">@(card.SCount)</h4>
+                                                    <h5 class="text-center text-warning">@(card.STitle)</h5>
+                                                </div>
+                                            </a>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+    catch (Exception ex)
+    {
+        <div class="alert alert-danger">@ex.Message</div>
+    }
+}
+
+@if (Model.Count == 0)
+{
+    <div class="justify-content-center d-flex">
+        <h4 class="text-center my-3">@Tax_Tech.Resources.Resource.NoJobSummary</h4>
+    </div>
+}

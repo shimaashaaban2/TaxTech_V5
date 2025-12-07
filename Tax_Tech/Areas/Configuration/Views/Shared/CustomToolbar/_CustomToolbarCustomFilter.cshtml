@@ -1,0 +1,112 @@
+﻿
+<input type="hidden" id="formId" name="formId" value="@ViewBag.formId" />
+
+<div id="InternalID" class="hidden">
+    <div class="col-12">
+        <div class="dt-action-buttons text-left d-flex">
+            <div class="row justify-content-around align-items-end" style="margin-left: 10px;">
+                <div class="form-group col-md-7">
+                    <label class="control-label" for="InternalIDVal">@Tax_Tech.Resources.Resource.InternalID</label>
+                    <input type="text" id="InternalIDVal" name="InternalIDVal" class="form-control" placeholder="@Tax_Tech.Resources.Resource.InternalID" onkeydown="onEnterPressHandler(event)" />
+                </div>
+                <div class="form-group col-md-5">
+                    <button type="submit" class="btn btn-primary" autofocus id="subBtn-3" tabindex="18" onclick="getMOFByInternalID()">@Tax_Tech.Resources.Resource.Search</button>
+                    <button id="loadBtn-3" class="btn btn-outline-primary waves-effect btn-load" style="display: none;" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="FilterDate" class="row hidden">
+    <div class="col-12">
+        <div class="dt-action-buttons text-left d-flex">
+            <div class="row justify-content-around align-items-end" style="margin-left: 10px;">
+                <div class="form-group col-md-3">
+                    <label for="fromDate">@Tax_Tech.Resources.Resource.From</label>
+                    <input type="text" id="fromDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="toDate">@Tax_Tech.Resources.Resource.To</label>
+                    <input type="text" id="toDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="form-group col-md-6">
+                    <button type="submit" class="btn btn-primary" id="subBtn-2" tabindex="18" onclick="getMOFByDate()">@Tax_Tech.Resources.Resource.Search</button>
+                    <button id="loadBtn-2" class="btn btn-outline-primary waves-effect btn-load" style="display: none;" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="Sub-log-InternalID" class="hidden">
+    <div class="col-12">
+        <div class="dt-action-buttons text-left d-flex">
+            <div class="row justify-content-around align-items-end" style="margin-left: 10px;">
+                <div class="form-group col-md-7">
+                    <label class="control-label" for="Sub-log-InternalIDVal">@Tax_Tech.Resources.Resource.InternalID</label>
+                    <input type="text" id="Sub-log-InternalIDVal" name="Sub-log-InternalIDVal" class="form-control" placeholder="@Tax_Tech.Resources.Resource.InternalID" autofocus onkeydown="onEnterPressHandler(event)" />
+                </div>
+                <div class="form-group col-md-5">
+                    <button type="submit" class="btn btn-primary" id="subBtn-4" tabindex="18" onclick="getSubLogByInternalID()">@Tax_Tech.Resources.Resource.Search</button>
+                    <button id="loadBtn-4" class="btn btn-outline-primary waves-effect btn-load" style="display: none;" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div id="Sub-log-FilterDate" class="hidden">
+    <div class="col-12">
+        <div class="dt-action-buttons text-left d-flex">
+            <div class="row justify-content-around align-items-end" style="margin-left: 10px;">
+                <div class="form-group col-md-3">
+                    <label for="fromDate">@Tax_Tech.Resources.Resource.From</label>
+                    <input type="text" id="Sub-log-fromDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")">
+                </div>
+                <div class="form-group col-md-3">
+                    <label for="toDate">@Tax_Tech.Resources.Resource.To</label>
+                    <input type="text" id="Sub-log-toDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                </div>
+                <div class="form-group col-md-3">
+                    @Html.DropDownList("status", Tax_Tech.Helpers.LookupsHelper.GetLookups().SubmissionSignStatusList(null) as SelectList,
+                        new
+                        {
+                        @class = "select2 form-control",
+                        @style = "width  100%;",
+                        @tabindex = "3"
+                        })
+                </div>
+
+                <div class="form-group col-md-3">
+                    <button type="submit" class="btn btn-primary" id="subBtn-5" tabindex="18" onclick="getSubLogByDate()">@Tax_Tech.Resources.Resource.Search</button>
+                    <button id="loadBtn-5" class="btn btn-outline-primary waves-effect btn-load" style="display: none;" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    /*******  Flatpickr  *****/
+    var basicPickr = $('.flatpickr-basic')
+    if (basicPickr.length) {
+        basicPickr.flatpickr();
+    }
+</script>

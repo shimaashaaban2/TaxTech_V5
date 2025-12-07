@@ -1,0 +1,103 @@
+﻿@model Tax_Tech.Areas.Configuration.ViewModels.UserAccountsViewModel
+@using Tax_Tech.Areas.Configuration.Helpers;
+@{
+    SelectList RoleList = LookupsHelper.GetLookups().RoleList(null);
+
+}
+<div class="modal fade text-left" id="default" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog" style="max-width:500px" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.EditAccount</h4>
+                <button type="button" class="close" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                <div id="PopupMsg"></div>
+                <input type="hidden" id="UserID" name="UserID" value="@Model.UserID" />
+                <div class="form-group">
+                    <label class="form-label" for="DisplayName">@Tax_Tech.Resources.Resource.DisplayName<span class="text-danger">*</span> </label>
+                    <input class="form-control" id="DisplayName" type="text" name="DisplayName" placeholder="@Tax_Tech.Resources.Resource.DisplayName" value="@Model.DisplayName" aria-describedby="username" autofocus="" tabindex="1" />
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="UserMail">@Tax_Tech.Resources.Resource.Email<span class="text-danger">*</span> </label>
+                    <input class="form-control" id="UserMail" type="text" name="UserMail" placeholder="@Tax_Tech.Resources.Resource.Email" value="@Model.UserMail" aria-describedby="UserMail" tabindex="2" />
+                </div>
+
+
+
+                <div class="form-group">
+                    <label class="form-label" for="login-username">@Tax_Tech.Resources.Resource.RoleID<span class="text-danger">*</span></label>
+                    @if (RoleList != null)
+                    {
+                        @Html.DropDownList("RoleID", LookupsHelper.GetLookups().RoleList(Model.RoleID) as SelectList, Tax_Tech.Resources.Resource.RoleID,
+             new
+             {
+                 @class = "select2 form-control",
+                 @style = "width: 100%;",
+                 tabindex = 2
+             })
+                    }
+                    else
+                    {
+                        <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+                    }
+
+                </div>
+
+
+
+                <div class="form-group">
+                    <div class="border rounded p-2">
+                        <div class="media flex-column flex-md-row">
+                            @if (Model.ProfileImage != null)
+                            {
+                                <img src="data:image\/jpg;base64,@Html.Raw(Convert.ToBase64String((byte[])Model.ProfileImage))" class="rounded mr-2 mb-1 mb-md-0" width="170" height="110" id="Prev">
+                            }
+                            else
+                            {
+                                <img src="~/Content/imgs/avater.png" class="rounded mr-2 mb-1 mb-md-0" width="170" height="110" id="Prev">
+                            }
+                            <div class="media-body">
+                                <h5 class="mb-0">@Tax_Tech.Resources.Resource.ProfileImage:</h5>
+                                <small class="text-muted">@*Required image resolution 800x400, image size 10mb.*@</small>
+
+                                <div class="d-inline-block">
+                                    <div class="form-group mb-0">
+                                        <div class="custom-file">
+                                            <input type="file" class="custom-file-input" id="ProfileImage" accept="image/*" name="ProfileImage" onchange="ReadURL(this,'Prev')" />
+                                            <label class="custom-file-label" for="blogCustomFile">Choose file</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary btn-block" tabindex="4" id="subBtn-1" onclick="EditAccount()">@Tax_Tech.Resources.Resource.Edit</button>
+                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                </button>
+
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+
+</script>

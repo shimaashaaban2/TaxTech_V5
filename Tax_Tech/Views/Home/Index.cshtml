@@ -1,0 +1,165 @@
+﻿@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.Home;
+    //List<Tax_Tech.ApiModels.DocumentTotalReport> invoiceTotals = ViewBag.InvoiceValues;
+    //List<Tax_Tech.ApiModels.DocumentTotalReport> creditTotals = ViewBag.CreditValues;
+    //List<Tax_Tech.ApiModels.DocumentTotalReport> debitTotals = ViewBag.DebitValues;
+
+    //List<Tax_Tech.ApiModels.RejectedDocumentReport> rejectedTotals = ViewBag.RejectedDocs;
+}
+
+<style>
+    .head-card {
+        font-weight: bolder !important;
+        font-size: 22px !important;
+    }
+    .stats-card {
+        min-width: 160px;
+    }
+</style>
+
+<div class="content-overlay"></div>
+<div class="header-navbar-shadow"></div>
+<div class="content-wrapper">
+    <div class="content-header row">
+    </div>
+    <div class="content-body">
+
+        <div class="row">
+            <div class="col-md-12" id="main-area-err">
+            </div>
+        </div>
+
+        <div class="d-flex flex-wrap justify-content-between align-items-center">
+            <div class="row">
+                <div class="mx-1">
+                    <div class="card" style="background: linear-gradient(141deg, #ff9f43, #E57373)">
+                        <div class="card-body">
+                            <h1 id="runningJobsContainer" class="text-center text-white" style="font-size: 40px;">
+                                <span class="spinner-grow"></span>
+                            </h1>
+                            <div class="text-center text-white">@Tax_Tech.Resources.Resource.RunningJobs</div>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="@Url.Action("Index", "JobQueue")" target="_blank" class="mx-1">
+                    <div class="card" style="background: linear-gradient(141deg, #388E3C, #81C784)">
+                        <div class="card-body">
+                            <h1 id="closedJobsContainer" class="text-center text-white" style="font-size: 40px;">
+                                <span class="spinner-grow"></span>
+                            </h1>
+                            <div class="text-center text-white">@Tax_Tech.Resources.Resource.ClosedJobs <span>@Tax_Tech.Resources.Resource.InThisMonth</span></div>
+                        </div>
+                    </div>
+                </a>
+            </div>
+
+            <div style="width: 150px;height: 100%;">
+                <a target="_blank" href="@Url.Action("UploadExecl", "Invoice", new { jobType = 1 })" class="card" style="background: linear-gradient(141deg, #388E3C, #81C784);">
+                    <div class="card-body">
+                        <h3 style="font-size: 40px;" class="text-center text-white">+</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12" id="runningJobReportContainer">
+                <div class="my-3 d-flex justify-content-center">
+                    <span class="my-2 spinner-border"></span>
+                </div>
+            </div>
+        </div>
+
+        @*<div class="row match-height">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="head-card">
+                            @Tax_Tech.Resources.Resource.SubmittedInvoices
+                        </div>
+                        <span>@Tax_Tech.Resources.Resource.From @DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd") @Tax_Tech.Resources.Resource.To @DateTime.Now.ToString("yyyy/MM/dd")</span>
+                    </div>
+                    <div class="card-body" id="invoiceTotalsContainer">
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:void(0);" id="invoiceTotalBtn" class="my-2" onclick="getInvoiceTotals()">@Tax_Tech.Resources.Resource.ClickToLoad</a>
+                            <button id="invoiceTotals-btn-loader" style="display: none;" class="btn btn-outline-primary waves-effect" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="head-card">
+                            @Tax_Tech.Resources.Resource.SubmitedCreditNotes
+                        </div>
+                        <span>@Tax_Tech.Resources.Resource.From @DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd") @Tax_Tech.Resources.Resource.To @DateTime.Now.ToString("yyyy/MM/dd")</span>
+                    </div>
+                    <div class="card-body" id="creditNotesTotalsContainer">
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:void(0);" id="creditNoteBtn" class="my-2" onclick="getCreditNotesTotals()">@Tax_Tech.Resources.Resource.ClickToLoad</a>
+                            <button id="creditNotesTotals-btn-loader" style="display: none;" class="btn btn-outline-primary waves-effect" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>*@
+
+        @*<div class="row match-height">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="head-card">
+                            @Tax_Tech.Resources.Resource.SubmittedDebitNotes
+                        </div>
+                        <span>@Tax_Tech.Resources.Resource.From @DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd") @Tax_Tech.Resources.Resource.To @DateTime.Now.ToString("yyyy/MM/dd")</span>
+                    </div>
+                    <div class="card-body" id="debitNotesTotalsContainer">
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:void(0);" class="my-2" id="debitNotesTotals-btn" onclick="getDebitNotesTotals()">@Tax_Tech.Resources.Resource.ClickToLoad</a>
+                            <button id="debitNotesTotals-btn-loader" style="display: none;" class="btn btn-outline-primary waves-effect" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="head-card">
+                            @Tax_Tech.Resources.Resource.MOFResultStatus
+                        </div>
+                        <span>@Tax_Tech.Resources.Resource.From @DateTime.Now.AddDays(-7).ToString("yyyy/MM/dd") @Tax_Tech.Resources.Resource.To @DateTime.Now.ToString("yyyy/MM/dd")</span>
+                    </div>
+                    <div class="card-body" id="mofStatusTotalsContainer">
+                        <div class="d-flex justify-content-center">
+                            <a href="javascript:void(0);" class="my-2" id="mofLoad" onclick="getMOFTotals()">@Tax_Tech.Resources.Resource.ClickToLoad</a>
+                            <button id="mofTotals-btn-loader" style="display: none;" class="btn btn-outline-primary waves-effect" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>*@
+
+
+    </div>
+</div>
+
+<script src="~/Content/app-assets/vendors/js/charts/chart.min.js"></script>
+<script src="~/Scripts/Custom/HomeReports.js"></script>
+<script src="~/Scripts/Custom/JobQueueV2.js"></script>

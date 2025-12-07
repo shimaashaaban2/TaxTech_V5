@@ -1,0 +1,59 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.ItemsReport;
+    List<Tax_Tech.ApiModels.DocumentType> docTypes = ViewBag.DocTypes;
+}
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-body mt-3">
+                    <div class="d-flex">
+                        <div class="btn-group justify-content-around align-items-end" style="margin-left: 10px;">
+                            <div class="form-group mx-2">
+                                <label for="fromDate">@Tax_Tech.Resources.Resource.From</label>
+                                <input type="text" id="fromDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="toDate">@Tax_Tech.Resources.Resource.To</label>
+                                <input type="text" id="toDate" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" readonly="readonly" value="@DateTime.Now.ToString("yyyy-MM-dd")">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="DocumentTypeID">@Tax_Tech.Resources.Resource.DocType</label>
+                                @if (docTypes != null)
+                                {
+                                    @Html.DropDownList("DocumentTypeID", new SelectList(docTypes, "DocumentID", "DocumentTypeName"), Tax_Tech.Resources.Resource.DocType, new { @class = "form-control form-control-md select2", tabindex = "3" })
+                                }
+                                else
+                                {
+                                    <span class="req">@Tax_Tech.Resources.Resource.ApiDown</span>
+                                }
+                            </div>
+
+                            <div class="form-group mx-2">
+                                <button type="submit" class="btn btn-primary" id="subBtn-2" tabindex="18" onclick="filterByDate()">@Tax_Tech.Resources.Resource.Search</button>
+                                <button id="loadBtn-2" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+
+                            <div class="form-group mx-2">
+                                <button type="button" class="btn btn-outline-primary" onclick="exportItemsTotalsToExecl()">@Tax_Tech.Resources.Resource.ExportToExcel</button>
+                            </div>
+                        </div>
+                        <div id="main-err"></div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12" id="list">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/ItemsReport.js"></script>

@@ -1,0 +1,100 @@
+﻿@model List<Tax_Tech.ApiModels.InvoicingApi.RecentDocument>
+
+<table class="table table-bordered table-striped" id="thebasic-datatable">
+    <thead>
+        <tr>
+            @*<th>
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="checkbox-all" oninput="selectAll(event)">
+                    <label class="custom-control-label" for="checkbox-all"></label>
+                </div>
+            </th>*@
+            <th>@Tax_Tech.Resources.Resource.UUID</th>
+            <th>@Tax_Tech.Resources.Resource.Details</th>
+            <th>@Tax_Tech.Resources.Resource.IssuerName / @Tax_Tech.Resources.Resource.TaxID</th>
+            <th>@Tax_Tech.Resources.Resource.Total</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody id="tbl-data">
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var doc in Model)
+                {
+                    <tr>
+                        @*<td>
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="checkbox-@doc.UUID" data-doc-id="@doc.RecordID" oninput="onItemSelect(event)" data-uuid="@doc.UUID">
+                                <label class="custom-control-label" for="checkbox-@doc.UUID"></label>
+                            </div>
+                        </td>*@
+
+                        <td>
+                            <div>@doc.UUID</div>
+                            <div>
+                                <span>
+                                    <a href="@doc.PublicUrl" target="_blank" class="badge badge-primary">@Tax_Tech.Resources.Resource.Details</a>
+                                </span>
+                            </div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Status</span>: @doc.Status</div>
+                        </td>
+
+                        <td>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InternalID</span>: @doc.InternalId</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssueDate</span>: @doc.DateTimeIssued</div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.DocType</span>:
+                                @doc.DocumentTypeNamePrimaryLang
+                            </div>
+                        </td>
+
+                        <td>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssuerName</span>: @doc.IssuerName</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TaxID</span>: @doc.IssuerId</div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TotalSales</span>:
+                                <span>@doc.TotalSales</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Discount</span>:
+                                <span>@doc.TotalDiscount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.NetAmount</span>:
+                                <span>@doc.NetAmount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Total</span>:
+                                <span>@doc.Total</span>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getCancelDocReasonPopup('@doc.RecordID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-x"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                                        <span>@Tax_Tech.Resources.Resource.RejectDoc</span>
+                                    </a>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center" colspan="6">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

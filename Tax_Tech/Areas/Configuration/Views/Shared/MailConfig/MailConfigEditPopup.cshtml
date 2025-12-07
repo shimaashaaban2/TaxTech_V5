@@ -1,0 +1,107 @@
+﻿@model Tax_Tech.Areas.Configuration.ViewModels.MailListViewModel
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.EditMailConfig</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="addItemModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                <div id="PopupMsg"></div>
+
+                @using (Ajax.BeginForm("Edit", "MailConfig", null,
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "ShowLoading(1)",
+                OnComplete = "showUpdateMailConfigPopupResult"
+            }, new
+            {
+                @class = "form-horizontal"
+            }))
+                {
+                    <input type="hidden" name="GroupID" value="@Model.GroupID" />
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="FriendlyName">
+                                @Tax_Tech.Resources.Resource.FriendlyName
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" readonly name="FriendlyName" id="FriendlyName" value="@Model.GroupName" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="EntityTitle">
+                                @Tax_Tech.Resources.Resource.Entity
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" name="EntityTitle" readonly id="EntityTitle" value="@Model.EntityTitle" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="Email">
+                                @Tax_Tech.Resources.Resource.Email
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Email" name="Email" id="Email" tabindex="1" value="@Model.Email" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="MailPassword">
+                                @Tax_Tech.Resources.Resource.Password
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Password" name="MailPassword" id="MailPassword" tabindex="2" value="@Model.MailPassword" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="SMTPServer">
+                                SMTP Server
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="Enter SMTP Server" name="SMTPServer" id="SMTPServer" tabindex="4" value="@Model.SMTPServer" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="Port">
+                                SMTP Port
+                                <span class="req">*</span>
+                            </label>
+                            <input type="number" min="1" max="65535" class="form-control" placeholder="Enter SMTP Port" name="Port" id="Port" tabindex="5" value="@Model.Port" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="TLSorSSL" name="TLSorSSL" checked="@Model.TLSFlag">
+                                <label class="custom-control-label" for="TLSorSSL">TLS/SSL</label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="6">@Tax_Tech.Resources.Resource.Save</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

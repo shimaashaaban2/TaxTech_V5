@@ -1,0 +1,24 @@
+﻿@model  IEnumerable<Tax_Tech.ApiModels.ItemGroupsListByItemID>
+
+
+@if (Model.Count() > 0 && Model != null)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @item.ItemGroupTitle
+            </td>
+            <td>
+                @Ajax.ActionLink(Tax_Tech.Resources.Resource.Delete, "RemoveItemgroup", "Items", new { area = "Configuration", id = item.SerialRecored, ItemID = item.ItemSerial }, new AjaxOptions
+            {
+                OnBegin = "ShowLoading(0)",
+                HttpMethod = "POST",
+                OnComplete = "onRemoveItemGroup",
+                Confirm = Tax_Tech.Resources.Resource.AreyouSuretoDelete
+            })
+            </td>
+        </tr>
+
+    }
+}

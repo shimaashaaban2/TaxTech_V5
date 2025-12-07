@@ -1,0 +1,47 @@
+﻿@model List<Tax_Tech.ViewModels.ItemsTaxViewModel>
+
+@if (Model != null && Model.Count() > 0)
+{
+    foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.TaxCode / @item.TaxTypeNameEN</td>
+            @if (!string.IsNullOrWhiteSpace(item.SubTaxName))
+            {
+                <td>@item.SubTaxCode / @item.SubTaxName</td>
+            }
+            else
+            {
+                <td></td>
+            }
+            <td>@item.Rate</td>
+            <td>
+                @if (item.IsActive.HasValue && !item.IsActive.Value)
+                {
+                    @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetAsActive, "ChangeStatusTaxItem", "Items", new { area = "Configuration", recordId = item.RecordID, status = true, itemId = item.ItemID }, new AjaxOptions
+               {
+                   OnBegin = "ShowLoading(0)",
+                   OnComplete = "onChangeStatusResult",
+                   HttpMethod = "POST"
+               })
+                }
+                else
+                {
+                    @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetInActive, "ChangeStatusTaxItem", "Items", new { area = "Configuration", recordId = item.RecordID, status = false, itemId = item.ItemID }, new AjaxOptions
+               {
+                   OnBegin = "ShowLoading(0)",
+                   HttpMethod = "POST",
+                   OnComplete = "onChangeStatusResult",
+                   Confirm = Tax_Tech.Resources.Resource.AreyouSuretoSetInactive
+               })
+                }
+            </td>
+        </tr>
+    }
+}
+else
+{
+    <tr>
+        <td colspan="3">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+    </tr>
+}

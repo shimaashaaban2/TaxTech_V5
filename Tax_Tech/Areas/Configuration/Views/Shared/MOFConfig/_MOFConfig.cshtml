@@ -1,0 +1,128 @@
+﻿@model Tax_Tech.Areas.Configuration.ViewModels.MOFConfigViewModel
+<div class="card">
+    <div class="card-body" style="overflow-x: auto">
+        <div class="row">
+            <div class="col-md-4">@Tax_Tech.Resources.Resource.Enviroment</div>
+            @{ if (Model.EnviromentBool == true)
+                {
+                    <div class="col-md-4">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="Enviroment1" name="Enviroment" class="custom-control-input" onchange="OnchangeRadio(1,3)" value="1" checked="">
+                            <label class="custom-control-label" for="Enviroment1">@Tax_Tech.Resources.Resource.Production</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="Enviroment2" name="Enviroment" onchange="OnchangeRadio(0,3)" value="0" class="custom-control-input">
+                            <label class="custom-control-label" for="Enviroment2">@Tax_Tech.Resources.Resource.PreProduction</label>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="col-md-4">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="Enviroment1" name="Enviroment" class="custom-control-input" onchange="OnchangeRadio(1,3)" value="1">
+                            <label class="custom-control-label" for="Enviroment1">@Tax_Tech.Resources.Resource.Production</label>
+                        </div>
+                    </div>
+                    <div class="col-md-4 ">
+                        <div class="custom-control custom-radio">
+                            <input type="radio" id="Enviroment2" name="Enviroment" onchange="OnchangeRadio(0,3)" value="0" class="custom-control-input" checked="">
+                            <label class="custom-control-label" for="Enviroment2">@Tax_Tech.Resources.Resource.PreProduction</label>
+                        </div>
+                    </div>
+                }}
+
+        </div>
+
+    </div>
+
+</div>
+<div class="card">
+    <div class="card-header">
+        <div class="dt-action-buttons text-left d-flex">
+            <div id="main-err"></div>
+        </div>
+    </div>
+
+    <div class="card-body" style="overflow-x: auto">
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="control-label" for="ClientID">
+                    @Tax_Tech.Resources.Resource.ClientID
+                    <span class="req">*</span>
+                </label>
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Enter Client ID" name="ClientID" id="ClientID" value="@Model.ClientID" tabindex="1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="control-label" for="ClientSecret">
+                    @Tax_Tech.Resources.Resource.ClientSecret
+                    <span class="req">*</span>
+                </label>
+            </div>
+
+            <div class="form-group col-md-6">
+               
+                <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Enter Client Secret" name="ClientSecret" id="ClientSecret" value="@Model.ClientSecret" tabindex="2" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">  </div>
+            <div class="form-group col-md-6">
+                <br />
+                <button type="submit" class="btn btn-primary btn-block" tabindex="4" id="subBtn-2" onclick="PostMOFData(1)">@Tax_Tech.Resources.Resource.Save</button>
+                <button id="loadBtn-2" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>
+<div class="card">
+    <div class="card-body" style="overflow-x: auto">
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="control-label" for="DefaultActivityCode">
+                    @Tax_Tech.Resources.Resource.DefaultActivityCode
+                    <span class="req">*</span>
+                </label>
+            </div>
+
+            <div class="form-group col-md-6">
+                <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Enter Default Activity Code" name="DefaultActivityCode" id="DefaultActivityCode" value="@Model.DefaultActivityCode" tabindex="1" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">
+                <label class="control-label" for="DocumentVersion">
+                    @Tax_Tech.Resources.Resource.DocumentVersion
+                    <span class="req">*</span>
+                </label>
+            </div>
+            <div class="form-group col-md-6">
+               
+                <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Enter Document Version" name="DocumentVersion" id="DocumentVersion" value="@Model.DocumentVersion" tabindex="2" />
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-md-2">  </div>
+            <div class="form-group col-md-6">
+                <br />
+                <button type="submit" class="btn btn-primary btn-block" tabindex="4" id="subBtn-2" onclick="PostMOFData(2)">@Tax_Tech.Resources.Resource.Save</button>
+                <button id="loadBtn-2" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,51 @@
+﻿@model List<Tax_Tech.ApiModels.JobQueueEnhancedDetailsApiModel>
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-lg modal-dialog modal-dialog-scrollable" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.Log</h4>
+                <button type="button" class="close" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                <div class="row my-2">
+                    <div class="col-md-12">
+                        <a class="btn btn-primary" href="@Url.Action("ExportGlobalLogToExecl", "JobQueue", new { jobId = ViewBag.JobID, logType = ViewBag.LogType })" target="_blank">@Tax_Tech.Resources.Resource.ExportToExcel</a>
+                    </div>
+                </div>
+
+                <table class="table table-striped table-bordered table-responsive-xl dataTable no-footer" id="thebasic-datatable">
+                    <thead>
+                        <tr>
+                            <th>@Tax_Tech.Resources.Resource.InternalID</th>
+                            <th>@Tax_Tech.Resources.Resource.Error</th>
+                            <th width="80%">@Tax_Tech.Resources.Resource.ErrorDetails</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model.Count() > 0)
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@item.InternalID</td>
+                                    <td>@item.Error</td>
+                                    <td width="80%">@item.ErrorDetails</td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="3" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

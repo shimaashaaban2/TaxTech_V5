@@ -1,0 +1,90 @@
+﻿@model Tax_Tech.ApiModels.JobLogPagedResult
+
+@{
+    int pageSize = 50;
+    int totalPages = (int)Math.Ceiling((double)Model.TotalCount / pageSize);
+    int currentPage = ViewBag.CurrentPage ?? 1;
+    int maxPagesToShow = 10;
+    int startPage = ((currentPage - 1) / maxPagesToShow) * maxPagesToShow + 1;
+    int endPage = Math.Min(startPage + maxPagesToShow - 1, totalPages);
+    ViewBag.Title = Model.logType;
+}
+
+<input type="hidden" id="TotalCount" value="@Model.TotalCount" />
+<div class="card">
+    <div class="card-body">
+        <table class="table table-striped table-bordered" id="thebasic-datatable">
+            <thead>
+                <tr>
+                    <th>@Tax_Tech.Resources.Resource.JobID</th>
+                    <th>@Tax_Tech.Resources.Resource.LogID</th>
+                    <th>@Tax_Tech.Resources.Resource.OperationDate</th>
+                    <th>@Tax_Tech.Resources.Resource.InternalID</th>
+                    <th>@Tax_Tech.Resources.Resource.Details</th>
+                </tr>
+            </thead>
+            <tbody id="FailedJobListBody">
+                @foreach (var item in Model.Logs)
+                {
+                    <tr>
+                        <td>@item.JobID</td>
+                        <td>@item.LogID</td>
+                        <td>@item.OperationDate</td>
+                        <td>@item.InternalID</td>
+                        <td>@item.Details</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+        <nav>
+            <ul class="pagination mt-2" id="pagination">
+                @if (startPage > 1)
+                {
+                    <li class="page-item">
+
+                        <a class="page-link" href="@Url.Action("FailedJobLogList", "JobTracking", new {
+                jobId = Model.Logs.FirstOrDefault()?.JobID,
+                logType = Model.logType,
+                pageNo = (startPage - 1),
+                pageSize = 50
+            })">« Prev</a>
+                    </li>
+                }
+
+                @for (var i = startPage; i <= endPage; i++)
+                {
+                    <li class="page-item @(i == currentPage ? "active" : "")">
+                        <a class="page-link" href="@Url.Action("FailedJobLogList", "JobTracking", new {
+    jobId = Model.Logs.FirstOrDefault()?.JobID,
+    logType = Model.logType,
+    pageNo = i,
+    pageSize = 50
+})">@i</a>
+    </li>
+}
+
+                @if (endPage < totalPages)
+                {
+                    <li class="page-item">
+                        <a class="page-link" href="@Url.Action("FailedJobLogList", "JobTracking", new {
+    jobId = Model.Logs.FirstOrDefault()?.JobID,
+    logType = Model.logType,
+    pageNo = (endPage + 1),
+    pageSize = 50
+})">Next »</a>
+
+                    </li>
+                }
+            </ul>
+        </nav>
+    </div>
+</div>
+   
+
+
+
+
+
+
+
+<script src="~/Scripts/Custom/JobTracking.js"></script>

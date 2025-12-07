@@ -1,0 +1,10 @@
+﻿@model List<Tax_Tech.ApiModels.ProcessStatus>
+
+@if (Model != null)
+{
+    @Html.DropDownList("ProcessStatusID", new SelectList(Model, "ProcessStatusID", "ProcessStatusTitle"), Tax_Tech.Resources.Resource.DocStatus, new { @class = "form-control form-control-md select2", tabindex = "5" })
+}
+else
+{
+    <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+}

@@ -1,0 +1,78 @@
+﻿@model List<Tax_Tech.ApiModels.InvoicingApi.SearchDocument>
+
+<table class="table table-bordered table-striped" id="thebasic-datatable">
+    <thead>
+        <tr>
+          
+            <th>@Tax_Tech.Resources.Resource.UUID</th>
+            <th>@Tax_Tech.Resources.Resource.Details</th>
+            <th>@Tax_Tech.Resources.Resource.IssuerName / @Tax_Tech.Resources.Resource.ReceiverName</th>
+            <th>@Tax_Tech.Resources.Resource.Total</th>
+        </tr>
+    </thead>
+    <tbody id="tbl-data">
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var doc in Model)
+                {
+                    <tr>
+                      
+                        <td>
+                            <div>@doc.uuid</div>
+                            <div>
+                                <span>
+                                    <a href="@doc.publicUrl" target="_blank" class="badge badge-primary">@Tax_Tech.Resources.Resource.Details</a>
+                                </span>
+                            </div>
+                        </td>
+
+                        <td>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InternalID</span>: @doc.internalId</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssueDate</span>: @doc.dateTimeIssued</div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.DocType</span>:
+                                @doc.documentTypeNamePrimaryLang
+                            </div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Status</span>: @doc.status</div>
+                        </td>
+
+                        <td>
+
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ReceiverId</span>: @doc.receiverId</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.ReceiverName</span>: @doc.receiverName</div>
+                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.IssuerName</span>: @doc.issuerName</div>
+                        </td>
+
+                        <td>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.TotalSales</span>:
+                                <span>@doc.totalSales</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Discount</span>:
+                                <span>@doc.totalDiscount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.NetAmount</span>:
+                                <span>@doc.netAmount</span>
+                            </div>
+                            <div>
+                                <span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Total</span>:
+                                <span>@doc.total</span>
+                            </div>
+                        </td>
+                        
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td class="text-center" colspan="5">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

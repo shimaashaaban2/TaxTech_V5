@@ -1,0 +1,110 @@
+﻿@{
+    List<Tax_Tech.ApiModels.ProcessStatus> processStatusList = ViewBag.ProcessStatusList;
+
+    var docTypes = new List<object>
+    {
+        new { id = 1, text = Tax_Tech.Resources.Resource.Invoice },
+        new { id = 2, text = Tax_Tech.Resources.Resource.CreditNote },
+        new { id = 3, text = Tax_Tech.Resources.Resource.DebitNote }
+    };
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.Search</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="addNewPaymentModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="PopupMsg"></div>
+            <div class="modal-body">
+
+                @using (Ajax.BeginForm("FilterDocs", new { controller = "Invoice", area = "" },
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnComplete = "onFilterComplete",
+                            OnBegin = "ShowLoading(1)",
+                        }, new
+                        {
+                            @class = "form-horizontal",
+                            id = "frmFitlerInvoice"
+                        }))
+                {
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="StartDate">@Tax_Tech.Resources.Resource.StartDate</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" name="StartDate" id="StartDate" tabindex="1" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="EndDate">@Tax_Tech.Resources.Resource.EndDate</label>
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" name="EndDate" id="EndDate" tabindex="3" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="DocumentType">
+                                @Tax_Tech.Resources.Resource.DocType
+                            </label>
+                            @if (docTypes != null)
+                            {
+                                @Html.DropDownList("DocumentType", new SelectList(docTypes, "id", "text"), Tax_Tech.Resources.Resource.DocType, new { @class = "form-control form-control-md select2", tabindex = "4" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ProcessStatusID">
+                                @Tax_Tech.Resources.Resource.DocStatus
+                            </label>
+                            <div id="docStatusContainer">
+                                @Html.Partial("Lookups/_ProcessStatusList", processStatusList)
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="7">@Tax_Tech.Resources.Resource.Search</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    var basicPickr = $('.flatpickr-basic');
+    if (basicPickr.length) {
+        basicPickr.flatpickr({
+            format: 'YYYY/MM/dd'
+        });
+    }
+    $('.select2').each(function () {
+    var $this = $(this);
+    $this.wrap('<div class="position-relative"></div>');
+    $this.select2({
+        // the following code is used to disable x-scrollbar when click in select input and
+        // take 100% width in responsive also
+        dropdownAutoWidth: true,
+        width: '100%',
+        dropdownParent: $this.parent()
+    });
+    });
+</script>

@@ -1,0 +1,76 @@
+﻿@using Tax_Tech.Helpers
+@using PagedList
+@using PagedList.Mvc
+
+@model List<Tax_Tech.ApiModels.TaxDetailsReportViewModel>
+    <table cellpadding="0" cellspacing="0" border="0" class="table table-responsive table-bordered" id="thebasic-datatable">
+        <thead>
+            <tr>
+                <th>@Tax_Tech.Resources.Resource.InternalID</th>
+                <th>@Tax_Tech.Resources.Resource.VendorName</th>
+                <th>@Tax_Tech.Resources.Resource.BranchName</th>
+                <th>@Tax_Tech.Resources.Resource.IssueDate</th>
+                <th>@Tax_Tech.Resources.Resource.NetTotal</th>
+                <th>@Tax_Tech.Resources.Resource.TaxTotal</th>
+                <th>Tb102</th>
+                <th>M102</th>
+                <th>M104</th>
+                <th>VAT</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model != null)
+            {
+                if (Model.Count > 0)
+                {
+                    foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @item.internalID
+                            </td>
+                            <td>
+                                @item.VendorName
+                            </td>
+                            <td>
+                                @item.BranchName
+                            </td>
+
+                            <td>
+                                @item.dateTimeIssued
+                            </td>
+
+                            <td>
+                                @item.NetTotal
+                            </td>
+                            <td>
+                                @item.TaxTotals
+
+                            </td>
+                            <td>
+                                @item.Tbl02
+                            </td>
+                            <td>
+                                @item.Ml02
+                            </td>
+                            <td>
+                                @item.Ml04
+                            </td>
+                            <td>
+                                @item.VAT
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="9">
+                            <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                        </td>
+                    </tr>
+                }
+            }
+
+        </tbody>
+    </table>

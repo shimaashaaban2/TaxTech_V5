@@ -1,0 +1,94 @@
+﻿@model List<Tax_Tech.ApiModels.BankAccount>
+
+<table cellpadding="0" cellspacing="0" border="0" class="table table-striped table-bordered table-responsive-xl" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.AccountNo</th>
+            <th>@Tax_Tech.Resources.Resource.IbanNo</th>
+            <th>@Tax_Tech.Resources.Resource.SwiftCode</th>
+            <th>@Tax_Tech.Resources.Resource.Adderss</th>
+            <th>@Tax_Tech.Resources.Resource.Bankname</th>
+            <th>@Tax_Tech.Resources.Resource.Status</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>
+                            <span>@item.BankAccountNo</span>
+                        </td>
+                        <td>
+                            <span>@item.BankAccountIBAN</span>
+                        </td>
+
+                        <td>
+                            <span>@item.SwiftCode</span>
+                        </td>
+
+                        <td>
+                            <span>@item.BranchAddress</span>
+                        </td>
+                        <td style="">
+                            <span>@item.BankName</span>
+                        </td>
+                        @if (item.IsActive.HasValue && item.IsActive.Value)
+                        {
+                            <td>@Tax_Tech.Resources.Resource.Active</td>
+                        }
+                        else
+                        {
+                            <td>@Tax_Tech.Resources.Resource.InActive</td>
+                        }
+                        <td>
+                            <div class="dropdown">
+                                <button type="button" class="btn btn-sm dropdown-toggle hide-arrow" data-toggle="dropdown">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-more-vertical"><circle cx="12" cy="12" r="1"></circle><circle cx="12" cy="5" r="1"></circle><circle cx="12" cy="19" r="1"></circle></svg>
+                                </button>
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item" href="javascript:void(0);" onclick="getUpdateModal('@item.PaymentAccountID')">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-edit-2"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"></path></svg>
+                                        <span>@Tax_Tech.Resources.Resource.Edit</span>
+                                    </a>
+
+                                    @if (item.IsActive.HasValue && !item.IsActive.Value)
+                                    {
+                                        @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetAsActive, "ChangeAccountStatus", "Payment", new { area = "Configuration", accountId = item.PaymentAccountID, status = true }, new AjaxOptions
+                                        {
+                                            OnBegin = "ShowLoading(0)",
+                                            HttpMethod = "POST",
+                                            OnComplete = "showDeleteResult"
+                                        }, new { @class = "dropdown-item" })
+                                    }
+                                    else
+                                    {
+                                        @Ajax.ActionLink(Tax_Tech.Resources.Resource.SetInActive, "ChangeAccountStatus", "Payment", new { area = "Configuration", accountId = item.PaymentAccountID, status = false }, new AjaxOptions
+                                        {
+                                            OnBegin = "ShowLoading(0)",
+                                            HttpMethod = "POST",
+                                            Confirm = Tax_Tech.Resources.Resource.AreyouSuretoSetInactive,
+                                            OnComplete = "showDeleteResult"
+                                        }, new { @class = "dropdown-item" })
+                                    }
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="4">
+                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                    </td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

@@ -1,0 +1,25 @@
+﻿
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.ErrorOccured</h4>
+                <button type="button" class="close" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                @if(ViewBag.Error == null)
+                {
+                    <h1 class="text-center">@Tax_Tech.Resources.Resource.ErrorOccured</h1>
+                    <h4 class="req text-center">@Tax_Tech.Resources.Resource.InvalidDataProvided</h4>
+                }
+                else
+                {
+                    <h4 class="text-center req">@ViewBag.Error</h4>
+                }
+            </div>
+        </div>
+    </div>
+</div>

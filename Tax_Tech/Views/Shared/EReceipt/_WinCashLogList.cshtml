@@ -1,0 +1,56 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.WinCashLogsModel>
+
+
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="content-body col-md-12">
+            <div class="card">
+                <div class="card-datatable">
+                    <table class="datatables-basic table table-striped table-responsive-lg" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+                                @*<th>LogID</th>*@
+                                @*<th>LogTypeID</th>*@
+                                <th>@Tax_Tech.Resources.Resource.dateTimeIssued</th>
+                                <th width="20%">@Tax_Tech.Resources.Resource.EReceiptData</th>
+                                <th>@Tax_Tech.Resources.Resource.Request</th>
+                                <th>@Tax_Tech.Resources.Resource.Response</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @if (Model != null && Model.Count() > 0)
+                            {
+
+                                foreach (var item in Model)
+                                {
+
+
+                                    <tr>
+                                        @*<td></td>
+                                        <td></td>*@
+                                        @*<td></td>
+                                        <td></td>
+                                        <td></td>*@
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="8">
+                                        <h5 class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</h5>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+  </section>

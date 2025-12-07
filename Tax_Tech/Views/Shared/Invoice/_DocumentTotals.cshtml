@@ -1,0 +1,95 @@
+﻿@model Tax_Tech.ApiModels.DocumentTotal
+
+@if (Model != null)
+{
+    var invoiceApiRepo = new Tax_Tech.Repository.InvoiceApiRepository();
+    var taxTotals = invoiceApiRepo.GetTaxTotals(Convert.ToString(Model.DocumentID));
+
+
+    <div class="invoice-terms mt-1">
+        <div class="invoice-total-wrapper" style="max-width: 100% !important">
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TotalSales:</p>
+                <p class="invoice-total-amount">@Model.SalesTotal</p>
+            </div>
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.ItemDiscount:</p>
+                <p class="invoice-total-amount">@Model.ItemsDiscount</p>
+            </div>
+            <hr class="my-50">
+
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.NetAmount:</p>
+                <p class="invoice-total-amount">@(Model.SalesTotal - Model.ItemsDiscount)</p>
+            </div>
+
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">
+                    <a href="javascript:void(0);" onclick="getAddExtraDiscountPopup('@Model.DocumentID')">@Tax_Tech.Resources.Resource.ExtraDiscount:</a>
+                </p>
+                <p class="invoice-total-amount ml-2">@Model.ExtraDiscountAmount</p>
+            </div>
+
+            @if (taxTotals != null && taxTotals.Count() > 0)
+            {
+                <div class="invoice-total-item" rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="@foreach(var item in taxTotals){ <div>@item.TaxCode - @item.Amount</div> } ">
+                    <script>$("[rel=tooltip]").tooltip({ html: true });</script>
+                    <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TaxTotal:</p>
+                    <p class="invoice-total-amount">+ @Model.TaxTotals</p>
+                </div>
+            }
+            else
+            {
+                <div class="invoice-total-item" rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="@Tax_Tech.Resources.Resource.NoTaxesforthisDoc">
+                    <script>$("[rel=tooltip]").tooltip({ html: true });</script>
+                    <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TaxTotal:</p>
+                    <p class="invoice-total-amount">+ @Model.TaxTotals</p>
+                </div>
+            }
+            <hr class="my-50">
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TotalAmount:</p>
+                <p class="invoice-total-amount" id="CredittotalAmount">@(Model.TotalAmount ?? 0.00)</p>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="invoice-terms mt-1">
+        <div class="invoice-total-wrapper" style="max-width: 100% !important">
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TotalSales:</p>
+                <p class="invoice-total-amount">0</p>
+            </div>
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.ItemDiscount:</p>
+                <p class="invoice-total-amount">0</p>
+            </div>
+
+            <hr class="my-50">
+
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.NetAmount:</p>
+                <p class="invoice-total-amount">0</p>
+            </div>
+
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">
+                    <a href="javascript:void(0);">@Tax_Tech.Resources.Resource.ExtraDiscount:</a>
+                </p>
+                <p class="invoice-total-amount">0</p>
+            </div>
+
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TaxTotal:</p>
+                <p class="invoice-total-amount">+ 0</p>
+            </div>
+            <hr class="my-50">
+            <div class="invoice-total-item">
+                <p class="invoice-total-title">@Tax_Tech.Resources.Resource.TotalAmount:</p>
+                <p class="invoice-total-amount">0</p>
+            </div>
+        </div>
+    </div>
+}

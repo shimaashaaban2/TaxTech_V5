@@ -1,0 +1,25 @@
+﻿
+@{
+    ViewBag.Title = "Send File via WhatsApp";
+}
+
+<h2>Send File via WhatsApp</h2>
+
+@using (Html.BeginForm("SendFile", "WhatsApp", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+
+    <div>
+        <label>Recipient phone (E.164 — digits only, no plus sign):</label><br />
+        <input type="text" name="phoneNumber" required placeholder="e.g. 201234567890" />
+    </div>
+
+    <div style="margin-top:10px">
+        <label>Select file to send (PDF/DOCX/PNG ...):</label><br />
+        <input type="file" name="file" accept=".pdf,.doc,.docx,.xlsx,.pptx,.zip,.jpg,.png,.mp4" required />
+    </div>
+
+    <div style="margin-top:10px">
+        <button type="submit">Send File</button>
+    </div>
+}

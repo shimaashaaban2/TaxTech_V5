@@ -1,0 +1,189 @@
+﻿@model Int64
+@using Tax_Tech.Helpers;
+@{
+    IEnumerable<Tax_Tech.ApiModels.Lup_CurrenyListView> currencies = ViewBag.Curreny;
+    //    List<object> currencies = new List<object>
+    //{
+    //new { name = "EGP"},
+    //new { name = "USD"}
+    //};
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.AddNewInvoiceLine </h4>
+                <button type="button" class="close" data-dismiss="modal" id="addNewInvoiceLineModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body">
+                @using (Ajax.BeginForm("CreateInvoiceLine", new { controller = "InvoiceLine", area = "" },
+                        new AjaxOptions
+                        {
+                        UpdateTargetId = "PopupMsg",
+                        InsertionMode = InsertionMode.Replace,
+                        OnBegin = "ShowLoading(1)",
+                        OnComplete = "showInvoiceLineResult",
+
+                        }))
+                {
+                    <input type="hidden" name="InvoiceInternalID" value="@Model" />
+
+                    <div id="PopupMsg"></div>
+                    <div>
+                        <div>
+                            <div class="row">
+                                <div class="form-group col-md-6" id="item-code">
+                                    @Html.Partial("Invoice/_ItemsCodeList", Convert.ToInt32(0))
+
+                                </div>
+
+                                <div class="form-group col-md-6" id="item-name">
+                                    @Html.Partial("Invoice/_ItemsNameList", Convert.ToInt32(0))
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="form-group col-md-3">
+                                    <label class="control-label" for="ItemCode">@Tax_Tech.Resources.Resource.Quantity<span class="text-danger">*</span> </label>
+                                    <input type="number" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Quantity" name="Quantity" id="Quantity" tabindex="8" oninput="calculateSoldTotal()" step=".00001" min="0" />
+                                </div>
+
+                                <div class="form-group col-md-2">
+                                    <label class="control-label" for="Currency">@Tax_Tech.Resources.Resource.Currency<span class="text-danger">*</span> </label>
+                                    @if (currencies != null)
+    {
+                                @Html.DropDownList("Currency", new SelectList(currencies, "CurrencyIndex", "CurrencyCode", 1), Tax_Tech.Resources.Resource.Currency, new { @class = "select2 form-control form-control-md select2-hidden-accessible", tabindex = "9", oninput = "showExchangeRate(event)" })
+}
+                                </div>
+
+                                <div id="ExchangeRateContainer" class="form-group col-md-2">
+                                    <label class="control-label" for="ExchangeRate">@Tax_Tech.Resources.Resource.ExchangeRate<span class="text-danger">*</span> </label>
+                                    <input type="number" class="form-control" placeholder="Exchange Rate" name="ExchangeRate" id="ExchangeRate" tabindex="10" value="1" min="0" oninput="calculateSoldTotal()" step=".00001" />
+                                </div>
+                                <div class="form-group col-md-2">
+                                    <label class="control-label" for="ItemCode">@Tax_Tech.Resources.Resource.Amount<span class="text-danger">*</span> </label>
+                                    <input type="number" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Amount" name="Amount" step=".00001" id="Amount" tabindex="11" oninput="calculateSoldTotal()" min="0" />
+                                </div>
+                                <div class="form-group col-md-3">
+                                    <label class="control-label" for="SoldTotal">@Tax_Tech.Resources.Resource.AmountEgp</label>
+                                    <input type="number" class="form-control" placeholder="@Tax_Tech.Resources.Resource.AmountEgp" step=".00001" name="SoldTotal" id="SoldTotal" readonly value="0.00" />
+
+                                </div>
+
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-8">
+                                    <div class="row form-group">
+                                        <div class="col-md-12">
+                                            <h5 class="text-left">@Tax_Tech.Resources.Resource.Description</h5>
+                                            <textarea id="description" name="description" class="form-control" style="resize:vertical"></textarea>
+                                        </div>
+                                     </div>
+                                    
+                                    <div id="ItemTaxList">  </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group row">
+                                        <div class="col-md-4">
+                                            <label class="control-label" for="Discount">
+                                                <div class="col-md-4">
+                                                    <h5 class="text-center">
+                                                        @Tax_Tech.Resources.Resource.Discount<span class="req">*</span>
+                                                    </h5>
+                                                </div>
+                                            </label>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" min="0" step=".00001" placeholder="Discount" name="Discount" id="Discount" value="0" tabindex="12" oninput="calculateTotal()" />
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-5"></div>
+                                        <div class="col-md-7 custom-control custom-checkbox">
+                                            <input type="checkbox" class="custom-control-input" id="percentageDiscount" name="percentageDiscount" checked="" value="true" oninput="calculateTotal()" tabindex="13">
+                                            <label class="custom-control-label" for="percentageDiscount">% @Tax_Tech.Resources.Resource.Percentage</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <hr />
+                                        </div>
+                                    </div>
+
+                                    <div class="row form-group">
+
+                                        <div class="col-md-4">
+                                            <h5 class="text-center">@Tax_Tech.Resources.Resource.ItemTotal</h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" step=".00001" placeholder="@Tax_Tech.Resources.Resource.ItemTotal" name="ItemTotal" id="ItemTotal" readonly value="0.00" />
+
+                                        </div>
+                                    </div>
+                                    <div class="row form-group hidden">
+
+                                        <div class="col-md-4">
+                                            <h5 class="text-center">@Tax_Tech.Resources.Resource.Tax</h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" step=".00001" placeholder="@Tax_Tech.Resources.Resource.Tax" name="Tax" id="Tax" tabindex="5" readonly value="0.00" />
+                                        </div>
+                                    </div>
+                                    <div class="row form-group hidden">
+
+                                        <div class="col-md-4">
+                                            <h5 class="text-center">@Tax_Tech.Resources.Resource.NetTotal</h5>
+                                        </div>
+                                        <div class="col-md-8">
+                                            <input type="number" class="form-control" step=".00001" placeholder="@Tax_Tech.Resources.Resource.NetTotal" name="NetTotal" id="NetTotal" readonly value="0.00" />
+
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+
+                            <div class="invoice-total-wrapper">
+
+                            </div>
+
+                            <div class="row mt-2">
+                                <div class="form-group col-md-12">
+                                    <button type="submit" class="btn btn-primary btn-submit" tabindex="18" id="subBtn-1">@Tax_Tech.Resources.Resource.Save</button>
+                                    <div class="form-group">
+                                        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+
+</script>

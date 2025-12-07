@@ -1,0 +1,125 @@
+﻿@model Tax_Tech.ViewModels.ItemViewModel
+
+@{
+    List<Tax_Tech.ApiModels.UnitType> unitTypes = ViewBag.UnitTypes;
+    List<object> itemTypes = ViewBag.ItemTypes;
+}
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.UpdateItem</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="updateItemModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                <div id="PopupMsg"></div>
+
+                @using (Ajax.BeginForm("UpdateItem", "Items", null,
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "ShowLoading(1)",
+                OnComplete = "showAfterPopupActionResult"
+            }, new
+            {
+                @class = "form-horizontal"
+            }))
+                {
+
+                    <input type="hidden" name="EntityID" value="@Convert.ToInt32(Session["EntityID"])" />
+                    <input type="hidden" value="@Model.ItemSerial" name="ItemSerial" />
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ItemCode">
+                                @Tax_Tech.Resources.Resource.ItemCode
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.ItemCode" name="ItemCode" id="ItemCode" tabindex="1" value="@Model.ItemCode" />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ItemName">
+                                @Tax_Tech.Resources.Resource.ItemName
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.ItemName" name="ItemName" id="ItemName" tabindex="2" value="@Model.ItemName" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ItemUnitID">
+                                @Tax_Tech.Resources.Resource.UnitType
+                                <span class="req">*</span>
+                            </label>
+                            @if (unitTypes != null)
+                            {
+                                @Html.DropDownList("ItemUnitID", new SelectList(unitTypes, "UnitID", "UnitTitleEN", Model.ItemUnitID), Tax_Tech.Resources.Resource.UnitType, new { @class = "form-control form-control-md select2", tabindex = "3" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="ItemType">
+                                @Tax_Tech.Resources.Resource.ItemType
+                                <span class="req">*</span>
+                            </label>
+                            @if (itemTypes != null)
+                            {
+                                @Html.DropDownList("ItemType", new SelectList(itemTypes, "Id", "Name", Model.ItemType), Tax_Tech.Resources.Resource.ItemType, new { @class = "form-control form-control-md select2", tabindex = "4" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label" for="ItemERPID">
+                                @Tax_Tech.Resources.Resource.ERPID
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.ERPID" name="ItemERPID" id="ItemERPID" tabindex="5" value="@Model.ItemERPID" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" id="subBtn-1" class="btn btn-primary" tabindex="6">@Tax_Tech.Resources.Resource.UpdateItem</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            // the following code is used to disable x-scrollbar when click in select input and
+            // take 100% width in responsive also
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+</script>

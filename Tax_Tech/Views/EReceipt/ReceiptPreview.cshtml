@@ -1,0 +1,160 @@
+﻿@model  Tax_Tech.ApiModels.EReceiptApi.EReceiptSingleViewModel
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.PreviewEReceipt;
+    IEnumerable<Tax_Tech.ApiModels.EReceiptApi.ReceiptLinesTotals> LinesTotals = ViewBag.linesTotals;
+
+}
+
+<style>
+    .invoice-add .invoice-total-wrapper, .invoice-edit .invoice-total-wrapper, .invoice-preview .invoice-total-wrapper {
+        max-width: 100% !important;
+    }
+</style>
+
+<section class="invoice-preview-wrapper">
+    <div class="row invoice-preview">
+        <!-- Invoice -->
+        <div class="col-xl-9 col-md-8 col-12">
+            <div class="card invoice-preview-card">
+                <div class="card-body invoice-padding pb-0">
+                    <div id="msg"></div>
+                    <!-- Header starts -->
+                    <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+                        <div class="col-md-5">
+                            <div class="logo-wrapper">
+                                <h3>@Tax_Tech.Resources.Resource.BranchInfo</h3>
+                            </div>
+                            <p class="card-text mb-25">@Model.CompanyTradeName</p>
+                            <p class="card-text mb-25">@Tax_Tech.Resources.Resource.Adderss: @Model.regionCity </p>
+                        </div>
+                        <div class="col-md-7">
+                            @*<h4 id="StatusTitleContainer">
+                                ProcessStatusTitle
+                            </h4>*@
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.IssueDate:</p>
+                                <p class="invoice-date">@Model.dateTimeIssued</p>
+                            </div>
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.UUID:</p>
+                                <p class="invoice-date" id="uuid">@Model.UUID</p>
+                            </div>
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.EReceiptNumber</p>
+                                <span class="invoice-number">@Model.receiptNumber</span>
+                            </div>
+
+
+                        </div>
+                        <div>
+                        </div>
+                        <!-- Header ends -->
+                    </div>
+                </div>
+
+                <hr class="invoice-spacing">
+
+                <!-- Address and Contact starts -->
+                <div class="card-body invoice-padding pt-0">
+
+                   
+
+                    <div class="row invoice-spacing">
+                        <div class="col-xl-8 p-0">
+                            <h6 class="mb-2">@Tax_Tech.Resources.Resource.InvoiceTo:</h6>
+                            <h6 class="card-text mb-25">@Tax_Tech.Resources.Resource.RegInfo: @(Model.buyerID ?? "None")</h6>
+                            <h6 class="mb-25">@Model.buyerName</h6>
+                            @*<p class="card-text mb-25">Building Number:</p>*@
+                            <p class="card-text mb-25"> @Model.buildingNumber, @Model.street, @Model.regionCity,@Model.Governate</p>
+                            @*<p class="card-text mb-25">RegionCity:</p>
+                                <p class="card-text mb-25">Country Name: </p>
+                                <p class="card-text mb-25"> PostalCode:</p>*@
+                            <p class="card-text mb-25">@Tax_Tech.Resources.Resource.VendorType:@Model.buyerType </p>
+                            @*<p class="card-text mb-25"></p>*@
+                            @* <div class="pr-1">@Tax_Tech.Resources.Resource.ProformaInvoiceNumber: ProformaInvoiceNumber</div>
+                                </p>
+                                <p>
+                                    <div class="pr-1">@Tax_Tech.Resources.Resource.PurchaseOrderReference: PurchaseOrderReference</div>
+                                    <div>@Tax_Tech.Resources.Resource.PurchaseOrderDescription: PurchaseOrderDescription</div>
+                                </p>
+                                <p>
+                                    <div class="pr-1">@Tax_Tech.Resources.Resource.SalesOrderReference: SalesOrderReference</div>
+                                    <div>@Tax_Tech.Resources.Resource.SalesOrderDescription: SalesOrderDescription</div>
+                                </p>*@
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <!-- Invoice Note ends -->
+                <!-- Invoice Description starts -->
+
+                <div class="card-body invoice-padding pb-0">
+                    <div class="row invoice-sales-total-wrapper">
+                        <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-3">
+                            <p class="card-text mb-0">
+
+                            </p>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Invoice Description ends -->
+            </div>
+        </div>
+        <!-- /Invoice -->
+        <!-- Invoice Actions -->
+        <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-total-wrapper" id="EReceiptTotals">
+                        @Html.Partial("EReceipt/_ReceiptLinesTotals", LinesTotals)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Invoice Actions -->
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row col-12">
+                <table class="table table-bordered table-responsive-lg" id="thebasic-datatable" >
+                        <thead>
+                            <tr>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.ItemCode</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.ItemInfo</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.Quantity</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.AmountSold</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.NetTotal</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.TaxTotal</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.Total</th>
+                            </tr>
+                        </thead>
+                        <tbody id="EReceiptLines1">
+                            <tr class="m-3">
+                                @*<td colspan="7" class="text-center">@Tax_Tech.Resources.Resource.Loading...</td>*@
+                            </tr>
+                        </tbody>
+                    </table>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script src="~/Scripts/Custom/Public.js"></script>
+<script src="~/Scripts/Custom/EReceiptPreview.js"></script>
+<script>
+    window.addEventListener('load', function () {
+
+        GetEReceiptLines('@Model.EReceiptID');
+        @*getReceiptTotals('@Model.EReceiptID');*@
+        /*$('#thebasic-datatable').DataTable({ "pageLength": 50 });*/
+    });
+</script>
+
+

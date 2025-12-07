@@ -1,0 +1,57 @@
+﻿@{ 
+    long JobID =Convert.ToInt64(ViewBag.JobID);
+    string DocID = ViewBag.DocID;
+}
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.CancellInvoice </h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="addNewPaymentModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="PopupMsg"></div>
+            <div class="modal-body">
+                <section class="basic-textarea">
+                    <div class="row">
+                        <div class="col-12">
+                            @using (Ajax.BeginForm("GetCancellInvoice", "Invoice", new { area = "" , JobID = JobID , DocID = DocID  },
+new AjaxOptions
+{
+    HttpMethod = "Post",
+    OnBegin = "showLoader('btn-Cancel', 'btn-Cancel-loader')",
+    OnComplete = "onCancellItem"
+
+}, new
+{
+    @class = "form-horizontal"
+}))
+                            {
+                                <div class="row">
+                                    <div class="col-12">
+                                        <div class="form-group">
+                                            <label for="exampleFormControlTextarea1">@Tax_Tech.Resources.Resource.CancellReason</label>
+                                            <textarea class="form-control" name="processMsg" id="exampleFormControlTextarea1" rows="3" placeholder="@Tax_Tech.Resources.Resource.CancellReason"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-4">
+                                        <button class="btn btn-primary col-md-12" id="btn-Cancel" type="submit">@Tax_Tech.Resources.Resource.Cancel</button>
+                                        <button class="btn btn-outline-primary waves-effect btn-block" style="display: none;" id="btn-Cancel-loader" type="button" disabled="">
+                                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading</span>
+                                        </button>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="~/Scripts/Custom/Invoice.js"></script>

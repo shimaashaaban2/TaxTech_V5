@@ -1,0 +1,229 @@
+﻿@model Tax_Tech.ViewModels.DocumentViewModel
+
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.PreviewDoc;
+    Tax_Tech.ApiModels.DocumentTotal docTotals = ViewBag.DocTotals;
+}
+
+<style>
+    .invoice-add .invoice-total-wrapper, .invoice-edit .invoice-total-wrapper, .invoice-preview .invoice-total-wrapper {
+        max-width: 100% !important;
+    }
+</style>
+
+<section class="invoice-preview-wrapper">
+    <div class="row invoice-preview">
+        <!-- Invoice -->
+        <div class="col-xl-9 col-md-8 col-12">
+            <div class="card invoice-preview-card">
+                <div class="card-body invoice-padding pb-0">
+                    <div id="msg"></div>
+                    <!-- Header starts -->
+                    <div class="d-flex justify-content-between flex-md-row flex-column invoice-spacing mt-0">
+                        <div class="col-md-5">
+                            <div class="logo-wrapper">
+                                <h3>@Tax_Tech.Resources.Resource.BranchInfo</h3>
+                            </div>
+                            <p class="card-text mb-25"></p>
+                            <p class="card-text mb-25">@Tax_Tech.Resources.Resource.Adderss: @Model.BranchAddress</p>
+                        </div>
+                        <div class="col-md-7">
+                            <h4 id="StatusTitleContainer">
+                                @Model.ProcessStatusTitle
+                            </h4>
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.IssueDate:</p>
+                                <p class="invoice-date">@Model.DateTimeIssued</p>
+                            </div>
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.UUID:</p>
+                                <p class="invoice-date" id="uuid">@Model.UUID</p>
+                            </div>
+                            <div class="invoice-date-wrapper">
+                                <p class="invoice-date-title">@Tax_Tech.Resources.Resource.InvoiceID:</p>
+                                <span class="invoice-number">@Model.InternalID</span>
+                            </div>
+                        </div>
+                        <div>
+                        </div>
+                        <!-- Header ends -->
+                    </div>
+                </div>
+
+                <hr class="invoice-spacing">
+
+                <!-- Address and Contact starts -->
+                <div class="card-body invoice-padding pt-0">
+
+                    <div>
+                        <h3>@Tax_Tech.Resources.Resource.Activity</h3>
+                        <span>@Model.ActivityCode - @Model.ActivityEN</span>
+                    </div>
+
+                    <div class="row invoice-spacing">
+                        <div class="col-xl-8 p-0">
+                            <h6 class="mb-2">@Tax_Tech.Resources.Resource.InvoiceTo:</h6>
+                            <h6 class="card-text mb-25">@Tax_Tech.Resources.Resource.RegInfo: @(Model.VendorRegInfo ?? "None")</h6>
+                            <h6 class="mb-25">@Model.VendorName</h6>
+                            <p class="card-text mb-25">@Model.BuildingNumber @Model.Street, @Model.RegionCity</p>
+                            <p class="card-text mb-25">@Model.CountryName @Model.PostalCode</p>
+                            <p class="card-text mb-25">@Tax_Tech.Resources.Resource.VendorType: @Model.VendorTypeList</p>
+                            <p class="card-text mb-25">
+                                <div class="pr-1">@Tax_Tech.Resources.Resource.ProformaInvoiceNumber: @Model.ProformaInvoiceNumber</div>
+                            </p>
+                            <p>
+                                <div class="pr-1">@Tax_Tech.Resources.Resource.PurchaseOrderReference: @Model.PurchaseOrderReference</div>
+                                <div>@Tax_Tech.Resources.Resource.PurchaseOrderDescription: @Model.PurchaseOrderDescription</div>
+                            </p>
+                            <p>
+                                <div class="pr-1">@Tax_Tech.Resources.Resource.SalesOrderReference: @Model.SalesOrderReference</div>
+                                <div>@Tax_Tech.Resources.Resource.SalesOrderDescription: @Model.SalesOrderDescription</div>
+                            </p>
+                        </div>
+                        <div class="col-xl-4 p-0 mt-xl-0 mt-2">
+                            <h6 class="mb-2">@Tax_Tech.Resources.Resource.PaymentDetails:</h6>
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td class="pr-1">@Tax_Tech.Resources.Resource.AccountNo:</td>
+                                        <td><span class="font-weight-bold">@Model.BankAccountNo</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-1">@Tax_Tech.Resources.Resource.Bankname:</td>
+                                        <td>@Model.BankName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-1">@Tax_Tech.Resources.Resource.Country:</td>
+                                        <td>@Model.CountryName</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-1">@Tax_Tech.Resources.Resource.IbanNo:</td>
+                                        <td>@Model.BankAccountIBAN</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="pr-1">@Tax_Tech.Resources.Resource.SwiftCode:</td>
+                                        <td>@Model.SwiftCode</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!-- Address and Contact ends -->
+
+
+                <hr class="invoice-spacing">
+
+                <!-- Invoice Note starts -->
+                <div class="card-body invoice-padding pt-0">
+                    <div class="row">
+                        <div class="col-12">
+                            <span class="font-weight-bold">@Tax_Tech.Resources.Resource.Note:</span>
+                            <span>
+                                @(Model.AdditionalInformation ?? "-")
+                            </span>
+                        </div>
+                    </div>
+                </div>
+                <!-- Invoice Note ends -->
+                <!-- Invoice Description starts -->
+
+                <div class="card-body invoice-padding pb-0">
+                    <div class="row invoice-sales-total-wrapper">
+                        <div class="col-md-6 order-md-1 order-2 mt-md-0 mt-3">
+                            <p class="card-text mb-0">
+
+                            </p>
+                        </div>
+                        <div class="col-md-6 d-flex justify-content-end order-md-2 order-1">
+
+                        </div>
+                    </div>
+                </div>
+                <!-- Invoice Description ends -->
+            </div>
+        </div>
+        <!-- /Invoice -->
+        <!-- Invoice Actions -->
+        <div class="col-xl-3 col-md-4 col-12 invoice-actions mt-md-0 mt-2">
+            <div class="card">
+                <div class="card-body">
+                    <button class="btn btn-success btn-block mb-75 waves-effect waves-float waves-light" id="subBtn-10" onclick="SendInvoiceToSubmit(@Model.DocumentID)">
+                        @Tax_Tech.Resources.Resource.SubmitInvoice
+                    </button>
+                    <button id="loadBtn-10" class="btn btn-outline-primary waves-effect hidden btn-load" style="width:100%" type="button" disabled="">
+                        <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                    </button>
+                    <button class="btn btn-primary btn-block mb-75 waves-effect waves-float waves-light" onclick="getDocStatusPopup('@Model.UUID')">
+                        @Tax_Tech.Resources.Resource.GetStatus
+                    </button>
+                    @*<button class="btn btn-outline-primary btn-block mb-75 waves-effect waves-float waves-light" onclick="getGetInvoiceChangeStatusPopup('@Model.DocumentID')">
+            @Tax_Tech.Resources.Resource.ChangeStatus
+        </button>*@
+                    <a href="@Url.Action("DownloadDocumentPdf", new { controller = "Invoice", area = "", uuid = Model.UUID })" class="btn btn-outline-secondary btn-block btn-download-invoice mb-75 waves-effect">@Tax_Tech.Resources.Resource.DownloadAsPdf</a>
+
+                    @if (Tax_Tech.Classes.PublicConfig.CreateDocumentVersion == "1")
+                    {<!-- small version -->
+                                <a class="btn btn-outline-secondary btn-block mb-75 waves-effect" href="@Url.Action("InvoiceDetails", "InvoiceLine", new { invoiceId = Model.DocumentID, invoiceType = Model.DocumentType })"> @Tax_Tech.Resources.Resource.Edit </a> }
+                                            else
+                                            {
+                                <a class="btn btn-outline-secondary btn-block mb-75 waves-effect" href="@Url.Action("InvoiceDetailsV2", "InvoiceLine", new { invoiceId = Model.DocumentID, invoiceType = Model.DocumentType })"> @Tax_Tech.Resources.Resource.Edit </a>}
+
+                    <!-- needs id to be passed to the action -->
+                    @*<a href="@Url.Action("Index", "Payment", new { Area = "Configuration" })" class="btn btn-success btn-block waves-effect waves-float waves-light">
+            Add Payment
+        </a>*@
+                    <button class="btn btn-outline-danger btn-block mb-75 waves-effect waves-float waves-light" onclick="getCancelDocReasonPopup('@Model.DocumentID')">
+                        @Tax_Tech.Resources.Resource.CancelDoc
+                    </button>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <div class="invoice-total-wrapper" id="invoiceTotals">
+                        @Html.Partial("Invoice/_DocumentTotals", docTotals)
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /Invoice Actions -->
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <div class="row col-12">
+                <table class="table table-bordered table-responsive-lg">
+                    <thead>
+                        <tr>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.ItemCode</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.ItemInfo</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.Quantity</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.AmountSold</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.NetTotal</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.TaxTotal</th>
+                            <th class="py-1">@Tax_Tech.Resources.Resource.Total</th>
+                        </tr>
+                    </thead>
+                    <tbody id="invoiceLinesContainer">
+                        <tr class="m-3">
+                            <td colspan="7" class="text-center">@Tax_Tech.Resources.Resource.Loading...</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<script src="~/Scripts/Custom/Public.js"></script>
+<script src="~/Scripts/Custom/PreviewInvoice.js"></script>
+<script src="~/Scripts/Custom/DownloadPDF.js"></script>
+<script>
+    window.addEventListener('load', function () {
+        GetInvoiceLines('@Model.DocumentID');
+    });
+</script>

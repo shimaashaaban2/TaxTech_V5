@@ -1,0 +1,262 @@
+﻿@{
+    List<Tax_Tech.ApiModels.Country> countries = ViewBag.Countries;
+    List<Tax_Tech.ApiModels.VendorType> vendorTypes = ViewBag.VendorTypes;
+}
+<style>
+    .phone-input {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        max-width: 350px;
+    }
+
+    select, input {
+        padding: 8px;
+        font-size: 16px;
+    }
+
+    select {
+        width: 120px;
+    }
+
+    input {
+        flex: 1;
+    }
+</style>
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.CreateVendor</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="createVendorModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+                <div id="PopupMsg"></div>
+
+                @using (Ajax.BeginForm("CreateVendorV2", "VendorsV2", null,
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        OnBegin = "ShowLoading(1);",
+                        OnComplete = "showAfterPopupActionResult"
+                    }, new
+                    {
+                        @class = "form-horizontal"
+                    }))
+                {
+                    <input type="hidden" name="EntityID" value="@Convert.ToInt32(Session["EntityID"])" />
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="VendorAPIType">
+                                @Tax_Tech.Resources.Resource.VendorType
+                                <span class="req">*</span>
+                            </label>
+                            @if (vendorTypes != null)
+                            {
+                                @Html.DropDownList("VendorAPIType", new SelectList(vendorTypes, "VendorTypeID", "VendorTypeList"), Tax_Tech.Resources.Resource.VendorType, new { @class = "form-control", tabindex = "3", @onchange = "GetRegInfo()" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="PersonalID">
+                                @Tax_Tech.Resources.Resource.RegInfo
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.RegInfo" name="PersonalID" id="PersonalID" tabindex="1" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="VendorName">
+                                @Tax_Tech.Resources.Resource.VendorName
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.VendorName" name="VendorName" id="VendorName" tabindex="2" />
+                        </div>
+
+
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="CountryID">
+                                @Tax_Tech.Resources.Resource.Country
+                                <span class="req">*</span>
+                            </label>
+                            @if (countries != null)
+                            {
+                                @Html.DropDownList("CountryID", new SelectList(countries, "CountryID", "CountryName"), Tax_Tech.Resources.Resource.Country, new { @class = "form-control form-control-md select2", tabindex = "4" })
+                            }
+                            else
+                            {
+                                <div class="req">@Tax_Tech.Resources.Resource.ApiDown</div>
+                            }
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Governate">
+                                @Tax_Tech.Resources.Resource.Governate
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Governate" name="Governate" id="Governate" tabindex="6" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="RegionCity">
+                                @Tax_Tech.Resources.Resource.City
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.City" name="RegionCity" id="RegionCity" tabindex="7" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Street">
+                                @Tax_Tech.Resources.Resource.Street
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Street" name="Street" id="Street" tabindex="8" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="BuildingNo">
+                                @Tax_Tech.Resources.Resource.BuildingNo
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.BuildingNo" name="BuildingNo" id="BuildingNo" tabindex="9" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="PostalCode">@Tax_Tech.Resources.Resource.PostalCode</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.PostalCode" name="PostalCode" id="PostalCode" tabindex="10" />
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Floor">@Tax_Tech.Resources.Resource.Floor</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Floor" name="Floor" id="Floor" tabindex="11" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Flat">@Tax_Tech.Resources.Resource.Flat</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Flat" name="Flat" id="Flat" tabindex="12" />
+                        </div>
+
+                        <div class="form-group col-md-4">
+                            <label class="control-label" for="Landmark">@Tax_Tech.Resources.Resource.Landmark</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Landmark" name="Landmark" id="Landmark" tabindex="13" />
+                        </div>
+                    </div>
+                  
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label" for="PhoneNumber">
+                                @Tax_Tech.Resources.Resource.PhoneNumber
+                                <span class="req">*</span>
+                            </label>
+                            <div class="input-group">
+                              
+                                <input class="form-control" type="tel" id="PhoneNumber" name="PhoneNumber"
+                                       placeholder="@Tax_Tech.Resources.Resource.PhoneNumber" tabindex="14">
+                            </div>
+                        </div>
+                    </div>
+
+                    
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label" for="AdditionalInformation">@Tax_Tech.Resources.Resource.AddtionalInfo</label>
+                            <textarea class="form-control" id="AdditionalInformation" name="AdditionalInformation" placeholder="@Tax_Tech.Resources.Resource.AddtionalInfo" tabindex="15"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <label class="control-label" for="ERPInternalID">
+                                @Tax_Tech.Resources.Resource.ERPID
+                                <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.ERPID" name="ERPInternalID" id="ERPInternalID" tabindex="15" />
+                        </div>
+                    </div>
+
+
+                    <div class="row">
+                        <div class="form-group col-md-12">
+                            <div class="custom-control custom-checkbox">
+                                <input type="checkbox" class="custom-control-input" id="CheckBox" name="CheckBox" onchange="Checkval()">
+                                <label class="custom-control-label" for="CheckBox">@Tax_Tech.Resources.Resource.TaxExempted</label>
+                            </div>
+                        </div>
+                    </div>
+                    <input hidden id="IsTaxExempted" name="IsTaxExempted" value="false" />
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="16">@Tax_Tech.Resources.Resource.CreateVendor</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+
+
+
+                }
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            // the following code is used to disable x-scrollbar when click in select input and
+            // take 100% width in responsive also
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+
+    function Checkval() {
+        checkBox = document.getElementById("CheckBox");
+        if (checkBox.checked == true) {
+            document.getElementById("IsTaxExempted").value = true;
+        }
+        else {
+            document.getElementById("IsTaxExempted").value = false;
+        }
+    }
+    const countryCodeSelect = document.getElementById("CountryCode");
+    const phoneInput = document.getElementById("PhoneNumber");
+    const fullNumberDisplay = document.getElementById("FullPhoneNumber");
+
+    function updateFullNumber() {
+        const code = countryCodeSelect.value;
+        const number = phoneInput.value;
+        fullNumberDisplay.textContent = code + number;
+    }
+
+    countryCodeSelect.addEventListener("change", updateFullNumber);
+    phoneInput.addEventListener("input", updateFullNumber);
+</script>

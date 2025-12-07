@@ -1,0 +1,66 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.ItemsManagment;
+    string jobType = "2";
+}
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <a href="javascript:void(0);" onclick="getCreateItemPopup()" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.New</a>
+                        <div id="main-err"></div>
+                        <div class="btn-group mx-1">
+                            @*<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                @Tax_Tech.Resources.Resource.Export
+                            </button>*@
+                            <!--<div class="dropdown-menu">-->
+                            @*<a class="dropdown-item" href="javascript:void(0);">PDF</a>*@
+                            <!--<a class="dropdown-item" target="_blank" href="@Url.Action("ExportToExecl", "Items")">@Tax_Tech.Resources.Resource.Excel</a>
+                         </div>-->
+                            <a class="btn btn-outline-secondary" href="#" onclick="ExportItemsToExcel()" id="ItemsToExcel">@Tax_Tech.Resources.Resource.ExportToExcel</a>
+                            @*<a class="btn btn-outline-secondary" href="#" onclick="ExportItemsToExcel2()" id="ItemsToExcel22">@Tax_Tech.Resources.Resource.ExportToExcel</a>*@
+                        </div>
+
+                        <div class="btn-group ml-1">
+                            <a href="@Url.Action("UploadExecl", new { controller = "Invoice", area = "", jobType = jobType })" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.UploadExcel</a>
+                        </div>
+                    </div>
+                    <div class="dt-action-buttons text-right d-flex">
+                        <div id="count" class="btn-group ml-1 pull-right"></div>
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start" id="filterContainer">
+                    <div class="btn-group justify-content-around align-items-end" style="margin-left: 10px;">
+                        <div class="form-group col-md-7">
+                            <label class="control-label" for="fromDate">@Tax_Tech.Resources.Resource.FreeTextSearch</label>
+                            <input onkeydown="onKeyDownFreeText(event)" type="text" autofocus id="FilterBy" name="FilterBy" class="form-control" placeholder="@Tax_Tech.Resources.Resource.FreeTextSearch" value="@ViewBag.Filter" />
+                        </div>
+                        <div class="form-group col-md-5">
+                            <button type="submit" class="btn btn-primary" id="btnFilterItems" tabindex="18" onclick="getItemsByFilter()">@Tax_Tech.Resources.Resource.Search</button>
+                            <button id="btnFilterItemsLoader" class="btn btn-outline-primary waves-effectbtn-load" style="display: none;" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body" id="list" style="overflow-x: auto"> </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/Items.js"></script>
+
+<script>
+    window.addEventListener('load', function () {
+        if ($("#FilterBy").val()) {
+            getItemsByFilter('@ViewBag.PageNo', '@ViewBag.PageSize');
+        }
+    });
+</script>

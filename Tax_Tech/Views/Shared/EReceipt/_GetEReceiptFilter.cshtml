@@ -1,0 +1,95 @@
+﻿
+@{
+
+}
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.Search</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="addNewPaymentModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div id="PopupMsg"></div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="StartDate">@Tax_Tech.Resources.Resource.StartDate</label>
+                        <input type="text" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" name="StartDate" id="StartDate" tabindex="1" value="@DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd")" />
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="EndDate">@Tax_Tech.Resources.Resource.EndDate</label>
+                        <input type="text" class="form-control flatpickr-basic flatpickr-input active" placeholder="YYYY-MM-DD" name="EndDate" id="EndDate" tabindex="3" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="DocumentType">
+                            @Tax_Tech.Resources.Resource.DocType
+                        </label>
+                        @*<div class="position-relative">*@
+
+                        <select class="select2 form-control form-control-lg select2-hidden-accessible" id="DocumentType" name="DocumentType">
+                            <option value="">Document Type</option>
+                            <option value="1">Submit EReceipt</option>
+                            <option value="2">Pending</option>
+                            <option value="3">Approve</option>
+                        </select>
+                        @*</div>*@
+                    </div>
+
+                    <div class="form-group col-md-6">
+                        <label class="control-label" for="Current Status">
+                            @Tax_Tech.Resources.Resource.DocStatus
+                        </label>
+                        @*<div class="col-md-12 mb-1 form-group">*@
+                        <select class="select2 form-control form-control-lg">
+                            <option value="Current Status">Current Status</option>
+                            <option value="1">Vaild</option>
+                            <option value="2">Invaild</option>
+                            <option value="3">Submitted</option>
+                            <option value="4">cancelled</option>
+                            <option value="5">Rejected</option>
+                        </select>
+                        @*</div>*@
+                    </div>
+                </div>
+                <div class="row mt-2">
+                    <div class="form-group col-md-12">
+                        <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="7">@Tax_Tech.Resources.Resource.Search</button>
+                        <div class="form-group">
+                            <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden" type="button" disabled="">
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            </div>
+        </div>
+    </div>
+<script>
+    var basicPickr = $('.flatpickr-basic');
+    if (basicPickr.length) {
+        basicPickr.flatpickr({
+            format: 'YYYY/MM/dd'
+        });
+    }
+    $('.select2').each(function () {
+        var $this = $(this);
+        $this.wrap('<div class="position-relative"></div>');
+        $this.select2({
+            // the following code is used to disable x-scrollbar when click in select input and
+            // take 100% width in responsive also
+            dropdownAutoWidth: true,
+            width: '100%',
+            dropdownParent: $this.parent()
+        });
+    });
+</script>

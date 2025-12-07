@@ -1,0 +1,39 @@
+﻿@model List<Tax_Tech.ApiModels.DocumentTotalReport>
+
+
+<table cellpadding="0" cellspacing="0" border="0" class="table" id="thebasic-datatable">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.Status</th>
+            <th>@Tax_Tech.Resources.Resource.TaxTotal</th>
+            <th>@Tax_Tech.Resources.Resource.TotalAmount</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            if (Model.Count > 0)
+            {
+                foreach (var item in Model)
+                {
+                    <tr>
+                        <td>@item.ProcessStatusTitle</td>
+                        <td>@item.TaxTotals</td>
+                        <td>@item.TotalAmount</td>
+                    </tr>
+                }
+                <tr style="font-weight: bolder">
+                    <td>@Tax_Tech.Resources.Resource.Total</td>
+                    <td></td>
+                    <td>@Model.Sum(i => i.TotalAmount)</td>
+                </tr>
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>

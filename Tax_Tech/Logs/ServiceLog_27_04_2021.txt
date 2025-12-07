@@ -1,0 +1,36 @@
+[27 04 2021 11:13:24] - 
+
+1.Prepared the file name and set it to eac745a833f148a19f7bf18415a061f8.xlsx
+
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\eac745a833f148a19f7bf18415a061f8.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\eac745a833f148a19f7bf18415a061f8.xlsx'.
+1.Prepared the file name and set it to 79ef1d6ad8c3430b8ed760ec736d81e9.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\79ef1d6ad8c3430b8ed760ec736d81e9.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\79ef1d6ad8c3430b8ed760ec736d81e9.xlsx
+1.Prepared the file name and set it to e00692e8cce74f60856efb80acc4c38f.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\e00692e8cce74f60856efb80acc4c38f.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\e00692e8cce74f60856efb80acc4c38f.xlsx
+1.Prepared the file name and set it to c4ec3fe8817d4a48aba9c05d75492235.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\c4ec3fe8817d4a48aba9c05d75492235.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\c4ec3fe8817d4a48aba9c05d75492235.xlsx
+1.Prepared the file name and set it to 04715fccd4df47e3b47e0d3e2f32f448.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\04715fccd4df47e3b47e0d3e2f32f448.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\04715fccd4df47e3b47e0d3e2f32f448.xlsx
+1.Prepared the file name and set it to 6050f87c45ca47928ea00d4a212b1f89.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\6050f87c45ca47928ea00d4a212b1f89.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\6050f87c45ca47928ea00d4a212b1f89.xlsx
+1.Prepared the file name and set it to caec02bf47224421aa3e45e18451da7a.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\caec02bf47224421aa3e45e18451da7a.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\caec02bf47224421aa3e45e18451da7a.xlsx
+1.Prepared the file name and set it to 519418c449b94a27aa29fcef62100d1a.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\519418c449b94a27aa29fcef62100d1a.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\519418c449b94a27aa29fcef62100d1a.xlsx
+1.Prepared the file name and set it to 10eb5c56be404381bc8f1be0ee47098f.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\10eb5c56be404381bc8f1be0ee47098f.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\10eb5c56be404381bc8f1be0ee47098f.xlsx
+1.Prepared the file name and set it to 6f50c358b4384047a00db31de42bf7bc.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\6f50c358b4384047a00db31de42bf7bc.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\6f50c358b4384047a00db31de42bf7bc.xlsx
+1.Prepared the file name and set it to 903a30fd949f4aa695f1d57c33048cde.xlsx
+2.Trying to save the file to: D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\903a30fd949f4aa695f1d57c33048cde.xlsx
+3.File saved successfully to D:\\Tax Tech\\Tax_Tech\\Tax_Tech\\Content\\temp\903a30fd949f4aa695f1d57c33048cde.xlsx

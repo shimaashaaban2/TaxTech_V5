@@ -1,0 +1,15 @@
+[29 03 2021 11:51:30] - 
+
+Prepared the file name and set it to e288df408d61438f9d17277a472fe754.png
+
+Trying to save the file to: Uploads\Files\e288df408d61438f9d17277a472fe754.png
+Exception Thrown: The SaveAs method is configured to require a rooted path, and the path 'Uploads\Files\e288df408d61438f9d17277a472fe754.png' is not rooted.
+Prepared the file name and set it to 806d4f24f67249cca4b78241c9faa42c.png
+Trying to save the file to: Uploads\Files\806d4f24f67249cca4b78241c9faa42c.png
+Exception Thrown: The SaveAs method is configured to require a rooted path, and the path 'Uploads\Files\806d4f24f67249cca4b78241c9faa42c.png' is not rooted.
+1.Prepared the file name and set it to 4fe3d9d387e24133857e72da39791bfd.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\4fe3d9d387e24133857e72da39791bfd.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\4fe3d9d387e24133857e72da39791bfd.xlsx'.
+1.Prepared the file name and set it to 729d0a6d67a84d0db3dbeeee3d07d7e0.xlsx
+2.Trying to save the file to: C:\\inetpub\\wwwroot\\TaxTech\\Uploads\\Files\729d0a6d67a84d0db3dbeeee3d07d7e0.xlsx
+3.Exception Thrown: Could not find a part of the path 'C:\inetpub\wwwroot\TaxTech\Uploads\Files\729d0a6d67a84d0db3dbeeee3d07d7e0.xlsx'.

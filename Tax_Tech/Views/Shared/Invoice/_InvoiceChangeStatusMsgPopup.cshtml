@@ -1,0 +1,54 @@
+﻿@{
+    long docID = Convert.ToInt64(ViewBag.DocID);
+}
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.RejectDoc</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+
+                @using (Ajax.BeginForm("ChangeInvoiceStatus", "Invoice",
+                    null,
+                        new AjaxOptions
+                        {
+                            HttpMethod = "POST",
+                            OnBegin = "ShowLoading(1)",
+                            OnComplete = "showPopUpResult"
+                        }, new
+                        {
+                            @class = "form-horizontal"
+                        }
+                ))
+                {
+                    <div class="card-body">
+                        <div id="PopupMsg"></div>
+
+                        <input type="hidden" id="status" name="status" value="8" />
+                        <input type="hidden" id="docId" name="docId" value="@docID" />
+
+                        <div class="row">
+                            <div class="form-group col-md-12">
+                                <textarea class="form-control" placeholder="@Tax_Tech.Resources.Resource.RejectReason" name="msg" id="msg" tabindex="1" autofocus></textarea>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="18">@Tax_Tech.Resources.Resource.Confirm</button>
+                        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                        </button>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</div>

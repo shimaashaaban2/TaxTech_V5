@@ -1,0 +1,24 @@
+﻿@model Int32
+@using Tax_Tech.Helpers;
+@{
+    SelectList ItemsCodeList = LookupsHelper.GetLookups().ItemsCodeList(Model);
+
+}
+
+<label class="control-label" for="ItemCode">@Tax_Tech.Resources.Resource.ItemInternalCode<span class="text-danger">*</span> </label>
+@if (ItemsCodeList != null)
+{
+    @Html.DropDownList("ItemID", ItemsCodeList as SelectList, Tax_Tech.Resources.Resource.ItemInternalCode,
+                        new
+                        {
+                            @class = "select2 form-control",
+                            @style = "width  100%;",
+                            @Onchange = "GetItemsByID('ItemID','item-name')",
+                            @tabindex = "6"
+                        })
+}
+else
+{
+    <h5 class="text-danger">@Tax_Tech.Resources.Resource.ApiDown</h5>
+}
+

@@ -1,0 +1,40 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.Banks;
+}
+
+<section>
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left">
+                        <button class="btn btn-outline-secondary" onclick="getInsertBankPopup()">@Tax_Tech.Resources.Resource.New</button>
+                        <div id="main-err"></div>
+                        @*<div class="btn-group">
+                                <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    Export
+                                </button>
+                                <div class="dropdown-menu" style="">
+                                    <a class="dropdown-item" href="javascript:void(0);">PDF</a>
+                                    <a class="dropdown-item" href="javascript:void(0);">Excel</a>
+                                </div>
+                            </div>*@
+                    </div>
+                </div>
+                <div class="d-flex justify-content-start" id="filterContainer">
+
+                </div>
+
+                <div class="card-body" id="list">
+                    <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Areas/Configuration/Scripts/Custom/Banks.js"></script>

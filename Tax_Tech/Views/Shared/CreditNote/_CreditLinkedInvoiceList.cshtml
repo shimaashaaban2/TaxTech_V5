@@ -1,0 +1,50 @@
+﻿@model IEnumerable<Tax_Tech.ViewModels.DocumentViewModel>
+
+@{
+    double? totalOfAmounts = 0;
+}
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>@Tax_Tech.Resources.Resource.InternalID</th>
+            <th>@Tax_Tech.Resources.Resource.TotalAmount</th>
+            <th>@Tax_Tech.Resources.Resource.Actions</th>
+        </tr>
+    </thead>
+    <tbody id="linkedInvoicesContainer">
+        @if (Model != null)
+        {
+            if (Model.Count() > 0)
+            {
+                foreach (var item in Model)
+                {
+                    totalOfAmounts += item.TotalAmount;
+                    <tr>
+                        <td style="width: 25% !important">@item.InternalID</td>
+                        <td>@item.TotalAmount</td>
+                        <td>
+                            <a href="javascript:void(0)" onclick="removeLinkedInvoice(event, '@item.DocumentID')">X</a>
+                        </td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                </tr>
+            }
+        }
+    </tbody>
+</table>
+
+<table class="table table-bordered">
+    <tbody>
+        <tr>
+            <td style="width: 35% !important" class="font-weight-bolder">@Tax_Tech.Resources.Resource.Total</td>
+            <td id="totalLinkedInvoicesAmount">@totalOfAmounts</td>
+            <td></td>
+        </tr>
+    </tbody>
+</table>

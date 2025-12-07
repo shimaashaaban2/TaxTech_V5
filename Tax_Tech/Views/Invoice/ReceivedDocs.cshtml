@@ -1,0 +1,58 @@
+﻿
+@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.ReceivedDocs;
+}
+
+<section id="basic-datatable">
+    <div class="row">
+        <div class="col-12">
+            <div class="card">
+
+                <div class="card-header">
+                    <div class="dt-action-buttons text-left d-flex">
+                        <div class="btn-group" style="margin-left: 10px;">
+                            <button type="button" class="btn btn-outline-secondary" onclick="getFilterRecievedDocsPopup()">
+                                @Tax_Tech.Resources.Resource.Search
+                            </button>
+                            @*<button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @Tax_Tech.Resources.Resource.QuickFilter
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="getInvoicesOf('0')">@Tax_Tech.Resources.Resource.AllInvoices</a>
+                                        <a class="dropdown-item" href="javascript:void(0);" onclick="getInvoicesOf('6')">@Tax_Tech.Resources.Resource.RejectedDocuments</a>
+                                    </div>
+                                </div>
+                                <div class="btn-group" style="margin-left: 10px;">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="getFilterFormPopup()">
+                                        @Tax_Tech.Resources.Resource.Search
+                                    </button>
+                                </div>
+                                <div class="btn-group" style="margin-left: 10px;">
+                                    <button type="button" class="btn btn-outline-secondary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                        @Tax_Tech.Resources.Resource.Export
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="javascript:void(0);">PDF</a>
+                                        <a class="dropdown-item" href="@Url.Action("ExportToExecl", "Invoice")">@Tax_Tech.Resources.Resource.Execl</a>
+                                    </div>
+                                </div>*@
+                            @*<div class="btn-group ml-1">
+                                    <a href="@Url.Action("UploadExecl", "Invoice", new { jobType = jobType })" class="btn btn-outline-secondary">@Tax_Tech.Resources.Resource.UploadExecl</a>
+                                </div>*@
+                            <div id="main-err"></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body mt-3" id="list">
+                    <h4 class="text-center">@Tax_Tech.Resources.Resource.Loading...</h4>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<script src="~/Scripts/Custom/PublicConfig.js"></script>
+<script src="~/Scripts/Custom/ReceviedDocs.js"></script>
+<script src="~/Scripts/Custom/Popup.js"></script>

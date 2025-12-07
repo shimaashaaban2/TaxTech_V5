@@ -1,0 +1,29 @@
+﻿@model IEnumerable<Tax_Tech.ApiModels.EReceiptApi.ReceiptListModel>
+
+
+
+
+
+@foreach (var item in Model)
+{
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <img src="@item.QRCode" class="img-thumbnail" />
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+}
+
+
+
+<script>
+    $(document).ready(function () {
+        getQRImg();
+    });
+</script>
+<script src="~/Scripts/Custom/EReceipt.js"></script>

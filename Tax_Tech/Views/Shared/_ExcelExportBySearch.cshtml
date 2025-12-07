@@ -1,0 +1,10 @@
+﻿@model Tax_Tech.ViewModels.FilterViewModel
+@if (Model != null)
+{
+    <a target="_blank" class="dropdown-item" href="@Url.Action("ExportToExeclBySearch", "Invoice",new { ProcessStatusID=Model.ProcessStatusID,StartDate=Model.StartDate,EndDate=Model.EndDate,DocumentType=Model.DocumentType})">@Tax_Tech.Resources.Resource.Excel</a>
+
+}
+else
+{
+    <a target="_blank" class="dropdown-item" href="@Url.Action("ExportToExecl", "Invoice")">@Tax_Tech.Resources.Resource.Excel</a>
+}

@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = Tax_Tech.Resources.Resource.ErrorOccured;
+}
+
+<div class="misc-inner p-2 p-sm-3">
+    <div class="w-100 text-center">
+        <h2 class="mb-1">@Tax_Tech.Resources.Resource.ErrorOccured 🕵🏻&zwj;♀️</h2>
+        @if (TempData["ErrorMsg"] == null)
+        {
+            <h2 class="text-center">@Tax_Tech.Resources.Resource.ErrorOccuredWhileProcessingYourRequest</h2>
+        }
+        else
+        {
+            <h2 class="text-center">@TempData["ErrorMsg"]</h2>
+        }
+        @*<a class="btn btn-primary mb-2 btn-sm-block waves-effect waves-float waves-light" href="index.html">Back to home</a>*@<img class="img-fluid" src="~/Content/app-assets/images/pages/error.svg" alt="Error page">
+    </div>
+</div>

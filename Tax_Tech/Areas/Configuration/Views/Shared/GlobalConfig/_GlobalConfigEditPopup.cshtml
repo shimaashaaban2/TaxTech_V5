@@ -1,0 +1,58 @@
+﻿
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">@Tax_Tech.Resources.Resource.EditGlobalConfig</h4>
+                <button type="button" class="close" onclick="DismissPopup()" id="addBranchModalClose" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+            <div id="PopupMsg"></div>
+
+                @using (Ajax.BeginForm("Edit", "GlobalConfig", null,
+            new AjaxOptions
+            {
+                HttpMethod = "POST",
+                OnBegin = "ShowLoading(1)",
+                OnComplete = "showPopUpResult"
+            }, new
+            {
+                @class = "form-horizontal"
+            }))
+                {
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="Key">@Tax_Tech.Resources.Resource.Key
+                            <span class="req">*</span>
+                            </label>
+                            <input type="text" class="form-control" value="Setting Name" name="Key" id="Key" tabindex="1" readonly />
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label class="control-label" for="Value">
+                                <span class="req">*</span>
+                            @Tax_Tech.Resources.Resource.Value</label>
+                            <input type="text" class="form-control" placeholder="@Tax_Tech.Resources.Resource.Value" name="Value" id="Value" tabindex="2" />
+                        </div>
+                    </div>
+
+                    <div class="row mt-2">
+                        <div class="form-group col-md-12">
+                            <button type="submit" class="btn btn-primary" id="subBtn-1" tabindex="16">@Tax_Tech.Resources.Resource.Save</button>
+                            <div class="form-group">
+                                <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                                    <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                    <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                }
+            </div>
+        </div>
+    </div>
+</div>

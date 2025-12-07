@@ -1,0 +1,107 @@
+﻿@model List<Tax_Tech.ApiModels.EReceiptApi.EReceiptLinesModel>
+
+<style>
+    .tooltip.show div div {
+        text-align: left !important;
+    }
+</style>
+
+
+
+
+<div class="modal fade text-left" id="default" data-backdrop="static" tabindex="-1" role="dialog" aria-labelledby="myModalLabel1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="myModalLabel1">Partial Return</h4>
+                <button type="button" class="close" data-dismiss="modal" onclick="DismissPopup()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- Create New Form Controls -->
+            <div class="modal-body">
+
+
+                <div class="card-body">
+                    <div id="PopupMsg"></div>
+                    @using (Ajax.BeginForm("PartialReturn", "EReceipt", new { LogID= ViewBag.LogID, area = "" },
+                    new AjaxOptions
+                    {
+                        HttpMethod = "POST",
+                        UpdateTargetId = "msg",
+                        InsertionMode = InsertionMode.Replace, 
+                        OnBegin = "ShowLoading(1)",
+                        OnComplete = "onParialRefundComplete",
+
+                    }, new { @class = "auth-login-form mt-2" }))
+                    {
+
+                <div class="row col-12">
+                    <table class="table table-bordered table-responsive-lg" id="thebasic-datatable">
+                        <thead>
+                            <tr>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.ItemCode</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.ItemInfo</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.Quantity</th>
+                                <th class="py-1">@Tax_Tech.Resources.Resource.AmountSold</th>
+                                <th class="py-1">Returned Quentity</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody id="EReceiptLines1">
+                            @if (Model != null && Model.Count() > 0)
+                            {
+                                foreach (var item in Model)
+                                {
+                                    <tr>
+                                        <td rel="tooltip" data-toggle="tooltip">
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Code: </span>@item.ItemCode</div>
+                                            <div><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.InternalCode: </span>@item.InternalCode</div>
+                                        </td>
+                                        <td rel="tooltip" data-toggle="tooltip">
+                                            <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Name: </span>@item.ItemName</div>
+                                            <div style="width: 200px !important;"><span style="color: #2196F3;">@Tax_Tech.Resources.Resource.Desc: </span>@item.description</div>
+                                        </td>
+                                        <td><label id="lbl-quentity-@item.LineID" name="lbl-quentity-@item.LineID">@item.quantity</label> </td>
+                                        <td rel="tooltip" data-toggle="tooltip" data-placement="right" data-original-title="<div><div>@Tax_Tech.Resources.Resource.Currency: @item.currencySold</div><div>@Tax_Tech.Resources.Resource.ExchangeRate: @item.currencyExchangeRate</div><div>@Tax_Tech.Resources.Resource.UnitinEGP: @item.UnitType</div></div>">
+                                            @item.amountSold
+                                        </td>
+                                        <td>
+                                            <div class="input-group">
+                                                <input onkeyup="ValidatedQuantity(@item.LineID)" onchange="ValidatedQuantity(@item.LineID)" type="number" class="touchspin form-control" min="0" id="txt-quentity-@item.LineID" name="txt-quentity-@item.LineID" value="0" max="@item.quantity">
+                                            </div>
+
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                            else
+                            {
+                                <tr>
+                                    <td colspan="7" class="text-center">@Tax_Tech.Resources.Resource.NoDataAvailable</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <button type="submit" class="btn btn-primary btn-submit" tabindex="18" id="subBtn-1">Partial Return</button>
+                    <div class="form-group">
+                        <button id="loadBtn-1" class="btn btn-outline-primary waves-effect hidden btn-load" type="button" disabled="">
+                            <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                            <span class="ml-25 align-middle">@Tax_Tech.Resources.Resource.Loading...</span>
+                        </button>
+                    </div>
+
+                 </div>
+                    }
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+  
+</div>
+
+ 
+<script src="~/Scripts/Custom/EReceipt.js"></script>
