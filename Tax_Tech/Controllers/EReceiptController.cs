@@ -131,7 +131,7 @@ namespace Tax_Tech.Controllers
                     return Json(new { msg = "fail", view = RenderRazorViewToString("_Result") });
                 }
                 IEnumerable<ReceiptListModel> ReceiptList = _eReceiptRepo.GetReceiptListByUUID(ReceiptUUID);
-                var receiptType = ReceiptList.FirstOrDefault().receiptType;
+                //var receiptType = ReceiptList.FirstOrDefault().receiptType;
                
                 var jsonResult = Json(new { msg = "success", view = RenderRazorViewToString("EReceipt/_ReceiptList", ReceiptList) });
                 jsonResult.MaxJsonLength = int.MaxValue;
