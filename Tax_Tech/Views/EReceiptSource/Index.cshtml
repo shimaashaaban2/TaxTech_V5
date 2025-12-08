@@ -26,19 +26,19 @@
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label>Issue @Tax_Tech.Resources.Resource.Date </label>
-                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="From" id="From" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="FromDate" id="FromDate" placeholder="@Tax_Tech.Resources.Resource.From" value="@DateTime.Now.AddDays(-7).ToString("yyyy-MM-dd")" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 form-group">
                             <label>@Tax_Tech.Resources.Resource.To</label>
-                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="To" id="To" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                            <input type="text" class="form-control flatpickr-basic flatpickr-input active" name="ToDate" id="ToDate" placeholder="@Tax_Tech.Resources.Resource.To" value="@DateTime.Now.ToString("yyyy-MM-dd")" />
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12 mb-1 form-group">
                             <select name="source" class="form-control select2 select2-hidden-accessible" id="ERecesource">
-                                <option value="all">All Sources</option>
+                                <option value="all">@Tax_Tech.Resources.Resource.AllSources</option>
                                 @*<option value="WinCash">WinCash</option>*@
                             <option value="EreceiptBilling">EreceiptBilling</option>
                             </select>
